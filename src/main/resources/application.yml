@@ -1,5 +1,5 @@
 okta:
   oauth2:
-    issuer: https://dev-edward-andress.uk.auth0.com/
-    client-id: ${OKTA_CLIENT_ID}
-    client-secret: ${OKTA_CLIENT_SECRET}
+    issuer: ${ISSUER_ACEBOOK}
+    client-id: ${CLIENT_ID_ACEBOOK}
+    client-secret: ${CLIENT_SECRET_ACEBOOK}
