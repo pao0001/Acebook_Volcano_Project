@@ -23,7 +23,7 @@
 
     <ul>
         <li th:each="post : ${posts}"
-            th:text="${#authentication.principal.attributes['email']} + ': ' + ${post.content}">
+            th:utext="${#authentication.principal.attributes['email']} + ':<br>' + ${post.content} + '<hr><br>'">
         </li>
     </ul>
 
