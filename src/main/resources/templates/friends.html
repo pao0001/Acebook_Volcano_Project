@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Friends</title>
+</head>
+<body>
+    <ul th:each="friend: ${friends}">
+        <li th:text="${friend.username}" />
+    </ul>
+
+</body>
+</html>
