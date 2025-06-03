@@ -5,31 +5,38 @@
 
 <!-- Header Fragment -->
 <div th:fragment="header">
-    <header style="padding: 0.5rem 2rem; background: #fff; border-bottom: 1px solid #ddd;">
+    <header style="background: #fff; border-bottom: 1px solid #ddd;">
         <div style="display: flex; align-items: center; justify-content: space-between;">
 
             <!-- Left side: Logo only -->
-            <a class="logo" href="/homepage" th:href="@{/homepage}" style="font-size:1.5rem; font-weight:bold; text-decoration:none; color:#333;">
-                AceBook
+            <a class="acebook-logo" href="/homepage" th:href="@{/homepage}" style="
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                font-size: 1.8rem;
+                font-weight: bold;
+                color: #1877f2;
+                text-decoration: none;
+                letter-spacing: -1px;">
+                acebook
             </a>
 
             <!-- Right side: logged-in text + logout, grouped -->
-            <div style="display: flex; align-items: center; gap: 1rem;" sec:authorize="isAuthenticated()">
+            <div style="display: flex; align-items: center;" sec:authorize="isAuthenticated()">
                 <div style="font-size:0.9rem; color:#333;">
                     Logged in as <b><span sec:authentication="principal.attributes['email']"></span></b>
                 </div>
-                <a href="/logout" style="text-decoration:none; color:#c00; font-weight:bold;">
+                <a href="/logout" style="margin-left: 1rem; text-decoration:none; color:#c00; font-weight:bold;">
                     Logout
                 </a>
             </div>
+
         </div>
-        <div style="display: flex; align-items: center; justify-content: space-between;">
-            <nav style="background:#eee; padding:0.5rem 2rem;">
+
+        <!-- Bottom nav bar -->
+        <nav style="background:#eee; padding:0.5rem 2rem;">
                 <a href="/home" th:href="@{/home}" style="margin-right:1rem; text-decoration:none; color:#555;">Home</a>
                 <a href="/profile" th:href="@{/profile}" style="margin-right:1rem; text-decoration:none; color:#555;">Profile</a>
                 <a href="/friends" th:href="@{/team}" style="margin-right:1rem; text-decoration:none; color:#555;">Friends</a>
-            </nav>
-        </div>
+        </nav>
     </header>
 </div>
 
