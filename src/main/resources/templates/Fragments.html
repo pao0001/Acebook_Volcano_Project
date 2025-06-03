@@ -1,0 +1,43 @@
+<!-- Fragments.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- Header Fragment -->
+<div th:fragment="header">
+    <header style="padding: 0.5rem 2rem; background: #fff; border-bottom: 1px solid #ddd;">
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+
+            <!-- Left side: Logo only -->
+            <a class="logo" href="/homepage" th:href="@{/homepage}" style="font-size:1.5rem; font-weight:bold; text-decoration:none; color:#333;">
+                AceBook
+            </a>
+
+            <!-- Right side: logged-in text + logout, grouped -->
+            <div style="display: flex; align-items: center; gap: 1rem;" sec:authorize="isAuthenticated()">
+                <div style="font-size:0.9rem; color:#333;">
+                    Logged in as <b><span sec:authentication="principal.attributes['email']"></span></b>
+                </div>
+                <a href="/logout" style="text-decoration:none; color:#c00; font-weight:bold;">
+                    Logout
+                </a>
+            </div>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            <nav style="background:#eee; padding:0.5rem 2rem;">
+                <a href="/home" th:href="@{/home}" style="margin-right:1rem; text-decoration:none; color:#555;">Home</a>
+                <a href="/profile" th:href="@{/profile}" style="margin-right:1rem; text-decoration:none; color:#555;">Profile</a>
+                <a href="/friends" th:href="@{/team}" style="margin-right:1rem; text-decoration:none; color:#555;">Friends</a>
+            </nav>
+        </div>
+    </header>
+</div>
+
+<!-- Footer Fragment -->
+<div th:fragment="footer" style="text-align:center; padding:1rem; background:#f1f1f1; margin-top:2rem;">
+    <footer>
+        <a href="/contact" th:href="@{/contactus}" style="text-decoration:none; color:#777;">Contact Us</a>
+    </footer>
+</div>
+
+</html>
