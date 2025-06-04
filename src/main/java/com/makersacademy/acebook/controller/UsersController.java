@@ -38,7 +38,7 @@ public class UsersController {
         return new RedirectView("/posts");
     }
 
-    @GetMapping("/users/friends")
+    @GetMapping("/friends")
     public ModelAndView viewFriends() {
         DefaultOidcUser principal = (DefaultOidcUser) SecurityContextHolder
                 .getContext()
