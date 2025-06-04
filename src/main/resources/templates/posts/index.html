@@ -18,13 +18,15 @@
     <form action="#" th:action="@{/posts}" th:object="${post}" method="post">
 <!--        <p>User: <input type="text" th:field="*{username}" /></p>-->
         <p>Content: <input type="text" th:field="*{content}" /></p>
+        <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
+
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 
     <ul style="list-style-type: none; padding: 10; margin: 0;">
         <li th:each="post : ${posts}"
             style="padding: 10px 0;"
-            th:utext="${#authentication.principal.attributes['email']} + ':<br>' + ${post.content} + '<hr>'">
+            th:utext="${post.username} + ':<br>' + ${post.content} + '<hr>'">
         </li>
     </ul>
 
