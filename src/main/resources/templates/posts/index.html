@@ -21,9 +21,10 @@
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 
-    <ul>
+    <ul style="list-style-type: none; padding: 10; margin: 0;">
         <li th:each="post : ${posts}"
-            th:utext="${#authentication.principal.attributes['email']} + ':<br>' + ${post.content} + '<hr><br>'">
+            style="padding: 10px 0;"
+            th:utext="${#authentication.principal.attributes['email']} + ':<br>' + ${post.content} + '<hr>'">
         </li>
     </ul>
 
