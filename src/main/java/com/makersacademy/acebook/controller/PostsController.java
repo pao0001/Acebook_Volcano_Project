@@ -18,20 +18,17 @@ public class PostsController {
     @Autowired
     PostRepository repository;
 
-    @GetMapping("/posts")
+    @GetMapping("/")
     public String index(Model model) {
         Iterable<Post> posts = repository.findAll();
         model.addAttribute("posts", posts);
         model.addAttribute("post", new Post());
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName(); // or get from attributes if you use OAuth2
-        model.addAttribute("currentUserEmail", email);
         return "posts/index";
     }
 
     @PostMapping("/posts")
     public RedirectView create(@ModelAttribute Post post) {
         repository.save(post);
-        return new RedirectView("/posts");
+        return new RedirectView("/");
     }
 }

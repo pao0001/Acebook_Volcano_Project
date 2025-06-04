@@ -17,7 +17,9 @@ public class Post {
 
     public Post() {}
 
-    public Post(String content) {
+    public Post(String content, String username) {
         this.content = content;
+        this.username = username;
     }
+
 }
