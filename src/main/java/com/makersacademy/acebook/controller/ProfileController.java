@@ -18,19 +18,26 @@ public class ProfileController {
 
     @GetMapping("/profile")
     public String showProfile(Model model) {
+
+        // the 'principal' is the currently authenticated user in Spring Security
+        // this looks through SecurityContextHolder to find the principal
         Object principalObj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        // throws an error if the returned principal object is not a 0auth2user
         if (!(principalObj instanceof OAuth2User principal)) {
             throw new RuntimeException("Unexpected principal type: " + principalObj.getClass().getName());
         }
 
-        String authId = principal.getName(); // This should be "auth0|userId"
-        System.out.println("Auth ID: " + authId);
+        // extracts the unique id from the principal and saves it as authId
+        String authId = principal.getName();
 
+        // creates a user repository and searches the database for a user matching the authId from the principal
+        // throws an error if the user does not exist
         User user = userRepository
                 .findByAuthId(authId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        // adds the user to the model to make it available in the view
         model.addAttribute("user", user);
         return "posts/profile";
     }
