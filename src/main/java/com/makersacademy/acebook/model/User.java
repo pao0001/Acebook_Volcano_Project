@@ -15,6 +15,14 @@ public class User {
     private String username;
     private boolean enabled;
 
+    // need to use @Column to tell JPA to map this field to the database as it has a "unique" qualifier
+    @Column(name = "auth0_id", unique = true)
+    private String authId;
+
+    // need to tell JPA that this column is TEXT as it auto assumes it will be VARCHAR if it's a string
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
     public User() {
         this.enabled = TRUE;
     }
@@ -26,6 +34,20 @@ public class User {
 
     public User(String username, boolean enabled) {
         this.username = username;
+        this.enabled = enabled;
+    }
+
+    public User(String username, String authId, boolean enabled) {
+        this.username = username;
+        this.authId = authId;
+        this.description = null;
+        this.enabled = enabled;
+    }
+
+    public User(String username, String authId, String description, boolean enabled) {
+        this.username = username;
+        this.authId = authId;
+        this.description = description;
         this.enabled = enabled;
     }
 }
