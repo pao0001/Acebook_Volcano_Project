@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>User Profile</title>
+  <title>User Profile</title>
 </head>
 <body>
 <div th:replace="fragments :: header"></div> <!--This is the header added from Fragments.html -->
 
-<h1>User Profile</h1>
+<h1 th:text="'Profile for ' + ${user.username}"></h1>
 
 <p><strong>ID:</strong> <span th:text="${user.id}">User ID</span></p>
 <p><strong>Username:</strong> <span th:text="${user.username}">Username</span></p>

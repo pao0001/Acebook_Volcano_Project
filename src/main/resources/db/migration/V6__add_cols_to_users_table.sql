@@ -1,0 +1,3 @@
+ALTER TABLE users
+ADD COLUMN forename VARCHAR(255),
+ADD COLUMN surname VARCHAR(255);
