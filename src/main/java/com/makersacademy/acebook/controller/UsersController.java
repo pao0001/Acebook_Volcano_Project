@@ -35,7 +35,7 @@ public class UsersController {
                     return userRepository.save(newUser);
                 });
 
-        return new RedirectView("/posts");
+        return new RedirectView("/");
     }
 
     @GetMapping("/friends")

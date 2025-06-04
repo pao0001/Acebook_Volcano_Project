@@ -6,8 +6,9 @@
         <title>Acebook</title>
         <link rel="stylesheet" href="/main.css" />
     </head>
-    <div th:replace="fragments :: header"></div>
     <body>
+    <div th:replace="fragments :: header"></div> <!--This is the header added from Fragments.html -->
+
 
     <h1>Posts</h1>
 
@@ -27,6 +28,8 @@
             th:utext="${#authentication.principal.attributes['email']} + ':<br>' + ${post.content} + '<hr>'">
         </li>
     </ul>
+    <div th:replace="fragments :: footer"></div> <!--This is the footer added from Fragments.html -->
 
     </body>
+
 </html>
