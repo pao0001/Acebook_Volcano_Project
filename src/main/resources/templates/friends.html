@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <p>Do we exist?</p>
     <meta charset="UTF-8">
     <title>Friends</title>
 </head>
 <body>
+    <p>Do we exist?</p>
     <ul th:each="friend: ${friends}">
-        <li th:text="${friend.username}" />
+        <li th:text="${friend.username}"></li>
     </ul>
 
 </body>
