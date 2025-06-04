@@ -1,7 +1,7 @@
 package com.makersacademy.acebook.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+//import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,9 +31,8 @@ public class User {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    public User() {
-        this.enabled = TRUE;
-    }
+    private String forename;
+    private String surname;
 
     // Connects the friends table ot
     @ManyToMany(fetch = FetchType.EAGER)
@@ -46,17 +45,26 @@ public class User {
     // Using hashset to store friends to prevent duplicates and lets us do faster access/search
     private Set<User> friends = new HashSet<>();
 
-    public User(String username) {
-        this.username = username;
-        this.enabled = TRUE;
+    // no arguments constructor
+    public User() {
     }
 
+    // constructor for login (extracts username, auth0_id)
+    // all other fields set to null until updated by user
+    public User(String username, String authId, boolean enabled) {
+        this.username = username;
+        this.authId = authId;
+        this.enabled = enabled;
+    }
+
+    // constructor with username and enabled, for testing (no auth0_id required)
     public User(String username, boolean enabled) {
         this.username = username;
         this.enabled = enabled;
     }
 
-    public User(String username, String authId, boolean enabled) {
+    // full constructor, all arguments
+    public User(String username, boolean enabled, String authId, String description, String forename, String surname) {
         this.username = username;
         this.authId = authId;
         this.description = null;
@@ -67,7 +75,8 @@ public class User {
         this.username = username;
         this.authId = authId;
         this.description = description;
-        this.enabled = enabled;
+        this.forename = forename;
+        this.surname = surname;
     }
 
     // Equals and hashCode only on id for Hibernate identity

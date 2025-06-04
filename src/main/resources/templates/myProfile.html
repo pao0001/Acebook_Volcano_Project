@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Profile</title>
+</head>
+<body>
+<div th:replace="fragments :: header"></div> <!--This is the header added from Fragments.html -->
+
+<h1>User Profile</h1>
+
+<p><strong>ID:</strong> <span th:text="${user.id}">User ID</span></p>
+<p><strong>Username:</strong> <span th:text="${user.username}">Username</span></p>
+<p><strong>Auth ID:</strong> <span th:text="${user.authId}">Auth ID</span></p>
+<p><strong>Enabled:</strong> <span th:text="${user.enabled}">true/false</span></p>
+<p><strong>Description:</strong> <span th:text="${user.description}">Description</span></p>
+<p><strong>Forename:</strong> <span th:text="${user.forename}">Forename</span></p>
+<p><strong>Surname:</strong> <span th:text="${user.surname}">Surname</span></p>
+
+<!-- testing clickable links to user profiles -->
+<br>
+<p><strong>This is an example of how clicking your friends' usernames will return their profiles:</strong></p>
+<ul>
+    <li th:each="user : ${users}">
+        <a th:href="@{/profile/{id}(id=${user.id})}">[[${user.username}]]</a>
+    </li>
+</ul>
+
+<!-- testing a form for updating user -->
+<br>
+<p><strong>This is an example of how clicking your friends' usernames will return their profiles:</strong></p>
+<form th:action="@{/myProfile}" th:object="${user}" method="post">
+    <input type="hidden" name="field" value="forename" />
+    <label for="forename">Forename:</label>
+    <input type="text" id="forename" th:field="*{forename}" />
+    <button type="submit">Update Forename</button>
+</form>
+
+<form th:action="@{/myProfile}" th:object="${user}" method="post">
+    <input type="hidden" name="field" value="surname" />
+    <label for="surname">Surname:</label>
+    <input type="text" id="surname" th:field="*{surname}" />
+    <button type="submit">Update Surname</button>
+</form>
+
+<form th:action="@{/myProfile}" th:object="${user}" method="post">
+    <input type="hidden" name="field" value="description" />
+    <label for="description">Description:</label>
+    <textarea id="description" th:field="*{description}"></textarea>
+    <button type="submit">Update Description</button>
+</form>
+
+<div th:replace="fragments :: footer"></div> <!--This is the footer added from Fragments.html -->
+</body>
+</html>

@@ -25,12 +25,12 @@ public class UsersController {
         String authId = principal.getName(); // this gives "auth0|userId"
 
         userRepository
-                .findByAuthId(authId)
+                .findUserByAuthId(authId)
                 .orElseGet(() -> {
                     User newUser = new User(username, authId, true);
                     return userRepository.save(newUser);
                 });
 
-        return new RedirectView("/posts");
+        return new RedirectView("/");
     }
 }
