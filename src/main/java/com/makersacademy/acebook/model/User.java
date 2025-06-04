@@ -1,14 +1,17 @@
 package com.makersacademy.acebook.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static java.lang.Boolean.TRUE;
+//If @Data is required later, add annotations separately to avoid issues:
+//@Getter, @Setter, @ToString, @EqualsAndHashCode, @RequiredArgsConstructor
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "USERS")
 public class User {
@@ -29,7 +32,7 @@ public class User {
     private String forename;
     private String surname;
 
-    // Join table to link user ID with friend ID
+    // Tells the friends table which values to use
     @ManyToMany
     @JoinTable(
             name = "friends",
@@ -61,7 +64,13 @@ public class User {
     // full constructor, all arguments
     public User(String username, boolean enabled, String authId, String description, String forename, String surname) {
         this.username = username;
+        this.authId = authId;
+        this.description = null;
         this.enabled = enabled;
+    }
+
+    public User(String username, String authId, String description, boolean enabled) {
+        this.username = username;
         this.authId = authId;
         this.description = description;
         this.forename = forename;
