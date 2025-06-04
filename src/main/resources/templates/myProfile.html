@@ -4,6 +4,7 @@
     <title>User Profile</title>
 </head>
 <body>
+<div th:replace="fragments :: header"></div> <!--This is the header added from Fragments.html -->
 
 <h1>User Profile</h1>
 
@@ -48,5 +49,6 @@
     <button type="submit">Update Description</button>
 </form>
 
+<div th:replace="fragments :: footer"></div> <!--This is the footer added from Fragments.html -->
 </body>
 </html>
