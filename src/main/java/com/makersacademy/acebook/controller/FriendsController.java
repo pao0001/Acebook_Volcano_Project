@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Set;
 
-@Controller//Changed restcontroller to controller
+@RestController
 public class FriendsController {
     @Autowired
     UserRepository userRepository;
@@ -20,28 +20,23 @@ public class FriendsController {
     @GetMapping("/friends")
     public ModelAndView viewFriends() {
 
-        //username == email
-
+        // extracting user's email from authenticator and setting it as "username"
         DefaultOidcUser principal = (DefaultOidcUser) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
         String username = (String) principal.getAttributes().get("email");
-        // extracting user's email from authenticator and setting it as "username"
 
+        // Creates new User object "currentUser" by using an email/user in the database.
         User currentUser = userRepository.findUserByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        // Creates new User object "currentUser" by using an email/user in the database.
 
+        // List of a user's friends
         Set<User> friends = currentUser.getFriends();
-        // sets friends hashset as currentUser object's friends.
 
-        System.out.println("Rendering friends page for user: " + username);
-
-        // Pass friends to the view named "friends"
         ModelAndView mav = new ModelAndView("friends");
         mav.addObject("friends", friends);
-        System.out.println("Friends: " + friends);
+        mav.addObject("friendsCount", friends.size());
         return mav;
     }
 }

@@ -1,16 +1,14 @@
 package com.makersacademy.acebook.model;
 
 import jakarta.persistence.*;
-//import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import static java.lang.Boolean.TRUE;
-
-//@Data
+//If @Data is required later, add annotations separately to avoid issues:
+//@Getter, @Setter, @ToString, @EqualsAndHashCode, @RequiredArgsConstructor
 
 @Getter
 @Setter
@@ -34,8 +32,8 @@ public class User {
     private String forename;
     private String surname;
 
-    // Connects the friends table ot
-    @ManyToMany(fetch = FetchType.EAGER)
+    // Tells the friends table which values to use
+    @ManyToMany
     @JoinTable(
             name = "friends",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -77,19 +75,5 @@ public class User {
         this.description = description;
         this.forename = forename;
         this.surname = surname;
-    }
-
-    // Equals and hashCode only on id for Hibernate identity
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User other = (User) o;
-        return id != null && id.equals(other.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 31;
     }
 }
