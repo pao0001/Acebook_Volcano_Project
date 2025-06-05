@@ -18,7 +18,7 @@ public class Comment {
         private String username;
         private String comment;
         private int postID;
-        @Column(name = "time_stamp")
+        @Column(name = "time_stamp", updatable = false)
         private LocalDateTime timeStamp;
 
 

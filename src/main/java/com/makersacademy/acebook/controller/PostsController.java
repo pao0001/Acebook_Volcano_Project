@@ -1,34 +1,53 @@
 package com.makersacademy.acebook.controller;
 
+import com.makersacademy.acebook.model.Comment;
 import com.makersacademy.acebook.model.Post;
+import com.makersacademy.acebook.repository.CommentRepository;
 import com.makersacademy.acebook.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
 public class PostsController {
+    @Autowired
+    PostRepository postRepository;
 
     @Autowired
-    PostRepository repository;
+    CommentRepository commentRepository; // Make sure you have this
 
     @GetMapping("/")
     public String index(Model model) {
-        Iterable<Post> posts = repository.findAll();
+        Iterable<Post> posts = postRepository.findAll();
+        List<Comment> comments = (List<Comment>) commentRepository.findAll();
+
+        comments.sort(Comparator.comparing(Comment::getTimeStamp).reversed());
+
         model.addAttribute("posts", posts);
         model.addAttribute("post", new Post());
+
+        model.addAttribute("comments", comments);
+        model.addAttribute("comment", new Comment());
+
         return "posts/index";
     }
 
     @PostMapping("/posts")
-    public RedirectView create(@ModelAttribute Post post) {
-        repository.save(post);
+    public RedirectView createPost(@ModelAttribute Post post) {
+        postRepository.save(post);
+        return new RedirectView("/");
+    }
+
+    @PostMapping("/comment")
+    public RedirectView createComment(@ModelAttribute Comment comment) {
+        commentRepository.save(comment);
         return new RedirectView("/");
     }
 

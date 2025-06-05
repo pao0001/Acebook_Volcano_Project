@@ -26,8 +26,17 @@
 
     <ul style="list-style-type: none; padding: 10; margin: 0;">
         <li th:each="post : ${posts}"
-            style="padding: 10px 0;"
-            th:utext="${post.username} + ':<br>' + ${post.content} + '<hr>'">
+            style="padding: 10px 0;">
+            <div>
+                <strong th:text="${post.username}"></strong><br />
+                <span th:text="${post.content}"></span>
+                <hr />
+            </div>
+            <form th:action="@{/comment}" method="post" th:object="${comment}" style="margin-top: 5px; margin-left: 50px">
+                <input type="hidden" name="postID" th:value="${post.id}">
+                <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}">
+                <input type="text" th:field="*{comment}"> <input type="submit" value="Comment" />
+            </form>
         </li>
     </ul>
     <div th:replace="fragments :: footer"></div> <!--This is the footer added from Fragments.html -->
