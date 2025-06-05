@@ -3,3 +3,7 @@ okta:
     issuer: ${ISSUER_ACEBOOK}
     client-id: ${CLIENT_ID_ACEBOOK}
     client-secret: ${CLIENT_SECRET_ACEBOOK}
+
+upload:
+  profile: ${UPLOAD_PROFILE_PATH}
+  posts: ${UPLOAD_POSTS_PATH}

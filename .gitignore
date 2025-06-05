@@ -9,3 +9,5 @@ dependency-reduced-pom.xml
 .factorypath
 .project
 .settings/
+uploads/profile/*
+uploads/posts/*
