@@ -8,7 +8,8 @@
 <body>
 <div th:replace="fragments :: header"></div> <!--This is the header added from Fragments.html -->
 
-<h1 th:text="'Friends (' + ${friendsCount} + ')'">Friends</h1>
+<!--You can create your own ids for elements-->
+<h1 th:text="'Friends (' + ${friendsCount} + ')'" data-testid="friends">Friends</h1>
     <ul th:each="friend: ${friends}">
         <li th:text="${friend.forename + ' ' + friend.surname}"></li>
     </ul>
