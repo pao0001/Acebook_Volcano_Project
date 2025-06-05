@@ -28,6 +28,7 @@ public class User {
 
     private String forename;
     private String surname;
+    private String profile_image_src;
 
     // Join table to link user ID with friend ID
     @ManyToMany
@@ -59,12 +60,13 @@ public class User {
     }
 
     // full constructor, all arguments
-    public User(String username, boolean enabled, String authId, String description, String forename, String surname) {
+    public User(String username, boolean enabled, String authId, String description, String forename, String surname, String profile_image_src) {
         this.username = username;
         this.enabled = enabled;
         this.authId = authId;
         this.description = description;
         this.forename = forename;
         this.surname = surname;
+        this.profile_image_src = profile_image_src;
     }
 }
