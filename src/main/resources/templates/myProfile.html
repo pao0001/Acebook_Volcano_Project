@@ -4,7 +4,8 @@
     <title>User Profile</title>
 </head>
 <body>
-<div th:replace="fragments :: header"></div> <!--This is the header added from Fragments.html -->
+<!-- Header Fragment -->
+<div th:replace="~{fragments :: header}"></div>
 
 <h1>User Profile</h1>
 
@@ -49,6 +50,21 @@
     <button type="submit">Update Description</button>
 </form>
 
-<div th:replace="fragments :: footer"></div> <!--This is the footer added from Fragments.html -->
+<!-- Upload image form -->
+<form th:action="@{/uploadProfileImage}" method="post" enctype="multipart/form-data">
+    <label for="image">Choose profile image:</label>
+    <input type="file" id="image" name="image" accept="image/*" required />
+
+    <button type="submit">Upload</button>
+</form>
+
+<!-- Display the current profile image if it exists -->
+<div th:if="${user.profile_image_src}">
+    <p>Current Profile Image:</p>
+    <img th:src="@{${user.profile_image_src}}" alt="Profile Image" style="max-width: 200px; max-height: 200px;" />
+</div>
+
+<!-- Footer Fragment -->
+<div th:replace="~{fragments :: footer}"></div>
 </body>
 </html>
