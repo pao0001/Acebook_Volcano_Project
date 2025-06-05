@@ -9,22 +9,25 @@ import java.time.LocalDateTime;
     @Entity
     @Table(name = "comments")
 
+
 public class Comment {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
+
         private Long id;
         private String username;
         private String comment;
         private int postID;
-        private LocalDateTime time_stamp;
+        @Column(name = "time_stamp")
+        private LocalDateTime timeStamp;
 
 
         public Comment() {}
 
-        public Comment(String username, String comment, int postID, LocalDateTime time_stamp) {
+        public Comment(String username, String comment, int postID, LocalDateTime timeStamp) {
             this.username = username;
             this.comment = comment;
             this.postID = postID;
-            this.time_stamp = time_stamp;
+            this.timeStamp = timeStamp;
         }
 }
