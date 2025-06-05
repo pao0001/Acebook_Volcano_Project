@@ -5,10 +5,7 @@ import com.makersacademy.acebook.repository.UserRepository;
 import com.makersacademy.acebook.service.AuthenticatedUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
-
-import java.util.Set;
 
 @RestController
 public class UsersController {
@@ -27,18 +24,5 @@ public class UsersController {
                 .orElseGet(() -> userRepository.save(user));
 
         return new RedirectView("/");
-    }
-
-    @GetMapping("/friends")
-    public ModelAndView viewFriends() {
-        User currentUser = authenticatedUserService.getAuthenticatedUser();
-
-        // Get friends
-        Set<User> friends = currentUser.getFriends();
-
-        // Pass friends to the view named "friends"
-        ModelAndView mav = new ModelAndView("friends");
-        mav.addObject("friends", friends);
-        return mav;
     }
 }

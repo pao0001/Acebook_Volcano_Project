@@ -9,9 +9,10 @@
 <!-- Header Fragment -->
 <div th:replace="~{fragments :: header}"></div>
 
-<p>Do we exist?</p>
+<!--You can create your own ids for elements-->
+<h1 th:text="'Friends (' + ${friendsCount} + ')'" data-testid="friends">Friends</h1>
     <ul th:each="friend: ${friends}">
-        <li th:text="${friend.username}" />
+        <li th:text="${friend.forename + ' ' + friend.surname}"></li>
     </ul>
 
 <!-- Footer Fragment -->
