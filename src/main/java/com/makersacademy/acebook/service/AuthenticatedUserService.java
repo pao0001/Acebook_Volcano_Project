@@ -26,8 +26,22 @@ public class AuthenticatedUserService {
 
     public User getAuthenticatedUser() {
         String authId = getPrincipal().getName();
-        return userRepository.findUserByAuthId(authId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findUserByAuthId(authId)
+                .orElseGet(() -> {
+                    System.out.println("User not found, creating new User with authId: " + authId);
+                    return createNewUser(authId);
+                });
+        return user;
+    }
+
+    private User createNewUser(String authId) {
+        OAuth2User principal = getPrincipal();
+        String email = (String) principal.getAttributes().get("email");
+        User newUser = new User();
+        newUser.setUsername(email);
+        newUser.setAuthId(authId);
+        newUser.setEnabled(true);
+        return userRepository.save(newUser);
     }
 
     public String getAuthenticatedAuthId() {

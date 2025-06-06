@@ -50,7 +50,7 @@ public class User {
 
     // constructor for login (extracts username, auth0_id)
     // all other fields set to null until updated by user
-    public User(String username, String authId, boolean enabled) {
+    public User(String username, boolean enabled, String authId) {
         this.username = username;
         this.authId = authId;
         this.enabled = enabled;
@@ -70,7 +70,7 @@ public class User {
         this.enabled = enabled;
     }
 
-    public User(String username, String authId, String description, boolean enabled) {
+    public User(String username, boolean enabled, String authId, String description) {
         this.username = username;
         this.authId = authId;
         this.description = description;
