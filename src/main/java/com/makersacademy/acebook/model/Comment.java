@@ -16,17 +16,19 @@ public class Comment {
 
         private Long id;
         private String username;
-        private String comment;
-        private int postID;
+        @Column(name = "comment")
+        private String commentContent;
+        private Integer postID;
         @Column(name = "time_stamp", updatable = false)
         private LocalDateTime timeStamp;
 
 
         public Comment() {}
 
-        public Comment(String username, String comment, int postID, LocalDateTime timeStamp) {
+        public Comment(String username, String commentContent,
+                       Integer postID, LocalDateTime timeStamp) {
             this.username = username;
-            this.comment = comment;
+            this.commentContent = commentContent;
             this.postID = postID;
             this.timeStamp = timeStamp;
         }

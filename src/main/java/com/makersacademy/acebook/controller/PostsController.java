@@ -10,8 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.sql.SQLOutput;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
@@ -27,8 +30,8 @@ public class PostsController {
     public String index(Model model) {
         Iterable<Post> posts = postRepository.findAll();
         List<Comment> comments = (List<Comment>) commentRepository.findAll();
-
-        comments.sort(Comparator.comparing(Comment::getTimeStamp).reversed());
+//        comments.removeIf(comment -> comment.getTimeStamp() == null);
+//        comments.sort(Comparator.comparing(Comment::getTimeStamp).reversed());
 
         model.addAttribute("posts", posts);
         model.addAttribute("post", new Post());
@@ -46,7 +49,12 @@ public class PostsController {
     }
 
     @PostMapping("/comment")
-    public RedirectView createComment(@ModelAttribute Comment comment) {
+    public RedirectView createComment(@ModelAttribute Comment comment,
+                                      @RequestParam String username,
+                                      @RequestParam Integer postID) {
+        comment.setTimeStamp(LocalDateTime.now());
+        comment.setUsername(username);
+        comment.setPostID(postID);
         commentRepository.save(comment);
         return new RedirectView("/");
     }
