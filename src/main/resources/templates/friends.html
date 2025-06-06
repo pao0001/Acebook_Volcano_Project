@@ -6,13 +6,16 @@
     <title>Friends</title>
 </head>
 <body>
-<div th:replace="fragments :: header"></div> <!--This is the header added from Fragments.html -->
+<!-- Header Fragment -->
+<div th:replace="~{fragments :: header}"></div>
 
-<p>Do we exist?</p>
+<!--You can create your own ids for elements-->
+<h1 th:text="'Friends (' + ${friendsCount} + ')'" id="friends">Friends</h1>
     <ul th:each="friend: ${friends}">
-        <li th:text="${friend.username}" />
+        <li th:text="${friend.forename + ' ' + friend.surname}" th:id="${friend.forename}"></li>
     </ul>
 
-<div th:replace="fragments :: footer"></div> <!--This is the footer added from Fragments.html -->
+<!-- Footer Fragment -->
+<div th:replace="~{fragments :: footer}"></div>
 </body>
 </html>

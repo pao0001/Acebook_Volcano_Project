@@ -1,37 +1,50 @@
 <!DOCTYPE html>
-    <html xmlns:th="http://www.thymeleaf.org"
-          xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
-    <head lang="en">
-        <meta charset="UTF-8"/>
-        <title>Acebook</title>
-        <link rel="stylesheet" href="/main.css" />
-    </head>
-    <body>
-    <div th:replace="fragments :: header"></div> <!--This is the header added from Fragments.html -->
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title>Acebook</title>
+    <link rel="stylesheet" href="/main.css" />
+</head>
+<body>
+<div th:replace="fragments :: header"></div> <!--This is the header added from Fragments.html -->
 
 
-    <h1>Posts</h1>
+<h1>Posts</h1>
 
-    <div sec:authorize="isAuthenticated()" id="greeting">
-        Signed in as <span sec:authentication="principal.attributes['email']"></span>
-    </div>
+<div sec:authorize="isAuthenticated()" id="greeting">
+    Signed in as <span sec:authentication="principal.attributes['email']"></span>
+</div>
 
-    <form action="#" th:action="@{/posts}" th:object="${post}" method="post">
-<!--        <p>User: <input type="text" th:field="*{username}" /></p>-->
-        <p>Content: <input type="text" th:field="*{content}" /></p>
-        <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
+<form action="#" th:action="@{/posts}" th:object="${post}" method="post">
+    <p>Content: <input type="text" th:field="*{content}" /></p>
+    <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
 
-        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-    </form>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
 
-    <ul style="list-style-type: none; padding: 10; margin: 0;">
-        <li th:each="post : ${posts}"
-            style="padding: 10px 0;"
-            th:utext="${post.username} + ':<br>' + ${post.content} + '<hr>'">
-        </li>
-    </ul>
-    <div th:replace="fragments :: footer"></div> <!--This is the footer added from Fragments.html -->
+<ul style="list-style-type: none; padding: 10; margin: 0;">
+    <li th:each="post : ${posts}"
+        style="padding: 10px 0;">
+        <div>
+            <strong th:text="${post.username}"></strong><br />
+            <span th:text="${post.content}"></span>
 
-    </body>
+        </div>
+
+
+        <form th:action="@{/comment}" method="post" th:object="${comment}" style="margin-top: 5px; margin-left: 50px">
+            <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
+            <input type="text" th:field="*{commentContent}">
+            <input type="hidden" name="postID" th:value="${post.id}"/>
+            <input type="submit" value="Comment" />
+        </form>
+        <hr />
+    </li>
+</ul>
+<div th:replace="fragments :: footer"></div> <!--This is the footer added from Fragments.html -->
+
+</body>
 
 </html>
