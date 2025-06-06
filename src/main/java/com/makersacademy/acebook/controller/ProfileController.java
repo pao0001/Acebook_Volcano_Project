@@ -1,6 +1,7 @@
 package com.makersacademy.acebook.controller;
 
 import com.makersacademy.acebook.model.User;
+import com.makersacademy.acebook.repository.FriendRequestRepository;
 import com.makersacademy.acebook.repository.UserRepository;
 import com.makersacademy.acebook.service.AuthenticatedUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,40 +13,49 @@ import org.springframework.web.bind.annotation.*;
 public class ProfileController {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    AuthenticatedUserService authenticatedUserService;
+    private AuthenticatedUserService authenticatedUserService;
+
+    @Autowired
+    private FriendRequestRepository friendRequestRepository;
 
     @GetMapping("/myProfile")
     public String showMyProfile(Model model) {
-
         User user = authenticatedUserService.getAuthenticatedUser();
-
-        // adds the user to the model to make it available in the view
         model.addAttribute("user", user);
 
-        Iterable<User> users = userRepository.findAll(); // this line is just for testing links to user profiles
-        model.addAttribute("users", users);  // this line is just for testing links to user profiles
+        // Test data for navigating between profiles (optional)
+        Iterable<User> users = userRepository.findAll();
+        model.addAttribute("users", users);
 
         return "myProfile";
     }
 
     @GetMapping("/profile/{id}")
     public String showUserProfile(@PathVariable Long id, Model model) {
-
-        User user = userRepository
-                .findUserById(id)
+        User profileUser = userRepository.findUserById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        model.addAttribute("user", user);
+        User currentUser = authenticatedUserService.getAuthenticatedUser();
+
+        boolean isAlreadyFriends = currentUser.getFriends().contains(profileUser);
+        boolean hasPendingRequest = friendRequestRepository
+                .existsBySenderAndReceiverAndPendingTrue(currentUser, profileUser);
+        boolean isSelfProfile = currentUser.equals(profileUser);
+
+        model.addAttribute("user", profileUser);
+        model.addAttribute("isAlreadyFriends", isAlreadyFriends);
+        model.addAttribute("hasPendingRequest", hasPendingRequest);
+        model.addAttribute("isSelfProfile", isSelfProfile);
+
         return "profile";
     }
 
     @PostMapping("/myProfile")
     public String updateUserProfile(@ModelAttribute User updatedUser,
                                     @RequestParam(name = "field") String field) {
-
         User user = authenticatedUserService.getAuthenticatedUser();
 
         switch (field) {

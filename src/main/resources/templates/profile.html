@@ -9,6 +9,28 @@
 
 <h1 th:text="'Profile for ' + ${user.username}"></h1>
 
+<!-- Only show form if not friends, not the user's own profile, and no pending request -->
+<form th:if="${!isAlreadyFriends} and !${isSelfProfile} and !${hasPendingRequest}" action="/friend-requests/send" method="POST">
+  <input type="hidden" name="receiverId" th:value="${user.id}" />
+  <button type="submit">Send Friend Request</button>
+</form>
+
+<!-- Show message if a request is pending -->
+<div th:if="${hasPendingRequest}">
+  <p>Friend request sent.</p>
+
+  <!-- Withdraw friend request button -->
+  <form action="/friend-requests/withdraw" method="POST">
+    <input type="hidden" name="receiverId" th:value="${user.id}" />
+    <button type="submit">Cancel Request</button>
+  </form>
+</div>
+
+<form th:if="${isAlreadyFriends} and !${isSelfProfile}" th:action="@{/friends/remove}" method="post" style="display:inline;">
+  <input type="hidden" name="friendId" th:value="${user.id}" />
+  <button type="submit">Remove Friend</button>
+</form>
+
 <p><strong>ID:</strong> <span th:text="${user.id}">User ID</span></p>
 <p><strong>Username:</strong> <span th:text="${user.username}">Username</span></p>
 <p><strong>Auth ID:</strong> <span th:text="${user.authId}">Auth ID</span></p>
