@@ -4,7 +4,8 @@
     <title>User Profile</title>
 </head>
 <body>
-<div th:replace="fragments :: header"></div> <!--This is the header added from Fragments.html -->
+<!-- Header Fragment -->
+<div th:replace="~{fragments :: header}"></div>
 
 <h1>User Profile</h1>
 
@@ -32,23 +33,38 @@
     <input type="hidden" name="field" value="forename" />
     <label for="forename">Forename:</label>
     <input type="text" id="forename" th:field="*{forename}" />
-    <button type="submit">Update Forename</button>
+    <button type="submit" id="update forename">Update Forename</button>
 </form>
 
 <form th:action="@{/myProfile}" th:object="${user}" method="post">
     <input type="hidden" name="field" value="surname" />
     <label for="surname">Surname:</label>
     <input type="text" id="surname" th:field="*{surname}" />
-    <button type="submit">Update Surname</button>
+    <button type="submit" id="update surname">Update Surname</button>
 </form>
 
 <form th:action="@{/myProfile}" th:object="${user}" method="post">
     <input type="hidden" name="field" value="description" />
     <label for="description">Description:</label>
     <textarea id="description" th:field="*{description}"></textarea>
-    <button type="submit">Update Description</button>
+    <button type="submit" id="update description">Update Description</button>
 </form>
 
-<div th:replace="fragments :: footer"></div> <!--This is the footer added from Fragments.html -->
+<!-- Upload image form -->
+<form th:action="@{/uploadProfileImage}" method="post" enctype="multipart/form-data">
+    <label for="image">Choose profile image:</label>
+    <input type="file" id="image" name="image" accept="image/*" required />
+
+    <button type="submit">Upload</button>
+</form>
+
+<!-- Display the current profile image if it exists -->
+<div th:if="${user.profile_image_src}">
+    <p>Current Profile Image:</p>
+    <img th:src="@{${user.profile_image_src}}" alt="Profile Image" style="max-width: 200px; max-height: 200px;" />
+</div>
+
+<!-- Footer Fragment -->
+<div th:replace="~{fragments :: footer}"></div>
 </body>
 </html>

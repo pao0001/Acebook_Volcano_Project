@@ -31,6 +31,7 @@ public class User {
 
     private String forename;
     private String surname;
+    private String profile_image_src;
 
     // Tells the friends table which values to use
     @ManyToMany
@@ -62,7 +63,7 @@ public class User {
     }
 
     // full constructor, all arguments
-    public User(String username, boolean enabled, String authId, String description, String forename, String surname) {
+    public User(String username, boolean enabled, String authId, String description, String forename, String surname, String profile_image_src) {
         this.username = username;
         this.authId = authId;
         this.description = null;
@@ -75,5 +76,6 @@ public class User {
         this.description = description;
         this.forename = forename;
         this.surname = surname;
+        this.profile_image_src = profile_image_src;
     }
 }
