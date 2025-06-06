@@ -27,12 +27,23 @@
 <ul style="list-style-type: none; padding: 10; margin: 0;">
     <li th:each="post : ${posts}"
         style="padding: 10px 0;">
-        <div>
-            <strong th:text="${post.username}"></strong><br />
+        <div style="margin-bottom: 1em;">
+            <div style="display: flex; margin-bottom: 0.4em; justify-content: space-between;">
+                <strong th:text="${post.username}"></strong>
+                <span th:text="${post.formattedTimestamp}"></span>
+            </div>
             <span th:text="${post.content}"></span>
-
         </div>
 
+        <ul style="list-style-type: none; margin-top: 5px; padding-left: 100px;"
+            th:if="${commentsByPostId[post.id]}">
+            <li th:each="comment : ${commentsByPostId[post.id]}">
+                <div style="margin-bottom: 0.5em; margin-top: 0.5em;">
+                    <strong><span th:text="${comment.username}" ></span></strong> commented at: <span th:text="${comment.formattedTimestamp}"></span>
+                </div>
+                <span th:text="${comment.commentContent}"></span>
+            </li>
+        </ul>
 
         <form th:action="@{/comment}" method="post" th:object="${comment}" style="margin-top: 5px; margin-left: 50px">
             <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
