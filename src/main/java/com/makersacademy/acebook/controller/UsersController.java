@@ -13,6 +13,6 @@ public class UsersController {
     @GetMapping("/users/after-login")
     public RedirectView afterLogin() {
         authenticatedUserService.getAuthenticatedUser();
-        return new RedirectView("/welcome");
+        return new RedirectView("/checkDetails");
     }
 }
