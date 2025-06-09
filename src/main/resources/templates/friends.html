@@ -10,7 +10,7 @@
 <div th:replace="~{fragments :: header}"></div>
 
 <!--You can create your own ids for elements-->
-<h1 th:text="'Friends (' + ${friendsCount} + ')'" data-testid="friends">Friends</h1>
+<h1 th:text="'Friends (' + ${friendsCount} + ')'" id="friends">Friends</h1>
     <ul th:each="friend: ${friends}">
         <li>
             <a th:href="@{/profile/{id}(id=${friend.id})}"

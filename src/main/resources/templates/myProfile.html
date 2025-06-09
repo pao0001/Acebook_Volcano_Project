@@ -33,21 +33,21 @@
     <input type="hidden" name="field" value="forename" />
     <label for="forename">Forename:</label>
     <input type="text" id="forename" th:field="*{forename}" />
-    <button type="submit">Update Forename</button>
+    <button type="submit" id="update forename">Update Forename</button>
 </form>
 
 <form th:action="@{/myProfile}" th:object="${user}" method="post">
     <input type="hidden" name="field" value="surname" />
     <label for="surname">Surname:</label>
     <input type="text" id="surname" th:field="*{surname}" />
-    <button type="submit">Update Surname</button>
+    <button type="submit" id="update surname">Update Surname</button>
 </form>
 
 <form th:action="@{/myProfile}" th:object="${user}" method="post">
     <input type="hidden" name="field" value="description" />
     <label for="description">Description:</label>
     <textarea id="description" th:field="*{description}"></textarea>
-    <button type="submit">Update Description</button>
+    <button type="submit" id="update description">Update Description</button>
 </form>
 
 <!-- Upload image form -->

@@ -4,6 +4,7 @@ import com.makersacademy.acebook.model.FriendRequest;
 import com.makersacademy.acebook.model.User;
 import com.makersacademy.acebook.repository.FriendRequestRepository;
 import com.makersacademy.acebook.repository.UserRepository;
+import com.makersacademy.acebook.service.AuthenticatedUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
@@ -25,6 +26,9 @@ public class FriendsController {
     @Autowired
     FriendRequestRepository friendRequestRepository;
 
+    @Autowired
+    AuthenticatedUserService authenticatedUserService;
+
     @GetMapping("/friends")
     public ModelAndView viewFriends() {
         DefaultOidcUser principal = (DefaultOidcUser) SecurityContextHolder
@@ -36,6 +40,10 @@ public class FriendsController {
         User currentUser = userRepository.findUserByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        // Get Authenticated User (logged-in user)
+        User currentUser =  authenticatedUserService.getAuthenticatedUser();
+
+        // List of a user's friends
         Set<User> friends = currentUser.getFriends();
 
         // Fetch incoming friend requests where the current user is the receiver and pending is true
