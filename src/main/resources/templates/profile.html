@@ -17,7 +17,7 @@
 
 <!-- Show message if a request is pending -->
 <div th:if="${hasPendingRequest}">
-  <p>Friend request sent.</p>
+  <p id="friendRequestSent">Friend request sent.</p>
 
   <!-- Withdraw friend request button -->
   <form action="/friend-requests/withdraw" method="POST">
