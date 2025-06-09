@@ -9,13 +9,20 @@
 
 <h1>User Profile</h1>
 
-<p><strong>ID:</strong> <span th:text="${user.id}">User ID</span></p>
-<p><strong>Username:</strong> <span th:text="${user.username}">Username</span></p>
-<p><strong>Auth ID:</strong> <span th:text="${user.authId}">Auth ID</span></p>
-<p><strong>Enabled:</strong> <span th:text="${user.enabled}">true/false</span></p>
+<p><strong>Username:</strong> <span th:text="${user.username}">Email address</span></p>
 <p><strong>Description:</strong> <span th:text="${user.description}">Description</span></p>
 <p><strong>Forename:</strong> <span th:text="${user.forename}">Forename</span></p>
 <p><strong>Surname:</strong> <span th:text="${user.surname}">Surname</span></p>
+<p><strong>Gender:</strong> <span th:text="${user.gender}">Gender</span></p>
+<p><strong>Pronouns:</strong> <span th:text="${user.pronouns}">Pronouns</span></p>
+<p><strong>Current City:</strong> <span th:text="${user.currentCity}">Current City</span></p>
+<p><strong>Hometown:</strong> <span th:text="${user.hometown}">Hometown</span></p>
+<p><strong>Job:</strong> <span th:text="${user.job}">Job</span></p>
+<p><strong>School:</strong> <span th:text="${user.school}">School</span></p>
+<p><strong>Relationship Status:</strong> <span th:text="${user.relationshipStatus}">Relationship Status</span></p>
+<p><strong>Sexual Orientation:</strong> <span th:text="${user.sexualOrientation}">Sexual Orientation</span></p>
+<p><strong>Political Views:</strong> <span th:text="${user.politicalViews}">Political Views</span></p>
+<p><strong>Religion:</strong> <span th:text="${user.religion}">Religion</span></p>
 
 <!-- testing clickable links to user profiles -->
 <br>
@@ -28,7 +35,6 @@
 
 <!-- testing a form for updating user -->
 <br>
-<p><strong>This is an example of how clicking your friends' usernames will return their profiles:</strong></p>
 <form th:action="@{/myProfile}" th:object="${user}" method="post">
     <input type="hidden" name="field" value="forename" />
     <label for="forename">Forename:</label>
@@ -48,6 +54,76 @@
     <label for="description">Description:</label>
     <textarea id="description" th:field="*{description}"></textarea>
     <button type="submit" id="update description">Update Description</button>
+</form>
+
+<form th:action="@{/myProfile}" th:object="${user}" method="post">
+    <input type="hidden" name="field" value="gender" />
+    <label for="gender">Gender:</label>
+    <input type="text" id="gender" th:field="*{gender}" />
+    <button type="submit" id="update-gender">Update Gender</button>
+</form>
+
+<form th:action="@{/myProfile}" th:object="${user}" method="post">
+    <input type="hidden" name="field" value="pronouns" />
+    <label for="pronouns">Pronouns:</label>
+    <input type="text" id="pronouns" th:field="*{pronouns}" />
+    <button type="submit" id="update-pronouns">Update Pronouns</button>
+</form>
+
+<form th:action="@{/myProfile}" th:object="${user}" method="post">
+    <input type="hidden" name="field" value="currentCity" />
+    <label for="currentCity">Current City:</label>
+    <input type="text" id="currentCity" th:field="*{currentCity}" />
+    <button type="submit" id="update-currentCity">Update Current City</button>
+</form>
+
+<form th:action="@{/myProfile}" th:object="${user}" method="post">
+    <input type="hidden" name="field" value="hometown" />
+    <label for="hometown">Hometown:</label>
+    <input type="text" id="hometown" th:field="*{hometown}" />
+    <button type="submit" id="update-hometown">Update Hometown</button>
+</form>
+
+<form th:action="@{/myProfile}" th:object="${user}" method="post">
+    <input type="hidden" name="field" value="job" />
+    <label for="job">Job:</label>
+    <input type="text" id="job" th:field="*{job}" />
+    <button type="submit" id="update-job">Update Job</button>
+</form>
+
+<form th:action="@{/myProfile}" th:object="${user}" method="post">
+    <input type="hidden" name="field" value="school" />
+    <label for="school">School:</label>
+    <input type="text" id="school" th:field="*{school}" />
+    <button type="submit" id="update-school">Update School</button>
+</form>
+
+<form th:action="@{/myProfile}" th:object="${user}" method="post">
+    <input type="hidden" name="field" value="relationshipStatus" />
+    <label for="relationshipStatus">Relationship Status:</label>
+    <input type="text" id="relationshipStatus" th:field="*{relationshipStatus}" />
+    <button type="submit" id="update-relationshipStatus">Update Relationship Status</button>
+</form>
+
+<form th:action="@{/myProfile}" th:object="${user}" method="post">
+    <input type="hidden" name="field" value="sexualOrientation" />
+    <label for="sexualOrientation">Sexual Orientation:</label>
+    <input type="text" id="sexualOrientation" th:field="*{sexualOrientation}" />
+    <button type="submit" id="update-sexualOrientation">Update Sexual Orientation</button>
+</form>
+
+<form th:action="@{/myProfile}" th:object="${user}" method="post">
+    <input type="hidden" name="field" value="politicalViews" />
+    <label for="politicalViews">Political Views:</label>
+    <input type="text" id="politicalViews" th:field="*{politicalViews}" />
+    <button type="submit" id="update-politicalViews">Update Political Views</button>
+</form>
+
+<form th:action="@{/myProfile}" th:object="${user}" method="post">
+    <input type="hidden" name="field" value="religion" />
+    <label for="religion">Religion:</label>
+    <input type="text" id="religion" th:field="*{religion}" />
+    <button type="submit" id="update-religion">Update Religion</button>
 </form>
 
 <!-- Upload image form -->

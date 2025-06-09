@@ -32,6 +32,16 @@ public class User {
     private String forename;
     private String surname;
     private String profile_image_src;
+    private String gender;
+    private String pronouns;
+    private String currentCity;
+    private String hometown;
+    private String job;
+    private String school;
+    private String relationshipStatus;
+    private String sexualOrientation;
+    private String politicalViews;
+    private String religion;
 
     // Tells the friends table which values to use
     @ManyToMany

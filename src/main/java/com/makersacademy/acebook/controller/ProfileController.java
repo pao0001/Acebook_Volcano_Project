@@ -52,6 +52,16 @@ public class ProfileController {
             case "forename" -> user.setForename(updatedUser.getForename());
             case "surname" -> user.setSurname(updatedUser.getSurname());
             case "description" -> user.setDescription(updatedUser.getDescription());
+            case "gender" -> user.setGender(updatedUser.getGender());
+            case "pronouns" -> user.setPronouns(updatedUser.getPronouns());
+            case "current_city" -> user.setCurrentCity(updatedUser.getCurrentCity());
+            case "hometown" -> user.setHometown(updatedUser.getHometown());
+            case "job" -> user.setJob(updatedUser.getJob());
+            case "school" -> user.setSchool(updatedUser.getSchool());
+            case "relationship_status" -> user.setRelationshipStatus(updatedUser.getRelationshipStatus());
+            case "sexual_orientation" -> user.setSexualOrientation(updatedUser.getSexualOrientation());
+            case "political_views" -> user.setPoliticalViews(updatedUser.getPoliticalViews());
+            case "religion" -> user.setReligion(updatedUser.getReligion());
         }
 
         userRepository.save(user);
