@@ -64,7 +64,7 @@
                 <div style="margin-bottom: 0.5em; margin-top: 0.5em;">
                     <strong><span th:text="${comment.username}" ></span></strong> commented at: <span th:text="${comment.formattedTimestamp}"></span>
                 </div>
-                <input id="comment-render" type="text" th:value="${comment.commentContent}">
+                <span id="comment-render" th:text="${comment.commentContent}"></span>
             </li>
         </ul>
 

@@ -97,7 +97,7 @@ public class PostsControllerTest {
             driver.findElement(By.id("comment-send")).sendKeys("Hi again!");
             driver.findElement(By.cssSelector("input[value='Comment']")).click();
             WebElement renderedComment = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("comment-render")));
-            String testComment = renderedComment.getAttribute("value");
+            String testComment = renderedComment.getText();
             assertEquals("Hi again!", testComment);
         }
 }
