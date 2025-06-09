@@ -43,7 +43,7 @@ public class SecurityConfiguration {
                         .successHandler(new AuthenticationSuccessHandler() {
                             @Override
                             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                                response.sendRedirect("/users/after-login");
+                                response.sendRedirect("/");
                             }
                         })
                 )
