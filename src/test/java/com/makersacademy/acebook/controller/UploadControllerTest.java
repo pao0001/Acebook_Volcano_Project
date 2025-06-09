@@ -46,7 +46,7 @@ class UploadControllerTest {
         MultipartFile mockFile = new MockMultipartFile("image", "profile.png", "image/png", content);
 
         // Call the method under test
-        String result = uploadController.handleImageUpload(mockFile);
+        String result = uploadController.handleProfileImageUpload(mockFile);
 
         // Verify redirect URL
         assertEquals("redirect:/myProfile", result);
@@ -69,7 +69,7 @@ class UploadControllerTest {
     void testHandleImageUpload_emptyFile() throws IOException {
         MultipartFile emptyFile = new MockMultipartFile("image", new byte[0]);
 
-        String result = uploadController.handleImageUpload(emptyFile);
+        String result = uploadController.handleProfileImageUpload(emptyFile);
 
         assertEquals("redirect:/myProfile?error=empty", result);
 
