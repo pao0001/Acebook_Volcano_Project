@@ -89,14 +89,14 @@ public class MyProfileTests {
         WebElement forenameInput = wait.until(ExpectedConditions.elementToBeClickable(By.id("forename")));
         forenameInput.clear();
         forenameInput.sendKeys(forename);
-        driver.findElement(By.id("submit")).click();
+        driver.findElement(By.id("update forename")).click();
 
         // Surname
         driver.get("http://localhost:8080/myProfile");
         WebElement surnameInput = wait.until(ExpectedConditions.elementToBeClickable(By.id("surname")));
         surnameInput.clear();
         surnameInput.sendKeys(surname);
-        driver.findElement(By.id("submit")).click();
+        driver.findElement(By.id("update surname")).click();
 
         // go to myProfile and submit description
         driver.get("http://localhost:8080/myProfile");
@@ -116,12 +116,14 @@ public class MyProfileTests {
     @Test // myProfile should redirect user if not logged in.
     public void myProfileRedirectsIfNotLoggedIn() {
 
-        // from sign up helper method
-        signUpUser();
-
         // gets myProfile page
         driver.get("http://localhost:8080/myProfile");
 
+        // gets current URL after navigation
+        String currentUrl = driver.getCurrentUrl();
+
+        // asserts the user was redirected (e.g., to login page)
+        assertTrue(currentUrl.contains("auth0.com/u/login"));
     }
 
     @Test // myProfile should allow users to update their forename
@@ -208,17 +210,3 @@ public class MyProfileTests {
         assertEquals(description, displayedDescription);
     }
 }
-
-
-/*
-Profile Page (Other Users)
-
-#profilePageDisplaysOtherUserData
-- Should display another user's data by id lookup.
-
-#profilePageDoesNotAllowEdit
-- Should not allow editing.
-
-#profilePageGives404ForInvalidUser
-- Should not display invalid user.
- */

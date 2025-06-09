@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
     @Entity
@@ -32,4 +33,9 @@ public class Comment {
             this.postID = postID;
             this.timeStamp = timeStamp;
         }
+    public String getFormattedTimestamp() {
+        if (timeStamp == null) return "No Time Stamp";
+        return timeStamp.format(DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm"));
+
+    }
 }
