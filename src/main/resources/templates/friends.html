@@ -12,8 +12,27 @@
 <!--You can create your own ids for elements-->
 <h1 th:text="'Friends (' + ${friendsCount} + ')'" id="friends">Friends</h1>
     <ul th:each="friend: ${friends}">
-        <li th:text="${friend.forename + ' ' + friend.surname}" th:id="${friend.forename}"></li>
+        <li>
+            <a th:href="@{/profile/{id}(id=${friend.id})}"
+               th:text="${friend.forename + ' ' + friend.surname}"></a>
+        </li>
     </ul>
+
+<h1>Friend Requests</h1>
+<ul th:if="${incomingRequests}">
+    <li th:each="request : ${incomingRequests}">
+        <span th:text="${request.sender.forename + ' ' + request.sender.surname}"></span>
+        <form th:action="@{/friend-requests/accept}" method="post" style="display:inline;">
+            <input type="hidden" name="requestId" th:value="${request.id}" />
+            <button type="submit">Accept</button>
+        </form>
+        <form th:action="@{/friend-requests/decline}" method="post" style="display:inline;">
+            <input type="hidden" name="requestId" th:value="${request.id}" />
+            <button type="submit">Decline</button>
+        </form>
+    </li>
+</ul>
+<p th:if="${#lists.isEmpty(incomingRequests)}">You currently have no friend requests.</p>
 
 <!-- Footer Fragment -->
 <div th:replace="~{fragments :: footer}"></div>

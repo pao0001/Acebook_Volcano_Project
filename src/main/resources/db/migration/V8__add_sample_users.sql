@@ -1,7 +1,7 @@
 INSERT INTO users (username, enabled, auth0_id, description, forename, surname)
 VALUES	  ('test@test.com',
              'TRUE',
-             'auth0|68417add0b8534afc622205f',
+             'auth0|6846adb55e1667fca8f00822',
              'test description',
              'John',
              'Smith' ),
