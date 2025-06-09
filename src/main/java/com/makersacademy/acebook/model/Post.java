@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Data
 @Entity
 @Table(name = "POSTS")
@@ -13,15 +16,21 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
-    private String username; // Newly added
+    private String username;
+    private LocalDateTime timeStamp;
     private String post_image_src;
 
     public Post() {}
 
-    public Post(String content, String username, String post_image_src) {
+    public Post(String content, String username, LocalDateTime timeStamp, String post_image_src) {
         this.content = content;
         this.username = username;
         this.post_image_src = post_image_src;
+        this.timeStamp = timeStamp;
     }
+    public String getFormattedTimestamp() {
+        if (timeStamp == null) return "No Time Stamp";
+        return timeStamp.format(DateTimeFormatter.ofPattern("dd MMM yyyy HH:mm"));
 
+    }
 }

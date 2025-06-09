@@ -17,6 +17,9 @@ import java.sql.SQLOutput;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Controller
 public class PostsController {
@@ -28,12 +31,22 @@ public class PostsController {
 
     @GetMapping("/")
     public String index(Model model) {
-        Iterable<Post> posts = postRepository.findAll();
-        List<Comment> comments = (List<Comment>) commentRepository.findAll();
-//        comments.removeIf(comment -> comment.getTimeStamp() == null);
-//        comments.sort(Comparator.comparing(Comment::getTimeStamp).reversed());
+        List<Post> recentSortedPosts = StreamSupport.stream(postRepository.findAll().spliterator(), false)
+                .filter(post -> post.getTimeStamp() != null &&
+                        post.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(3000)))
+                .sorted(Comparator.comparing(Post::getTimeStamp).reversed())
+                .toList();
 
-        model.addAttribute("posts", posts);
+
+        List<Comment> comments = (List<Comment>) commentRepository.findAll();
+        Map<Long, List<Comment>> commentsByPostId = comments.stream()
+                .filter(comment -> comment.getTimeStamp() != null &&
+                        comment.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(600)))
+                .sorted(Comparator.comparing(Comment::getTimeStamp).reversed())
+                .collect(Collectors.groupingBy(comment -> comment.getPostID().longValue()));
+
+        model.addAttribute("commentsByPostId", commentsByPostId);
+        model.addAttribute("posts", recentSortedPosts);
         model.addAttribute("post", new Post());
 
         model.addAttribute("comments", comments);
@@ -44,6 +57,7 @@ public class PostsController {
 
     @PostMapping("/posts")
     public RedirectView createPost(@ModelAttribute Post post) {
+        post.setTimeStamp(LocalDateTime.now());
         postRepository.save(post);
         return new RedirectView("/");
     }
