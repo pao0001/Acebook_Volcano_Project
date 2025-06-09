@@ -13,30 +13,45 @@
 
 <h1>Posts</h1>
 
+<!-- CODE FOR AUTHENTICATION EMAIL-->
 <div sec:authorize="isAuthenticated()" id="greeting">
     Signed in as <span sec:authentication="principal.attributes['email']"></span>
 </div>
 
+<!-- CODE FOR FORM FOR POSTS-->
 <form action="#" th:action="@{/posts}" th:object="${post}" method="post">
-    <p>Content: <input type="text" th:field="*{content}" /></p>
+    <p >Content: <input id="post-send" type="text" th:field="*{content}" /></p>
     <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
-
     <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
 </form>
 
+<!-- CODE FOR POST RENDERING-->=
 <ul style="list-style-type: none; padding: 10; margin: 0;">
     <li th:each="post : ${posts}"
         style="padding: 10px 0;">
-        <div>
-            <strong th:text="${post.username}"></strong><br />
-            <span th:text="${post.content}"></span>
-
+        <div style="margin-bottom: 1em;">
+            <div style="display: flex; margin-bottom: 0.4em; justify-content: space-between;">
+                <strong th:text="${post.username}"></strong>
+                <span th:text="${post.formattedTimestamp}"></span>
+            </div>
+            <span id="post-render" th:text="${post.content}"></span>
         </div>
 
+<!-- CODE FOR COMMENT RENDERING-->
+        <ul style="list-style-type: none; margin-top: 5px; padding-left: 100px;"
+            th:if="${commentsByPostId[post.id]}">
+            <li th:each="comment : ${commentsByPostId[post.id]}">
+                <div style="margin-bottom: 0.5em; margin-top: 0.5em;">
+                    <strong><span th:text="${comment.username}" ></span></strong> commented at: <span th:text="${comment.formattedTimestamp}"></span>
+                </div>
+                <input id="comment-render" type="text" th:value="${comment.commentContent}">
+            </li>
+        </ul>
 
+<!-- CODE FOR COMMENT FORM-->
         <form th:action="@{/comment}" method="post" th:object="${comment}" style="margin-top: 5px; margin-left: 50px">
             <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
-            <input type="text" th:field="*{commentContent}">
+            <input id="comment-send" type="text" th:field="*{commentContent}" />
             <input type="hidden" name="postID" th:value="${post.id}"/>
             <input type="submit" value="Comment" />
         </form>
