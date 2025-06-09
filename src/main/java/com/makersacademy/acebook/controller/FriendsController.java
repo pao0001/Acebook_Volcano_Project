@@ -37,9 +37,6 @@ public class FriendsController {
                 .getPrincipal();
         String username = (String) principal.getAttributes().get("email");
 
-        User currentUser = userRepository.findUserByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
         // Get Authenticated User (logged-in user)
         User currentUser =  authenticatedUserService.getAuthenticatedUser();
 
