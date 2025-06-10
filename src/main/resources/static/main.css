@@ -1,19 +1,367 @@
-.posts-main {
-    border-collapse: collapse;
-}
-
-.post-main {
-    border: 1px solid #999;
-    padding: 0.5rem;
-    text-align: left;
-    margin-bottom: 0.5rem;;
-}
-
 .acebook-logo {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1.8rem;
+    font-size: 2.5rem;
     font-weight: bold;
-    color: #1877f2; /* Facebook blue */
+    color: #1877f2;
     text-decoration: none;
-    letter-spacing: -1px;
+    letter-spacing: -1.5px;"
+
+}
+body {
+    background-color: #dce8fb;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    width: 100%;
+    max-width: none;
+    flex: 1;
+    margin: 0;
+    padding: 0;
+}
+
+.layout-container {
+    display: flex;
+    min-height: calc(100vh - 120px); /* Adjust based on header/footer height */
+    width: 100%;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+.left-sidebar, .right-sidebar {
+    flex: 0 0 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-inner {
+    flex: 1; /* Takes remaining space */
+    min-width: 0; /* Prevents overflow issues */
+}
+
+.center-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.sidebar-box {
+    background-color: #b2d2ff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 2px solid #6c9fd8;
+    flex: 1; /* Makes sidebar boxes fill available height */
+    margin-top: 0; /* Aligns with post form */
+}
+
+/* Friends sidebar styling */
+.sidebar-title {
+    color: #1877f2;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e4e6eb;
+    text-align: center;
+}
+
+.friends-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.friend-card {
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.friend-card:hover {
+    background: #f0f2f5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.friend-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #050505;
+}
+
+.friend-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+    border: 2px solid #e4e6eb;
+}
+
+.friend-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.friend-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.friend-name {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.friend-status {
+    font-size: 12px;
+    color: #65676b;
+}
+
+/* Ensure the post form aligns with sidebars */
+.post-form {
+    margin-top: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .layout-container {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .left-sidebar, .right-sidebar {
+        flex: 1;
+        width: 100%;
+    }
+
+    .sidebar-box {
+        margin-bottom: 1.5rem;
+    }
+}
+
+.post-form {
+    background-color: #b2d2ff;
+    padding: 1.5em;
+    border-radius: 12px;
+    border: 2px solid #6c9fd8;
+    margin-bottom: 2em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.post-form-container {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.profile-picture-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.profile-picture-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.post-content-area {
+    flex-grow: 1;
+}
+
+.post-textarea {
+    width: 100%;
+    padding: 1.25rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    resize: none;
+    min-height: 100px;
+    font-family: inherit;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.image-upload-label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #555;
+    font-weight: 500;
+}
+
+.image-upload-label:hover {
+    color: #1877f2;
+}
+
+.image-upload-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.image-upload-input {
+    display: none;
+}
+
+.post-submit-button {
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+.post-submit-button:hover {
+    background-color: #166fe5;
+}
+
+.post-submit-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.post-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em; /* Adds space between posts */
+}
+
+.post-item {
+    background-color: #b2d2ff;
+    padding: 1.5em;
+    border-radius: 12px;
+    border: 2px solid #6c9fd8;
+    margin: 0; /* Reset margin */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds subtle shadow */
+}
+
+.post-container {
+    margin-bottom: 0; /* Remove margin-bottom from post-container */
+    padding: 0; /* Remove padding from post-container */
+    background-color: transparent; /* Make background transparent */
+    border: none; /* Remove border */
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5em;
+    align-items: center;
+}
+
+#post-send {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.8em;
+    margin-bottom: 0.5em;
+}
+
+.comment-form {
+    background-color: #dce8fb;
+    padding: 1em;
+    border-radius: 10px;
+    border: 1px solid #a3c1ec;
+    margin-top: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    align-items: center;
+}
+
+#comment-send {
+    flex-grow: 1;
+    min-width: 200px;
+    padding: 0.6em;
+}
+.comment-submit-button {
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s;
+}
+.comment-list {
+    background-color: #eef5ff;
+    padding: 0.8em;
+    border-radius: 10px;
+    border: 1px solid #a3c1ec;
+    margin-top: 1em;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.comment-item {
+    margin-bottom: 0.8em;
+    padding-bottom: 0.8em;
+    border-bottom: 1px solid #d0e0ff;
+    list-style-type: none;
+    margin-left: 0;
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.post-image-section {
+    margin-top: 1em;
+    padding: 1em;
+    background-color: #e6f0ff;
+    border-radius: 10px;
+    border: 1px solid #a3c1ec;
+}
+
+.post-image-upload {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8em;
+    margin-bottom: 1em;
+}
+
+.post-image-display img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-top: 0.5em;
+}
+
+hr {
+    display: none; /* Hide hr since we're using gap for spacing */
 }
