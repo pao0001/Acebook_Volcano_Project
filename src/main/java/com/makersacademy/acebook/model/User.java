@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,8 +34,18 @@ public class User {
     private String forename;
     private String surname;
     private String profile_image_src;
+    private String gender;
+    private String pronouns;
+    private String currentCity;
+    private String hometown;
+    private String job;
+    private String school;
+    private String relationshipStatus;
+    private String sexualOrientation;
+    private String politicalViews;
+    private String religion;
+    private LocalDate dob;
 
-    // Tells the friends table which values to use
     @ManyToMany
     @JoinTable(
             name = "friends",
@@ -44,25 +56,20 @@ public class User {
     // Using hashset to store friends to prevent duplicates and lets us do faster access/search
     private Set<User> friends = new HashSet<>();
 
-    // no arguments constructor
     public User() {
     }
 
-    // constructor for login (extracts username, auth0_id)
-    // all other fields set to null until updated by user
     public User(String username, boolean enabled, String authId) {
         this.username = username;
         this.authId = authId;
         this.enabled = enabled;
     }
 
-    // constructor with username and enabled, for testing (no auth0_id required)
     public User(String username, boolean enabled) {
         this.username = username;
         this.enabled = enabled;
     }
 
-    // full constructor, all arguments
     public User(String username, boolean enabled, String authId, String description, String forename, String surname, String profile_image_src) {
         this.username = username;
         this.authId = authId;

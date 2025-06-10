@@ -1,11 +1,13 @@
 package com.makersacademy.acebook.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "FRIEND_REQUESTS")
 public class FriendRequest {
@@ -29,9 +31,10 @@ public class FriendRequest {
 
     public FriendRequest() {}
 
-    public FriendRequest(User sender, User receiver, boolean pending) {
+    public FriendRequest(User sender, User receiver, boolean pending, LocalDateTime sentAt) {
         this.sender = sender;
         this.receiver = receiver;
         this.pending = pending;
+        this.sentAt = sentAt;
     }
 }
