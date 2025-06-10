@@ -30,42 +30,6 @@
                             </div>
                         </a>
                     </div>
-
-
-<!-- CODE FOR FORM FOR POSTS-->
-<form action="#" th:action="@{/posts}" th:object="${post}" method="post">
-    <p >Content: <input id="post-send" type="text" th:field="*{content}" /></p>
-    <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
-    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-</form>
-
-<!-- CODE FOR POST RENDERING-->
-<ul style="list-style-type: none; padding: 10; margin: 0;">
-    <li th:each="post : ${posts}"
-        style="padding: 10px 0;">
-      
-        <div style="margin-bottom: 1em;">
-          
-            <div style="display: flex; margin-bottom: 0.4em; justify-content: space-between;">
-                <strong th:text="${post.username}"></strong>
-                <span th:text="${post.formattedTimestamp}"></span>
-            </div>
-          
-            <span id="post-render" th:text="${post.content}"></span>
-
-            <div>
-                <!-- Form to upload posts image -->
-                <form th:action="@{/uploadPostImage}" method="post" enctype="multipart/form-data"
-                      style="margin-top: 10px;">
-                    <input type="hidden" name="postId" th:value="${post.id}" />
-                    <input type="file" name="image" accept="image/*" required />
-                    <button type="submit">Upload Image</button>
-                </form>
-
-                <!-- Display the current profile image if it exists -->
-                <div th:if="${post.post_image_src}">
-                    <p>Current Post Image:</p>
-                    <img th:src="@{${post.post_image_src}}" alt="Post Image" style="max-width: 200px; max-height: 200px;" />
                 </div>
             </div>
         </div>
