@@ -92,4 +92,19 @@ public class FriendRequestsTest {
                         By.xpath("//p[text()='You currently have no friend requests.']")));
         assertEquals("You currently have no friend requests.", noFriendRequests.getText());
     }
+
+    @Test
+    public void removeFriend() {
+        driver.get("http://localhost:8080/myProfile");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        WebElement friendLink = driver.findElement(By.cssSelector("a[href='/profile/5']"));
+        friendLink.click();
+
+        WebElement removeFriendButton = wait.until(
+                ExpectedConditions.elementToBeClickable(By.xpath("//button[text()='Remove Friend']")));
+        removeFriendButton.click();
+
+        String noOfFriendsText = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("friends"))).getText();
+        assertEquals("Friends (5)", noOfFriendsText);
+    }
 }
