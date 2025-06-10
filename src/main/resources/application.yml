@@ -7,3 +7,16 @@ okta:
 upload:
   profile: ${UPLOAD_PROFILE_PATH}
   posts: ${UPLOAD_POSTS_PATH}
+
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: makersbnbgsai@gmail.com
+    password: ${EMAIL_PASS_ACEBOOK}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

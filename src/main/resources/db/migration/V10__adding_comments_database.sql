@@ -7,4 +7,4 @@ time_stamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 FOREIGN KEY (postID) REFERENCES posts(id)
 );
 
-INSERT INTO comments (username, comment, postID) VALUES('Paul','First test comment', 1);
+INSERT INTO comments (username, comment, postID) VALUES('Test Comment User','First test comment', 1);

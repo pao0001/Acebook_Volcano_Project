@@ -33,7 +33,7 @@ public class SecurityConfiguration {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/welcome", "/images/**").permitAll()
+                        .requestMatchers("/welcome", "/contact", "/images/**").permitAll()
                         .anyRequest().authenticated()
 
                 )
@@ -43,7 +43,7 @@ public class SecurityConfiguration {
                         .successHandler(new AuthenticationSuccessHandler() {
                             @Override
                             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                                response.sendRedirect("/users/after-login");
+                                response.sendRedirect("/");
                             }
                         })
                 )

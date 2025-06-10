@@ -24,6 +24,7 @@ public class AuthenticatedUserService {
         return principal;
     }
 
+
     public User getAuthenticatedUser() {
         String authId = getPrincipal().getName();
         User user = userRepository.findUserByAuthId(authId)

@@ -58,7 +58,7 @@ class UploadControllerUnitTest {
         when(authenticatedUserService.getAuthenticatedUser()).thenReturn(user);
         when(userRepository.save(any(User.class))).thenReturn(user);
 
-        String result = uploadController.handleImageUpload(mockFile);
+        String result = uploadController.handleProfileImageUpload(mockFile);
 
         assertEquals("redirect:/myProfile", result);
         verify(authenticatedUserService).getAuthenticatedUser();

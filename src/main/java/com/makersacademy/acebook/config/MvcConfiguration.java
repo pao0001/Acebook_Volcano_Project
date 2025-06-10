@@ -11,9 +11,14 @@ public class MvcConfiguration implements WebMvcConfigurer {
     @Value("${upload.profile}")
     private String profileUploadDir;
 
+    @Value("${upload.posts}")
+    private String postsUploadDir;
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/uploads/profile/**")
                 .addResourceLocations("file:" + profileUploadDir);
+        registry.addResourceHandler("/uploads/posts/**")
+                .addResourceLocations("file:" + postsUploadDir);
     }
 }

@@ -44,8 +44,11 @@ public class User {
     private String sexualOrientation;
     private String politicalViews;
     private String religion;
+
+    //Added dob to store the date of birth as a LocalTime which is of format YYYY-MM-DD same as SQL DATE
     private LocalDate dob;
 
+    // Tells the friends table which values to use
     @ManyToMany
     @JoinTable(
             name = "friends",
@@ -56,20 +59,25 @@ public class User {
     // Using hashset to store friends to prevent duplicates and lets us do faster access/search
     private Set<User> friends = new HashSet<>();
 
+    // no arguments constructor
     public User() {
     }
 
+    // constructor for login (extracts username, auth0_id)
+    // all other fields set to null until updated by user
     public User(String username, boolean enabled, String authId) {
         this.username = username;
         this.authId = authId;
         this.enabled = enabled;
     }
 
+    // constructor with username and enabled, for testing (no auth0_id required)
     public User(String username, boolean enabled) {
         this.username = username;
         this.enabled = enabled;
     }
 
+    // full constructor, all arguments
     public User(String username, boolean enabled, String authId, String description, String forename, String surname, String profile_image_src) {
         this.username = username;
         this.authId = authId;

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact</title>
+</head>
+
+<body>
+
+<div th:replace="fragments :: header"></div> <!--This is the header added from Fragments.html -->
+
+<h1>Contact Us</h1>
+<form action="/contact" method="post">
+
+  <div>
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" required>
+  </div>
+
+  <div>
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" required>
+  </div>
+
+  <div>
+    <label for="message">Message</label>
+    <textarea name="message" id="message" rows="4" required></textarea>
+  </div>
+
+  <div>
+    <button type="submit">Send Email</button>
+  </div>
+
+</form>
+
+<div th:replace="fragments :: footer"></div> <!--This is the footer added from Fragments.html -->
+
+</body>
+
+</html>
