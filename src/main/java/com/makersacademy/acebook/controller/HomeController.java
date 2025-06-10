@@ -3,6 +3,8 @@ package com.makersacademy.acebook.controller;
 
 import com.makersacademy.acebook.config.ContactMail;
 import com.makersacademy.acebook.model.Contact;
+import com.makersacademy.acebook.model.User;
+import com.makersacademy.acebook.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,10 +58,10 @@ public class HomeController {
                 (user.getSurname() == null || user.getSurname().isBlank()) ||
                 (user.getDob() == null);
 
-//        if (isIncomplete){
-//            model.addAttribute(user);
-//            return "completeDetails";
-//        }
+        if (isIncomplete){
+            model.addAttribute(user);
+            return "completeDetails";
+        }
         return "redirect:/";
     }
 

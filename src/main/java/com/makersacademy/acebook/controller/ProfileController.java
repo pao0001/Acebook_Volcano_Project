@@ -57,7 +57,8 @@ public class ProfileController {
     public String updateUserProfile(@ModelAttribute User updatedUser,
                                     @RequestParam(name = "field") String field) {
         User user = authenticatedUserService.getAuthenticatedUser();
-
+        System.out.println("===============");
+        System.out.println(updatedUser.getSurname());
         switch (field) {
             case "forename" -> user.setForename(updatedUser.getForename());
             case "surname" -> user.setSurname(updatedUser.getSurname());
@@ -73,7 +74,6 @@ public class ProfileController {
             case "political_views" -> user.setPoliticalViews(updatedUser.getPoliticalViews());
             case "religion" -> user.setReligion(updatedUser.getReligion());
         }
-
         userRepository.save(user);
         return "redirect:/myProfile";
     }
