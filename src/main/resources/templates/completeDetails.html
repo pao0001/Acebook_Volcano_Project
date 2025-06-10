@@ -1,10 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Details</title>
 </head>
 <body>
-<h1>Kindly enter all your details so we can give you more "personalised" ads ;)</h1>
+<br>
+    <form th:action="@{/saveNewUserDetails}" th:object="${user}" method="post">
+        <fieldset>
+            <legend>Kindly enter all your details so we can give you more "personalised" ads ;)</legend>
+                <label for="forename">Forename: </label>
+                    <input type="text" id="forename" th:field="*{forename}" required >
+                    <br>
+                    <label for="surname">Surname: </label>
+                    <input type="text" id="surname" th:field="*{surname}" required>
+                    <br>
+                    <label for="dob">Enter Date Of Birth</label>
+                <input type="date" id="dob" th:field="*{dob}" required>
+        </fieldset>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+<br>
+
 </body>
 </html>
