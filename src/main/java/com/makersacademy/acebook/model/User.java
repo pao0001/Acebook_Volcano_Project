@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,6 +44,9 @@ public class User {
     private String sexualOrientation;
     private String politicalViews;
     private String religion;
+
+    //Added dob to store the date of birth as a LocalTime which is of format YYYY-MM-DD same as SQL DATE
+    private LocalDate dob;
 
     // Tells the friends table which values to use
     @ManyToMany
