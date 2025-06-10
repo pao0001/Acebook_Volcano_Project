@@ -3,12 +3,9 @@ package com.makersacademy.acebook.controller;
 
 import com.makersacademy.acebook.config.ContactMail;
 import com.makersacademy.acebook.model.Contact;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
+import com.makersacademy.acebook.model.User;
+import com.makersacademy.acebook.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
-import java.util.Optional;
 
 
 @Controller
