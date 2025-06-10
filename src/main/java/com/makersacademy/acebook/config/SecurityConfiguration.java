@@ -33,7 +33,7 @@ public class SecurityConfiguration {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/welcome", "/images/**").permitAll()
+                        .requestMatchers("/welcome", "/contact", "/images/**").permitAll()
                         .anyRequest().authenticated()
 
                 )
