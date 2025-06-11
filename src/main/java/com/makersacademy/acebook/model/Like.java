@@ -19,7 +19,7 @@ public class Like {
     private Long userId;
 
     @Column(name = "liked_type", nullable = false)
-    private String likedType; // "post" or "comment"
+    private String likedType;
 
     @Column(name = "liked_id", nullable = false)
     private Long likedId;
@@ -27,7 +27,6 @@ public class Like {
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    // Constructors
     public Like() {}
 
     public Like(Long userId, String likedType, Long likedId) {

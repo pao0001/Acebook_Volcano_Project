@@ -22,16 +22,16 @@ public class LikeController {
     @PostMapping("/like")
     public String likeItem(
             Principal principal,
-            @RequestParam String likedType,  // "post" or "comment"
+            @RequestParam String likedType,
             @RequestParam Long likedId,
-            @RequestParam String redirectUrl // URL to redirect back to
+            @RequestParam String redirectUrl
     ) {
         String userEmail = principal.getName();
         Long userId = userRepository.findUserByAuthId(userEmail)
                 .orElseThrow(() -> new RuntimeException("User not found"))
                 .getId();
 
-        // Check if user already liked this item to prevent duplicates
+        // prevent duplicates
         boolean alreadyLiked = likeRepository
                 .findByUserIdAndLikedTypeAndLikedId(userId, likedType, likedId)
                 .isPresent();
