@@ -7,6 +7,7 @@ import com.makersacademy.acebook.model.User;
 import com.makersacademy.acebook.repository.CommentRepository;
 import com.makersacademy.acebook.repository.PostRepository;
 import com.makersacademy.acebook.repository.RecFriendRepository;
+import com.makersacademy.acebook.repository.LikeRepository;
 import com.makersacademy.acebook.service.AuthenticatedUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,10 +22,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.io.IOException;
 import java.sql.SQLOutput;
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -41,20 +39,21 @@ public class PostsController {
     UploadController uploadController;
 
     @Autowired
+    LikeRepository likeRepository;
+
+    @Autowired
     private AuthenticatedUserService authenticatedUserService;
 
     @Autowired
     RecFriendRepository recFriendRepository;
 
-
-    @GetMapping("/")
+    @GetMapping("/globalfeed")
     public String index(Model model) {
         List<Post> recentSortedPosts = StreamSupport.stream(postRepository.findAll().spliterator(), false)
                 .filter(post -> post.getTimeStamp() != null &&
                         post.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(3000)))
                 .sorted(Comparator.comparing(Post::getTimeStamp).reversed())
                 .toList();
-
 
         List<Comment> comments = (List<Comment>) commentRepository.findAll();
         Map<Long, List<Comment>> commentsByPostId = comments.stream()
@@ -66,6 +65,22 @@ public class PostsController {
         model.addAttribute("commentsByPostId", commentsByPostId);
         model.addAttribute("posts", recentSortedPosts);
         model.addAttribute("post", new Post());
+
+        // For posts
+        Map<Long, Long> postLikeCounts = new HashMap<>();
+        for (Post post : recentSortedPosts) {
+            long count = likeRepository.countByLikedTypeAndLikedId("post", post.getId());
+            postLikeCounts.put(post.getId(), count);
+        }
+        model.addAttribute("likeCountsByPostId", postLikeCounts);
+
+        // For comments
+        Map<Long, Long> commentLikeCounts = new HashMap<>();
+        for (Comment comment : comments) {
+            long count = likeRepository.countByLikedTypeAndLikedId("comment", comment.getId());
+            commentLikeCounts.put(comment.getId(), count);
+        }
+        model.addAttribute("likeCountsByCommentId", commentLikeCounts);
 
         // Adding attribute comments
         model.addAttribute("comments", comments);
@@ -83,15 +98,20 @@ public class PostsController {
         List<RecFriend> recommendedFriends = recFriendRepository.findByUser(currentUser);
         model.addAttribute("recommendedFriends", recommendedFriends);
 
-        return "posts/index";
+        return "posts/globalfeed";
     }
 
     @PostMapping("/posts")
     public RedirectView createPost(@ModelAttribute Post post,
                                    @RequestParam(value = "image", required = false)MultipartFile image,
-                                   @RequestParam String username) throws IOException {
+                                   @RequestParam String username, @RequestParam Integer user_id,
+                                   @RequestParam String forename, @RequestParam String surname) throws IOException {
         post.setTimeStamp(LocalDateTime.now());
         post.setUsername(username);
+        post.setUserID(user_id);
+        post.setForename(forename);
+        post.setSurname(surname);
+
 
         Post savedPost = postRepository.save(post);
 
@@ -113,4 +133,58 @@ public class PostsController {
         return new RedirectView("/");
     }
 
+    @GetMapping("/")
+    public String feed(Model model) {
+//        List<Post> recentSortedPosts = StreamSupport.stream(postRepository.findAll().spliterator(), false)
+//                .filter(post -> post.getTimeStamp() != null &&
+//                        post.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(3000)))
+//                .sorted(Comparator.comparing(Post::getTimeStamp).reversed())
+//                .toList();
+
+        List<Comment> comments = (List<Comment>) commentRepository.findAll();
+        Map<Long, List<Comment>> commentsByPostId = comments.stream()
+                .filter(comment -> comment.getTimeStamp() != null &&
+                        comment.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(600)))
+                .sorted(Comparator.comparing(Comment::getTimeStamp).reversed())
+                .collect(Collectors.groupingBy(comment -> comment.getPostID().longValue()));
+
+        model.addAttribute("commentsByPostId", commentsByPostId);
+
+        Long myId = authenticatedUserService.getAuthenticatedUser().getId();
+        List<Post> feedPosts = postRepository.findFeedNative(myId).stream()
+                .filter(post -> post.getTimeStamp() != null &&
+                        post.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(3000)))
+                .sorted(Comparator.comparing(Post::getTimeStamp).reversed())
+                .toList();
+
+        model.addAttribute("posts", feedPosts);
+        model.addAttribute("post", new Post());
+
+        model.addAttribute("comments", comments);
+        model.addAttribute("comment", new Comment());
+
+        User currentUser = authenticatedUserService.getAuthenticatedUser();
+        model.addAttribute("current_user", currentUser);
+
+        Set<User> friends = currentUser.getFriends();
+        model.addAttribute("friends", friends);
+
+        // like counts for posts
+        Map<Long, Long> likeCountsByPostId = new HashMap<>();
+        for (Post post : feedPosts) {
+            long count = likeRepository.countByLikedTypeAndLikedId("post", post.getId());
+            likeCountsByPostId.put(post.getId(), count);
+        }
+        model.addAttribute("likeCountsByPostId", likeCountsByPostId);
+
+        // likes count for comments
+        Map<Long, Long> likeCountsByCommentId = new HashMap<>();
+        for (Comment comment : comments) {
+            long count = likeRepository.countByLikedTypeAndLikedId("comment", comment.getId());
+            likeCountsByCommentId.put(comment.getId(), count);
+        }
+        model.addAttribute("likeCountsByCommentId", likeCountsByCommentId);
+
+        return "posts/friendsfeed";
+    }
 }

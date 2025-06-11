@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title>Friends Feed</title>
+    <link rel="stylesheet" href="/main.css" />
+</head>
+<body>
+<div th:replace="fragments :: header"></div> <!--This is the header added from Fragments.html -->
+
+<div class="main-content">
+
+    <div class="layout-container">
+
+        <!-- left sidebar -->
+        <div class="left-sidebar">
+            <div class="sidebar-box">
+                <h3 class="sidebar-title">Friends</h3>
+                <div class="friends-list">
+                    <div class="friend-card" th:each="friend: ${friends}">
+                        <a th:href="@{/profile/{id}(id=${friend.id})}" class="friend-link">
+                            <div class="friend-avatar">
+                                <img th:src="@{${friend.profile_image_src}}" alt="Friend's profile picture"
+                                     onerror="this.onerror=null; this.src='/assets/default-profile.png'"/>
+                            </div>
+                            <div class="friend-info">
+                                <span class="friend-name" th:text="${friend.forename + ' ' + friend.surname}"></span>
+                                <span class="friend-status">Active now</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="main-inner">
+            <h1 style="text-align: center; color: #1877f2;">Friends Feed</h1>
+<!--            <p style="text-align:center"><a href="/">Go to global feed</a></p>-->
+
+            <!-- CODE FOR FORM FOR POSTS -->
+            <form class="post-form" action="#" th:action="@{/posts}" th:object="${post}" method="post" enctype="multipart/form-data">
+                <div class="post-form-container">
+                    <!-- Profile picture circle -->
+                    <div class="profile-picture-circle">
+                        <img th:src="@{${current_user.profile_image_src}}" alt="Profile picture"/>
+                    </div>
+
+                    <div class="post-content-area">
+                        <label for="post-send"></label>
+                        <textarea id="post-send" th:field="*{content}" class="post-textarea"
+                                  th:placeholder="|What's on your mind, ${current_user.forename}?|"
+                                  placeholder="What's on your mind?"></textarea>
+
+                        <div class="post-actions">
+                            <!-- Image upload button as asset -->
+                            <label for="image-upload" class="image-upload-label">
+                                <img th:src="@{/assets/attachment.png}" alt="Add image" class="image-upload-icon"/>
+                                <span>Attach Photo</span>
+                                <input id="image-upload" type="file" name="image" accept="image/*" class="image-upload-input"/>
+                            </label>
+
+                            <!-- Styled submit button -->
+                            <button type="submit" class="post-submit-button">
+                                <span>Post</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
+                <input type="hidden" name="user_id" th:value="${current_user.id}" />
+                <input type="hidden" name="forename" th:value="${current_user.forename}" />
+                <input type="hidden" name="surname" th:value="${current_user.surname}" />
+
+
+            </form>
+
+            <!-- CODE FOR POST RENDERING-->
+            <ul class="post-list">
+                <li class="post-item" th:each="post : ${posts}">
+                    <div class="post-container">
+                        <div class="post-item">
+                            <strong th:text="|${post.forename} ${post.surname} posted:|"></strong>
+                            <span th:text="${post.formattedTimestamp}"></span>
+                        </div>
+
+                        <h1 id="post-render" th:text="${post.content}"></h1>
+
+                        <div class="post-image-section">
+                            <!-- Display the current post image if it exists -->
+                            <div class="post-image-display" th:if="${post.post_image_src}">
+                                <img th:src="@{${post.post_image_src}}" alt="Post Image"/>
+                            </div>
+                        </div>
+
+                        <!-- 👍 like button - posts -->
+                        <div class="post-likes">
+                            <form th:action="@{/like}" method="post" style="display:inline;">
+                                <input type="hidden" name="likedType" value="post" />
+                                <input type="hidden" name="likedId" th:value="${post.id}" />
+                                <input type="hidden" name="redirectUrl" th:value="@{/}" />
+
+                                <button type="submit" class="like-link" style="background:none; border:none; cursor:pointer; padding:0;">👍</button>
+                                <span class="like-count" th:text="${likeCountsByPostId[post.id] ?: 0}">0</span>
+                            </form>
+                        </div>
+
+                    </div>
+
+            <!-- CODE FOR COMMENT RENDERING-->
+                    <ul class="comment-list" th:if="${commentsByPostId[post.id]}">
+                        <li class="comment-item" th:each="comment : ${commentsByPostId[post.id]}">
+                            <div class="comment-header">
+                                <strong><span th:text="${comment.username}" ></span></strong> commented at: <span th:text="${comment.formattedTimestamp}"></span>
+                            </div>
+
+                            <span id="comment-render" th:text="${comment.commentContent}"></span>
+
+                            <!-- 👍 like button - comments -->
+                            <div class="comment-likes">
+                                <form th:action="@{/like}" method="post" style="display:inline;">
+                                    <input type="hidden" name="likedType" value="comment" />
+                                    <input type="hidden" name="likedId" th:value="${comment.id}" />
+                                    <input type="hidden" name="redirectUrl" th:value="@{/}" />
+
+                                    <button type="submit" class="like-link" style="background:none; border:none; cursor:pointer; padding:0;">👍</button>
+                                    <span class="like-count" th:text="${likeCountsByCommentId[comment.id] ?: 0}">0</span>
+                                </form>
+                            </div>
+
+                        </li>
+                    </ul>
+
+            <!-- CODE FOR COMMENT FORM-->
+                    <form class="comment-form" th:action="@{/comment}" method="post" th:object="${comment}">
+                        <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
+                        <input id="comment-send" type="text" th:field="*{commentContent}"
+                               placeholder="Write a comment..." />
+                        <input type="hidden" name="postID" th:value="${post.id}"/>
+                        <!-- Styled comment button -->
+                        <button type="submit" class="comment-submit-button">
+                            <span>Comment</span>
+                        </button>
+                    </form>
+
+                </li>
+            </ul>
+        </div>
+
+        <!-- New right sidebar -->
+        <div class="right-sidebar">
+            <div class="sidebar-box">
+                <h3 class="sidebar-title">Right Sidebar</h3>
+                <!-- Your right sidebar content here -->
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div th:replace="fragments :: footer"></div> <!--This is the footer added from Fragments.html -->
+
+</body>
+
+</html>
