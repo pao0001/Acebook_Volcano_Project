@@ -20,15 +20,20 @@ public class Post {
     private LocalDateTime timeStamp;
     private String post_image_src;
     private Integer user_id;
+    private String forename;
+    private String surname;
+
 
     public Post() {}
 
-    public Post(String content, String username, LocalDateTime timeStamp, String post_image_src, Integer user_id) {
+    public Post(String content, String username, LocalDateTime timeStamp, String post_image_src, Integer user_id, String forename, String surname) {
         this.content = content;
         this.username = username;
         this.post_image_src = post_image_src;
         this.timeStamp = timeStamp;
         this.user_id = user_id;
+        this.forename = forename;
+        this.surname = surname;
     }
     public String getFormattedTimestamp() {
         if (timeStamp == null) return "No Time Stamp";
