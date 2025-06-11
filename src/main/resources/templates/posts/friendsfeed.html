@@ -95,6 +95,18 @@
                             </div>
                         </div>
 
+                        <!-- 👍 like button - posts -->
+                        <div class="post-likes">
+                            <form th:action="@{/like}" method="post" style="display:inline;">
+                                <input type="hidden" name="likedType" value="post" />
+                                <input type="hidden" name="likedId" th:value="${post.id}" />
+                                <input type="hidden" name="redirectUrl" th:value="@{/}" />
+
+                                <button type="submit" class="like-link" style="background:none; border:none; cursor:pointer; padding:0;">👍</button>
+                                <span class="like-count" th:text="${likeCountsByPostId[post.id] ?: 0}">0</span>
+                            </form>
+                        </div>
+
                     </div>
 
             <!-- CODE FOR COMMENT RENDERING-->
@@ -103,7 +115,21 @@
                             <div class="comment-header">
                                 <strong><span th:text="${comment.username}" ></span></strong> commented at: <span th:text="${comment.formattedTimestamp}"></span>
                             </div>
+
                             <span id="comment-render" th:text="${comment.commentContent}"></span>
+
+                            <!-- 👍 like button - comments -->
+                            <div class="comment-likes">
+                                <form th:action="@{/like}" method="post" style="display:inline;">
+                                    <input type="hidden" name="likedType" value="comment" />
+                                    <input type="hidden" name="likedId" th:value="${comment.id}" />
+                                    <input type="hidden" name="redirectUrl" th:value="@{/}" />
+
+                                    <button type="submit" class="like-link" style="background:none; border:none; cursor:pointer; padding:0;">👍</button>
+                                    <span class="like-count" th:text="${likeCountsByCommentId[comment.id] ?: 0}">0</span>
+                                </form>
+                            </div>
+
                         </li>
                     </ul>
 
