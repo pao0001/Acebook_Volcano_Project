@@ -5,6 +5,7 @@ import com.makersacademy.acebook.model.Post;
 import com.makersacademy.acebook.model.User;
 import com.makersacademy.acebook.repository.CommentRepository;
 import com.makersacademy.acebook.repository.PostRepository;
+import com.makersacademy.acebook.repository.LikeRepository;
 import com.makersacademy.acebook.service.AuthenticatedUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,10 +20,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.io.IOException;
 import java.sql.SQLOutput;
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -39,6 +37,9 @@ public class PostsController {
     UploadController uploadController;
 
     @Autowired
+    LikeRepository likeRepository;
+
+    @Autowired
     private AuthenticatedUserService authenticatedUserService;
 
     @GetMapping("/")
@@ -48,7 +49,6 @@ public class PostsController {
                         post.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(3000)))
                 .sorted(Comparator.comparing(Post::getTimeStamp).reversed())
                 .toList();
-
 
         List<Comment> comments = (List<Comment>) commentRepository.findAll();
         Map<Long, List<Comment>> commentsByPostId = comments.stream()
@@ -60,6 +60,22 @@ public class PostsController {
         model.addAttribute("commentsByPostId", commentsByPostId);
         model.addAttribute("posts", recentSortedPosts);
         model.addAttribute("post", new Post());
+
+        // For posts
+        Map<Long, Long> postLikeCounts = new HashMap<>();
+        for (Post post : recentSortedPosts) {
+            long count = likeRepository.countByLikedTypeAndLikedId("post", post.getId());
+            postLikeCounts.put(post.getId(), count);
+        }
+        model.addAttribute("likeCountsByPostId", postLikeCounts);
+
+        // For comments
+        Map<Long, Long> commentLikeCounts = new HashMap<>();
+        for (Comment comment : comments) {
+            long count = likeRepository.countByLikedTypeAndLikedId("comment", comment.getId());
+            commentLikeCounts.put(comment.getId(), count);
+        }
+        model.addAttribute("likeCountsByCommentId", commentLikeCounts);
 
         // Adding attribute comments
         model.addAttribute("comments", comments);
