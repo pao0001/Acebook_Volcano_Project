@@ -2,9 +2,11 @@ package com.makersacademy.acebook.controller;
 
 import com.makersacademy.acebook.model.Comment;
 import com.makersacademy.acebook.model.Post;
+import com.makersacademy.acebook.model.RecFriend;
 import com.makersacademy.acebook.model.User;
 import com.makersacademy.acebook.repository.CommentRepository;
 import com.makersacademy.acebook.repository.PostRepository;
+import com.makersacademy.acebook.repository.RecFriendRepository;
 import com.makersacademy.acebook.service.AuthenticatedUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +43,10 @@ public class PostsController {
     @Autowired
     private AuthenticatedUserService authenticatedUserService;
 
+    @Autowired
+    RecFriendRepository recFriendRepository;
+
+
     @GetMapping("/")
     public String index(Model model) {
         List<Post> recentSortedPosts = StreamSupport.stream(postRepository.findAll().spliterator(), false)
@@ -72,6 +78,10 @@ public class PostsController {
         // Adding attribute friends
         Set<User> friends = currentUser.getFriends();
         model.addAttribute("friends", friends);
+
+        // Add suggested friends
+        List<RecFriend> recommendedFriends = recFriendRepository.findByUser(currentUser);
+        model.addAttribute("recommendedFriends", recommendedFriends);
 
         return "posts/index";
     }
