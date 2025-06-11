@@ -160,6 +160,22 @@ public class PostsController {
         Set<User> friends = currentUser.getFriends();
         model.addAttribute("friends", friends);
 
+        // like counts for posts
+        Map<Long, Long> likeCountsByPostId = new HashMap<>();
+        for (Post post : feedPosts) {
+            long count = likeRepository.countByLikedTypeAndLikedId("post", post.getId());
+            likeCountsByPostId.put(post.getId(), count);
+        }
+        model.addAttribute("likeCountsByPostId", likeCountsByPostId);
+
+        // likes count for comments
+        Map<Long, Long> likeCountsByCommentId = new HashMap<>();
+        for (Comment comment : comments) {
+            long count = likeRepository.countByLikedTypeAndLikedId("comment", comment.getId());
+            likeCountsByCommentId.put(comment.getId(), count);
+        }
+        model.addAttribute("likeCountsByCommentId", likeCountsByCommentId);
+
         return "posts/friendsfeed";
     }
 }
