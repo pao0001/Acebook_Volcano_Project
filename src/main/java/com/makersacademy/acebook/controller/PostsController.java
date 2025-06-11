@@ -41,7 +41,7 @@ public class PostsController {
     @Autowired
     private AuthenticatedUserService authenticatedUserService;
 
-    @GetMapping("/")
+    @GetMapping("/globalfeed")
     public String index(Model model) {
         List<Post> recentSortedPosts = StreamSupport.stream(postRepository.findAll().spliterator(), false)
                 .filter(post -> post.getTimeStamp() != null &&
@@ -73,15 +73,20 @@ public class PostsController {
         Set<User> friends = currentUser.getFriends();
         model.addAttribute("friends", friends);
 
-        return "posts/index";
+        return "posts/globalfeed";
     }
 
     @PostMapping("/posts")
     public RedirectView createPost(@ModelAttribute Post post,
                                    @RequestParam(value = "image", required = false)MultipartFile image,
-                                   @RequestParam String username) throws IOException {
+                                   @RequestParam String username, @RequestParam Integer user_id,
+                                   @RequestParam String forename, @RequestParam String surname) throws IOException {
         post.setTimeStamp(LocalDateTime.now());
         post.setUsername(username);
+        post.setUserID(user_id);
+        post.setForename(forename);
+        post.setSurname(surname);
+
 
         Post savedPost = postRepository.save(post);
 
@@ -103,4 +108,42 @@ public class PostsController {
         return new RedirectView("/");
     }
 
+    @GetMapping("/")
+    public String feed(Model model) {
+//        List<Post> recentSortedPosts = StreamSupport.stream(postRepository.findAll().spliterator(), false)
+//                .filter(post -> post.getTimeStamp() != null &&
+//                        post.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(3000)))
+//                .sorted(Comparator.comparing(Post::getTimeStamp).reversed())
+//                .toList();
+
+        List<Comment> comments = (List<Comment>) commentRepository.findAll();
+        Map<Long, List<Comment>> commentsByPostId = comments.stream()
+                .filter(comment -> comment.getTimeStamp() != null &&
+                        comment.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(600)))
+                .sorted(Comparator.comparing(Comment::getTimeStamp).reversed())
+                .collect(Collectors.groupingBy(comment -> comment.getPostID().longValue()));
+
+        model.addAttribute("commentsByPostId", commentsByPostId);
+
+        Long myId = authenticatedUserService.getAuthenticatedUser().getId();
+        List<Post> feedPosts = postRepository.findFeedNative(myId).stream()
+                .filter(post -> post.getTimeStamp() != null &&
+                        post.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(3000)))
+                .sorted(Comparator.comparing(Post::getTimeStamp).reversed())
+                .toList();
+
+        model.addAttribute("posts", feedPosts);
+        model.addAttribute("post", new Post());
+
+        model.addAttribute("comments", comments);
+        model.addAttribute("comment", new Comment());
+
+        User currentUser = authenticatedUserService.getAuthenticatedUser();
+        model.addAttribute("current_user", currentUser);
+
+        Set<User> friends = currentUser.getFriends();
+        model.addAttribute("friends", friends);
+
+        return "posts/friendsfeed";
+    }
 }
