@@ -34,6 +34,7 @@ public class User {
     private String forename;
     private String surname;
     private String profile_image_src;
+    private String banner_image_src;
     private String gender;
     private String pronouns;
     private String currentCity;
@@ -44,6 +45,7 @@ public class User {
     private String sexualOrientation;
     private String politicalViews;
     private String religion;
+
 
     //Added dob to store the date of birth as a LocalTime which is of format YYYY-MM-DD same as SQL DATE
     private LocalDate dob;

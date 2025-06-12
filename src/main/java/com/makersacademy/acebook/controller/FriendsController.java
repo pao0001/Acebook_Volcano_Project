@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 import java.util.Set;
@@ -120,6 +121,13 @@ public class FriendsController {
         userRepository.save(currentUser);
         userRepository.save(friend);
 
-        return new ModelAndView("redirect:/friends");
+        // Get the Referer header (the previous page URL)
+        String referer = request.getHeader("Referer");
+        if (referer == null || referer.isEmpty()) {
+            // Fallback if no referer present
+            referer = "/friends";
+        }
+
+        return new ModelAndView("redirect:" + referer);
     }
 }

@@ -53,12 +53,54 @@
         <!-- TOP RIGHT: BANNER IMAGE + NAVIGATION -->
         <div class="profile-banner-container">
           <div style="text-align: center; color: white; font-weight: bold; font-size: 2rem;">
-            BANNER IMAGE
+            <img class="profile-picture"
+                 th:src="@{${user.banner_image_src}}"
+                 onerror="this.src='/assets/default-profile.png'"
+                 alt="Profile Picture"
+                 style="width: 100%; height: 100%; object-fit: cover;">
           </div>
         </div>
 
         <!-- BOTTOM LEFT: USER INFO -->
         <div class="profile-info-container">
+          <div class="profile-action-buttons">
+            <!-- Edit button shows for profile owner -->
+            <div th:if="${user.id == currentUser.id}" class="edit-button-container">
+              <a href="/myProfile" class="profile-action-button edit-button">
+                Edit Profile
+              </a>
+            </div>
+
+            <!-- Friend status buttons show for other users -->
+            <div th:unless="${user.id == currentUser.id}" class="friend-button-container">
+              <!-- Already Friends State -->
+              <form th:if="${isAlreadyFriends == true}" method="post" th:action="@{/friends/remove}">
+                <input type="hidden" name="friendId" th:value="${user.id}">
+                <button type="submit" class="profile-action-button remove-friend-button">
+                  Remove Friend
+                </button>
+              </form>
+
+              <!-- Pending Request State -->
+              <form th:if="${hasPendingRequest == true}" method="post" th:action="@{/friend-requests/withdraw}">
+                <input type="hidden" name="receiverId" th:value="${user.id}">
+                <button type="submit" class="profile-action-button pending-request-button">
+                  Cancel Request
+                </button>
+              </form>
+
+              <!-- No Connection State -->
+              <form th:unless="${isAlreadyFriends == true or hasPendingRequest == true}"
+                    method="post"
+                    th:action="@{/friend-requests/send}">
+                <input type="hidden" name="receiverId" th:value="${user.id}">
+                <button type="submit" class="profile-action-button add-friend-button">
+                  Add Friend
+                </button>
+              </form>
+            </div>
+          </div>
+
           <div class="profile-details-box">
             <div class="detail-label">Name</div>
             <div class="detail-value" th:text="${user.forename + ' ' + user.surname}"></div>
@@ -105,7 +147,6 @@
               <button class="nav-button active" data-target="timeline">Timeline</button>
               <button class="nav-button" data-target="about">About</button>
               <button class="nav-button" data-target="friends">Friends</button>
-              <button class="nav-button" data-target="photos">Photos</button>
             </div>
           </div>
 
@@ -125,12 +166,6 @@
             <!-- Friends Content -->
             <h3>Friends</h3>
             <div th:replace="~{fragments :: friends-list}"></div>
-          </div>
-
-          <div id="photos" class="content-section">
-            <!-- Photos Content -->
-            <h3>Photos</h3>
-            <div th:replace="~{fragments :: photos-grid}"></div>
           </div>
         </div>
       </div>
