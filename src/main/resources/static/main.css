@@ -401,6 +401,7 @@ body {
 .comment-item {
     margin-bottom: 0.8em;
     padding-bottom: 0.8em;
+    padding-left: 1.2em;
     border-bottom: 1px solid #d0e0ff;
     list-style-type: none;
     margin-left: 0;

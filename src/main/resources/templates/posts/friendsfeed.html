@@ -82,7 +82,7 @@
                                 <input type="hidden" name="likedId" th:value="${post.id}" />
                                 <input type="hidden" name="redirectUrl" th:value="@{/}" />
 
-                                <button type="submit" class="like-link" style="background:none; border:none; cursor:pointer; padding:0;">👍</button>
+                                <button type="submit" class="like-link" style="background:none; border:none; cursor:pointer; margin-left: 8px;">👍</button>
                                 <span class="like-count" th:text="${likeCountsByPostId[post.id] ?: 0}">0</span>
                             </form>
                         </div>
@@ -93,7 +93,7 @@
                     <ul class="comment-list" th:if="${commentsByPostId[post.id]}">
                         <li class="comment-item" th:each="comment : ${commentsByPostId[post.id]}">
                             <div class="comment-header">
-                                <strong><span th:text="${comment.username}" ></span></strong> commented at: <span th:text="${comment.formattedTimestamp}"></span>
+                                <strong><span th:text="|${post.forename} ${post.surname} commented: |"></span></strong><span th:text="${comment.formattedTimestamp}"></span>
                             </div>
 
                             <span id="comment-render" th:text="${comment.commentContent}"></span>
