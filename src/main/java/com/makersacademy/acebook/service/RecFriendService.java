@@ -30,6 +30,7 @@ public class RecFriendService {
     public void generateAndStoreRecommendations() {
         User currentUser = authenticatedUserService.getAuthenticatedUser();
         Set<User> currentFriends = currentUser.getFriends();
+        System.out.println("Current user friends count: " + currentFriends.size());
 
         Map<User, Integer> mutualCountMap = new HashMap<>();
 
@@ -53,10 +54,34 @@ public class RecFriendService {
             RecFriend rec = new RecFriend(currentUser, entry.getKey(), entry.getValue());
             recFriendRepository.save(rec);
         }
+        System.out.println("Current user in generateAndStoreRecommendations: " + currentUser.getUsername());
+
+        for (User friend : currentFriends) {
+            for (User friendsFriend : friend.getFriends()) {
+                System.out.println("Checking friend-of-friend: " + friendsFriend.getUsername());
+                if (friendsFriend.equals(currentUser)) {
+                    System.out.println("  Skipping self");
+                    continue;
+                }
+                if (currentFriends.contains(friendsFriend)) {
+                    System.out.println("  Skipping existing friend: " + friendsFriend.getUsername());
+                    continue;
+                }
+
+                mutualCountMap.put(
+                        friendsFriend,
+                        mutualCountMap.getOrDefault(friendsFriend, 0) + 1
+                );
+                System.out.println("  Added recommendation candidate: " + friendsFriend.getUsername());
+            }
+        }
+        System.out.println("Recommendation candidates map size: " + mutualCountMap.size());
+
     }
 
     public List<RecFriend> getRecommendationsForCurrentUser() {
         User currentUser = authenticatedUserService.getAuthenticatedUser();
+        System.out.println("Current user in getRecommendationsForCurrentUser: " + currentUser.getUsername());
         return recFriendRepository.findByUser(currentUser);
     }
 }

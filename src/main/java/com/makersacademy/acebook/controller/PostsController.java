@@ -173,6 +173,7 @@ public class PostsController {
         recFriendService.generateAndStoreRecommendations();
         List<RecFriend> recommendedFriends = recFriendService.getRecommendationsForCurrentUser();
         model.addAttribute("recommendedFriends", recommendedFriends);
+        System.out.println("Recommended friends count: " + recommendedFriends.size());
 
         // like counts for posts
         Map<Long, Long> likeCountsByPostId = new HashMap<>();
