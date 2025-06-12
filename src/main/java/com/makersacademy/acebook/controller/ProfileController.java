@@ -9,6 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Controller
 public class ProfileController {
 
@@ -49,6 +55,22 @@ public class ProfileController {
         model.addAttribute("isAlreadyFriends", isAlreadyFriends);
         model.addAttribute("hasPendingRequest", hasPendingRequest);
         model.addAttribute("isSelfProfile", isSelfProfile);
+
+        // Adding attribute friends
+        Set<User> currentUserFriends = currentUser.getFriends();
+        model.addAttribute("friends", currentUserFriends);
+
+        // Adding attribute friends
+        Set<User> profileUserFriends = profileUser.getFriends();
+        model.addAttribute("profileFriends", profileUserFriends);
+
+        // Adding limited friends
+        List<User> friendList = new ArrayList<>(currentUserFriends);
+        Collections.shuffle(friendList);
+        List<User> limitedFriends = friendList.stream()
+                .limit(4)
+                .collect(Collectors.toList());
+        model.addAttribute("friends", limitedFriends);
 
         return "profile";
     }

@@ -1,52 +1,148 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta charset="UTF-8">
   <title>User Profile</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="/main.css">
+  <script defer>
+    document.addEventListener('DOMContentLoaded', function() {
+      const buttons = document.querySelectorAll('.nav-button');
+      const sections = document.querySelectorAll('.content-section');
+
+      buttons.forEach(button => {
+        button.addEventListener('click', function() {
+          // Remove active class from all buttons and sections
+          buttons.forEach(btn => btn.classList.remove('active'));
+          sections.forEach(section => section.classList.remove('active-section'));
+
+          // Add active class to clicked button
+          this.classList.add('active');
+
+          // Show the corresponding section
+          const targetId = this.getAttribute('data-target');
+          document.getElementById(targetId).classList.add('active-section');
+        });
+      });
+    });
+  </script>
 </head>
 <body>
-<!-- Header Fragment -->
+
+<!-- HEADER -->
 <div th:replace="~{fragments :: header}"></div>
 
-<h1 th:text="'Profile for ' + ${user.username}"></h1>
+<!-- MAIN CONTENT CONTAINER -->
+<div class="layout-container">
+  <!-- LEFT SIDEBAR -->
+  <div th:replace="~{fragments :: left-sidebar}"></div>
 
-<!-- Only show form if not friends, not the user's own profile, and no pending request -->
-<form th:if="${!isAlreadyFriends} and !${isSelfProfile} and !${hasPendingRequest}" action="/friend-requests/send" method="POST">
-  <input type="hidden" name="receiverId" th:value="${user.id}" />
-  <button type="submit">Send Friend Request</button>
-</form>
+  <!-- CENTER PROFILE CONTENT -->
+  <main class="main-content">
+    <div class="main-inner">
+      <div class="profile-grid">
+        <!-- TOP LEFT: PROFILE PICTURE -->
+        <div class="profile-picture-container">
+          <img class="profile-picture"
+               th:src="@{${user.profile_image_src}}"
+               onerror="this.src='/assets/default-profile.png'"
+               alt="Profile Picture"
+               style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
 
-<!-- Show message if a request is pending -->
-<div th:if="${hasPendingRequest}">
-  <p>Friend request sent.</p>
+        <!-- TOP RIGHT: BANNER IMAGE + NAVIGATION -->
+        <div class="profile-banner-container">
+          <div style="text-align: center; color: white; font-weight: bold; font-size: 2rem;">
+            BANNER IMAGE
+          </div>
+        </div>
 
-  <!-- Withdraw friend request button -->
-  <form action="/friend-requests/withdraw" method="POST">
-    <input type="hidden" name="receiverId" th:value="${user.id}" />
-    <button type="submit">Cancel Request</button>
-  </form>
+        <!-- BOTTOM LEFT: USER INFO -->
+        <div class="profile-info-container">
+          <div class="profile-details-box">
+            <div class="detail-label">Name</div>
+            <div class="detail-value" th:text="${user.forename + ' ' + user.surname}"></div>
+          </div>
+
+          <div class="profile-details-box">
+            <div class="detail-label">Gender</div>
+            <div class="detail-value" th:text="${user.gender}"></div>
+          </div>
+
+          <div class="profile-details-box">
+            <div class="detail-label">Pronouns</div>
+            <div class="detail-value" th:text="${user.pronouns}"></div>
+          </div>
+
+          <div class="profile-details-box">
+            <div class="detail-label">Occupation</div>
+            <div class="detail-value" th:text="${user.job}"></div>
+          </div>
+
+          <div class="profile-details-box">
+            <div class="detail-label">Education</div>
+            <div class="detail-value" th:text="${user.school}"></div>
+          </div>
+
+          <div class="profile-details-box">
+            <div class="detail-label">Location</div>
+            <div class="detail-value" th:text="${user.currentCity}"></div>
+          </div>
+
+          <div class="profile-bio">
+            <div class="detail-label">About Me</div>
+            <div class="detail-value" th:text="${user.description}"></div>
+          </div>
+        </div>
+
+        <!-- BOTTOM RIGHT: CONTENT AREA -->
+
+        <!-- Content Sections -->
+        <div class="profile-content-container">
+          <!-- Navigation Buttons -->
+          <div class="profile-nav-card">
+            <div class="profile-buttons">
+              <button class="nav-button active" data-target="timeline">Timeline</button>
+              <button class="nav-button" data-target="about">About</button>
+              <button class="nav-button" data-target="friends">Friends</button>
+              <button class="nav-button" data-target="photos">Photos</button>
+            </div>
+          </div>
+
+          <div id="timeline" class="content-section active-section">
+            <!-- Timeline Content -->
+            <h3>Timeline</h3>
+            <div th:replace="~{fragments :: posts}"></div>
+          </div>
+
+          <div id="about" class="content-section">
+            <!-- About Content -->
+            <h3>About</h3>
+            <div th:replace="~{fragments :: about-section}"></div>
+          </div>
+
+          <div id="friends" class="content-section">
+            <!-- Friends Content -->
+            <h3>Friends</h3>
+            <div th:replace="~{fragments :: friends-list}"></div>
+          </div>
+
+          <div id="photos" class="content-section">
+            <!-- Photos Content -->
+            <h3>Photos</h3>
+            <div th:replace="~{fragments :: photos-grid}"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- RIGHT SIDEBAR -->
+  <div th:replace="~{fragments :: right-sidebar}"></div>
 </div>
 
-<form th:if="${isAlreadyFriends} and !${isSelfProfile}" th:action="@{/friends/remove}" method="post" style="display:inline;">
-  <input type="hidden" name="friendId" th:value="${user.id}" />
-  <button type="submit">Remove Friend</button>
-</form>
-
-<p><strong>Email:</strong> <span th:text="${user.username}">Username</span></p>
-<p><strong>Forename:</strong> <span id="forename" th:text="${user.forename}">Forename</span></p>
-<p><strong>Surname:</strong> <span id="surname" th:text="${user.surname}">Surname</span></p>
-<p><strong>Description:</strong> <span id="description" th:text="${user.description}">Description</span></p>
-<p><strong>Gender:</strong> <span id="gender" th:text="${user.gender}">Gender</span></p>
-<p><strong>Pronouns:</strong> <span id="pronouns" th:text="${user.pronouns}">Pronouns</span></p>
-<p><strong>Current City:</strong> <span id="currentCity" th:text="${user.currentCity}">Current City</span></p>
-<p><strong>Hometown:</strong> <span id="hometown" th:text="${user.hometown}">Hometown</span></p>
-<p><strong>Job:</strong> <span id="job" th:text="${user.job}">Job</span></p>
-<p><strong>School:</strong> <span id="school" th:text="${user.school}">School</span></p>
-<p><strong>Relationship Status:</strong> <span id="relationshipStatus" th:text="${user.relationshipStatus}">Relationship Status</span></p>
-<p><strong>Sexual Orientation:</strong> <span id="sexualOrientation" th:text="${user.sexualOrientation}">Sexual Orientation</span></p>
-<p><strong>Political Views:</strong> <span id="politicalViews" th:text="${user.politicalViews}">Political Views</span></p>
-<p><strong>Religion:</strong> <span id="religion" th:text="${user.religion}">Religion</span></p>
-
-<!-- Footer Fragment -->
+<!-- FOOTER -->
 <div th:replace="~{fragments :: footer}"></div>
+
 </body>
 </html>
