@@ -1,9 +1,12 @@
 package com.makersacademy.acebook.controller;
 
+import com.makersacademy.acebook.model.RecFriend;
 import com.makersacademy.acebook.model.User;
 import com.makersacademy.acebook.repository.FriendRequestRepository;
+import com.makersacademy.acebook.repository.RecFriendRepository;
 import com.makersacademy.acebook.repository.UserRepository;
 import com.makersacademy.acebook.service.AuthenticatedUserService;
+import com.makersacademy.acebook.service.RecFriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +29,9 @@ public class ProfileController {
 
     @Autowired
     private FriendRequestRepository friendRequestRepository;
+
+    @Autowired
+    private RecFriendRepository recFriendRepository;
 
     @GetMapping("/myProfile")
     public String showMyProfile(Model model) {
@@ -63,6 +69,10 @@ public class ProfileController {
         // Adding attribute friends
         Set<User> profileUserFriends = profileUser.getFriends();
         model.addAttribute("profileFriends", profileUserFriends);
+
+        // Add suggested friends
+        List<RecFriend> recommendedFriends = recFriendRepository.findByUser(currentUser);
+        model.addAttribute("recommendedFriends", recommendedFriends);
 
         // Adding limited friends
         List<User> friendList = new ArrayList<>(currentUserFriends);
