@@ -4,11 +4,11 @@
     font-weight: bold;
     color: #1877f2;
     text-decoration: none;
-    letter-spacing: -1.5px;"
-
+    letter-spacing: -1.5px;
 }
+
 body {
-    background-color: #dce8fb;
+    background-color: #f6faff;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
@@ -16,14 +16,6 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-}
-
-.main-content {
-    width: 100%;
-    max-width: none;
-    flex: 1;
-    margin: 0;
-    padding: 0;
 }
 
 .layout-container {
@@ -41,6 +33,14 @@ body {
     flex-direction: column;
 }
 
+.main-content {
+    width: 100%;
+    max-width: none;
+    flex: 1;
+    margin: 0;
+    padding: 0;
+}
+
 .main-inner {
     flex: 1; /* Takes remaining space */
     min-width: 0; /* Prevents overflow issues */
@@ -52,7 +52,7 @@ body {
 }
 
 .sidebar-box {
-    background-color: #b2d2ff;
+    background-color: #dce8fb;
     padding: 1.5rem;
     border-radius: 12px;
     border: 2px solid #6c9fd8;
@@ -132,24 +132,58 @@ body {
 }
 
 /* Responsive adjustments */
-@media (max-width: 1200px) {
+@media (max-width: 900px) {
+    .post-form-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    .profile-col {
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        max-width: none;
+      }
+    .profile-grid {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto auto auto;
+    }
+    .profile-picture-container {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .profile-picture-container { grid-row: 1; grid-column: 1; }
+    .profile-banner-container { grid-row: 2; grid-column: 1; }
+    .profile-info-container { grid-row: 3; grid-column: 1; }
+    .profile-content-container { grid-row: 4; grid-column: 1; }
+    .user-name-block {
+        text-align: left;
+        margin-left: 1rem;
+      }
     .layout-container {
         flex-direction: column;
         min-height: auto;
     }
-
-    .left-sidebar, .right-sidebar {
-        flex: 1;
-        width: 100%;
-    }
-
-    .sidebar-box {
-        margin-bottom: 1.5rem;
+    .friends-grid {
+       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+       gap: 1rem;
     }
 }
 
+.left-sidebar, .right-sidebar {
+    flex: 0 0 22%;   /* or 20%, or whatever "more room" means for you */
+    max-width: 22%;  /* prevents them from growing too large */
+    min-width: 180px; /* optional: prevents being too small on small screens */
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-box {
+    margin-bottom: 1.5rem;
+}
+
+
 .post-form {
-    background-color: #b2d2ff;
+    background-color: #dce8fb;
     padding: 1.5em;
     border-radius: 12px;
     border: 2px solid #6c9fd8;
@@ -159,26 +193,60 @@ body {
 }
 
 .post-form-container {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  gap: 2rem; /* Space between left and right */
+  align-items: flex-start;
 }
 
+.profile-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 100px;
+  max-width: 130px;
+  flex-shrink: 0;
+  gap: 0.5rem;
+}
+
+
 .profile-picture-circle {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #e4e6eb;
+  margin-bottom: 0.5rem;
 }
 
 .profile-picture-circle img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-and-name-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.user-name-block {
+  text-align: center;
+}
+
+.user-forename, .user-surname {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #222;
+}
+
+.composer-col {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .post-content-area {
@@ -186,20 +254,23 @@ body {
 }
 
 .post-textarea {
-    width: 100%;
-    padding: 1.25rem;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    resize: none;
-    min-height: 100px;
-    font-family: inherit;
+  width: 100%;
+  min-height: 90px;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-family: inherit;
+  resize: vertical;
+  box-sizing: border-box;
 }
 
 .post-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  width: 100%;
+  position: relative;
 }
 
 .image-upload-label {
@@ -225,17 +296,18 @@ body {
 }
 
 .post-submit-button {
-    background-color: #1877f2;
-    color: white;
-    border: none;
-    padding: 0.5rem 1.5rem;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: background-color 0.2s;
+  margin-left: auto; /* Pushes the button to the far right */
+  background-color: #1877f2;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s;
 }
 
 .post-submit-button:hover {
@@ -257,7 +329,7 @@ body {
 }
 
 .post-item {
-    background-color: #b2d2ff;
+    background-color: #dce8fb;
     padding: 1.5em;
     border-radius: 12px;
     border: 2px solid #6c9fd8;
@@ -357,11 +429,321 @@ body {
 
 .post-image-display img {
     max-width: 100%;
+    max-height: 540px; /* Good for social feeds */
+    width: auto;
     height: auto;
+    object-fit: contain; /* Show full image, no cropping */
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     display: block;
-    margin-top: 0.5em;
+    margin: 0 auto;
 }
 
 hr {
     display: none; /* Hide hr since we're using gap for spacing */
+}
+
+.profile-container {
+  display: grid;
+  grid-template-columns: 260px 1.5fr 2.5fr 1fr;
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+
+/* Style the center two columns as one unified “blue” background area */
+.profile-main {
+  flex: 1;
+  grid-column: 2 / span 2;
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 1.5rem;
+  background: #dce8fb;        /* light blue wrapper */
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(24,119,242,0.1);
+}
+
+.profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      grid-template-rows: auto auto;
+      gap: 1.5rem;
+      margin: 1.5rem;
+}
+
+/* Top row: picture card & banner card side-by-side */
+.profile-top {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.5rem;
+}
+
+.profile-picture-container {
+    grid-row: 1;
+    grid-column: 1;
+    background: #b0b0b0;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1/1; /* Maintain square aspect ratio */
+}
+
+.profile-banner-container {
+      grid-row: 1;
+      grid-column: 2;
+      background: #b0b0b0;
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+}
+
+/* The grey “Profile Picture” card */
+.profile-picture-card {
+  background: #b0b0b0;
+  border-radius: 12px;
+  padding: 1rem;           /* add padding around the image */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(24,119,242,0.1);
+}
+
+.profile-picture {
+  width: 400px;             /* smaller width */
+  height: 400px;            /* smaller height */
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+/* The grey “Banner Image” card */
+.profile-banner {
+  background: #b0b0b0;
+  border-radius: 12px;
+  min-height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+}
+
+.profile-nav-card {
+      background: #e4eefe;
+      border: 1px solid #a3c1ec;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-top: 1.5rem;
+}
+
+/* The button row under the banner */
+.profile-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+}
+
+.profile-buttons button {
+      flex: 1;
+      min-width: 100px;
+      background: #fff;
+      border: 1px solid #6c9fd8;
+      border-radius: 8px;
+      padding: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 600;
+}
+
+.profile-buttons button:hover {
+  background: #c7daf7;
+  transform: translateY(-2px);
+}
+
+/* Bottom row: details column + content column */
+.profile-details-section {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1.5rem;
+}
+
+/* Left details panel */
+.profile-info-box {
+  background: #e4eefe;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.profile-info-container {
+      grid-row: 2;
+      grid-column: 1;
+      background: #e4eefe;
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 1px solid #a3c1ec;
+}
+
+/* Each detail line as its own pill */
+.profile-details-box {
+      background: white;
+      border: 1px solid #a3c1ec;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+}
+
+/* Bio box taller */
+.profile-bio {
+      background: white;
+      border: 1px solid #a3c1ec;
+      border-radius: 8px;
+      padding: 1rem;
+      min-height: 150px;
+}
+
+/* Right content panel */
+.profile-content {
+  background: #b7d3f7;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: inset 0 0 10px rgba(24,119,242,0.1);
+  min-height: 300px;
+}
+
+.profile-content-container {
+      grid-row: 2;
+      grid-column: 2;
+      background: #b7d3f7;
+      border-radius: 12px;
+      padding: 1.5rem;
+}
+
+.detail-label {
+    font-weight: bold;
+    color: #1877f2;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-value {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.4;
+}
+
+.content-section {
+  display: none;
+  padding: 1.5rem;
+  background: #dce8fb;
+  border-radius: 10px;
+  margin-top: 1.5rem;
+}
+
+.content-section.active-section {
+  display: block;
+}
+
+.nav-button.active {
+  background-color: #1877f2;
+  color: white;
+  border-color: #1877f2;
+}
+
+.profile-friends-section {
+        padding: 1.5rem;
+        background: #f0f2f5;
+        border-radius: 12px;
+        margin-top: 1.5rem;
+}
+
+.profile-friends-title {
+        color: #1877f2;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        border-bottom: 2px solid #e4e6eb;
+        padding-bottom: 0.5rem;
+}
+
+.profile-friends-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 1.5rem;
+}
+
+.profile-friends-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 1.5rem;
+}
+
+.profile-friend-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.profile-friend-link {
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        color: inherit;
+        height: 100%;
+}
+
+.profile-friend-avatar-container {
+        position: relative;
+        padding-top: 100%; /* 1:1 Aspect Ratio */
+}
+
+.profile-friend-avatar {
+        width: 100%;
+        height: 100%;
+}
+
+.profile-friend-info {
+        padding: 1rem;
+        text-align: center;
+}
+
+.profile-friend-name {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        color: #050505;
+}
+
+.profile-friend-status {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        color: #65676b;
+        gap: 0.25rem;
+}
+
+.profile-status-indicator {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #31a24c;
+}
+
+.profile-status-indicator.active {
+        background: #31a24c;
+}
+
+.profile-status-indicator.offline {
+        background: #ddd;
 }
