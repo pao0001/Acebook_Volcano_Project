@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 public class FriendsController {
@@ -36,15 +39,21 @@ public class FriendsController {
     public ModelAndView viewFriends() {
         User currentUser =  authenticatedUserService.getAuthenticatedUser();
         recFriendService.generateAndStoreRecommendations();
-        Set<User> friends = currentUser.getFriends();
+        Set<User> allFriends = currentUser.getFriends();
         Iterable<FriendRequest> incomingRequests = friendRequestRepository.findByReceiverAndPendingTrue(currentUser);
         List<RecFriend> recommendedFriends = recFriendService.getRecommendationsForCurrentUser();
 
         ModelAndView mav = new ModelAndView("friends");
-        mav.addObject("friends", friends);
-        mav.addObject("friendsCount", friends.size());
+        List<User> limitedFriendsForSidebar = new ArrayList<>(allFriends);
+        limitedFriendsForSidebar = limitedFriendsForSidebar.stream()
+                .limit(5)
+                .collect(Collectors.toList());
+        mav.addObject("friendsCount", allFriends.size());
         mav.addObject("incomingRequests", incomingRequests);
         mav.addObject("recommendedFriends", recommendedFriends);
+        mav.addObject("sidebarFriends", limitedFriendsForSidebar);
+        mav.addObject("currentUser", currentUser);
+        mav.addObject("allFriends", allFriends);
         return mav;
     }
 

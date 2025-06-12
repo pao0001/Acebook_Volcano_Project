@@ -352,15 +352,28 @@ body {
     padding: 1.5em;
     border-radius: 12px;
     border: 2px solid #6c9fd8;
-    margin: 0; /* Reset margin */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds subtle shadow */
+    margin: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+/*
 .post-container {
-    margin-bottom: 0; /* Remove margin-bottom from post-container */
-    padding: 0; /* Remove padding from post-container */
-    background-color: transparent; /* Make background transparent */
-    border: none; /* Remove border */
+    margin-bottom: 0;
+    padding: 0;
+    background-color: #eef5ff;
+     border-radius: 10px;
+     border: 1px solid #a3c1ec;
+}*/
+
+.post-container {
+    padding: 0.8em 1.2em 0.8em 1.2em; /* top/right/bottom/left */
+    margin-bottom: 0.8em;
+    border-bottom: 1px solid #d0e0ff;
+
+    /* keep your existing styles */
+    background-color: #eef5ff;
+    border-radius: 10px;
+    border: 1px solid #a3c1ec;
 }
 
 .post-header {
@@ -375,6 +388,12 @@ body {
     box-sizing: border-box;
     padding: 0.8em;
     margin-bottom: 0.5em;
+}
+
+#post-render {
+    font-size: 1.25rem; /* or use 20px, or any value you like */
+    line-height: 1.6;   /* optional: improves readability */
+    font-weight: 400;   /* optional: control text weight */
 }
 
 .comment-form {
@@ -424,6 +443,7 @@ body {
     border-bottom: 1px solid #d0e0ff;
     list-style-type: none;
     margin-left: 0;
+    text-align: right;
 }
 
 .comment-item:last-child {
@@ -432,12 +452,15 @@ body {
     padding-bottom: 0;
 }
 
+.comment-header {
+    margin-bottom: 0.8em; /* Adds vertical space under the title/timestamp block */
+}
+
 .post-image-section {
-    margin-top: 1em;
-    padding: 1em;
-    background-color: #e6f0ff;
-    border-radius: 10px;
-    border: 1px solid #a3c1ec;
+    margin-top: 1em; /* Keep some spacing */
+    padding: 0;
+    background-color: transparent; /* No background */
+    border: none; /* Remove border */
 }
 
 .post-image-upload {
@@ -473,7 +496,7 @@ hr {
 }
 
 
-/* Style the center two columns as one unified â€œblueâ€ background area */
+/* Style the center two columns as one unified Ã¢â‚¬Å“blueÃ¢â‚¬Â background area */
 .profile-main {
     flex: 1;
     grid-column: 2 / span 2;
@@ -531,7 +554,7 @@ hr {
 }
 
 
-/* The grey â€œProfile Pictureâ€ card */
+/* The grey Ã¢â‚¬Å“Profile PictureÃ¢â‚¬Â card */
 .profile-picture-card {
     background: #b0b0b0;
     border-radius: 12px;
@@ -549,7 +572,7 @@ hr {
     object-fit: cover;
 }
 
-/* The grey â€œBanner Imageâ€ card */
+/* The grey Ã¢â‚¬Å“Banner ImageÃ¢â‚¬Â card */
 .profile-banner {
     background: #b0b0b0;
     border-radius: 12px;
@@ -882,10 +905,7 @@ a.profile-action-button {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 .post-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8em; /* Adds vertical space under the title/timestamp block */
 }
 .post-user-info {
     display: flex;
@@ -1212,4 +1232,30 @@ ul.friends-list li:last-child {
 .submit-button:hover {
     background-color: #166fe5; /* Slightly darker blue on hover */
     transform: translateY(-1px); /* Subtle lift effect */
+}
+
+/* Styling for likes */
+
+.post-likes {
+    margin-top: 0.75em;
+    display: flex;
+    justify-content: flex-end; /* Pushes content to the right */
+    gap: 0.5em;
+}
+
+.like-link {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: transform 0.2s ease;
+}
+
+.like-link:hover {
+    transform: scale(1.1);
+}
+
+.like-count {
+    font-weight: bold;
+    color: #3b5998;
 }

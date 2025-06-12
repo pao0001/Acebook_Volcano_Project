@@ -34,7 +34,7 @@ public class PostsController {
     PostRepository postRepository;
 
     @Autowired
-    CommentRepository commentRepository; // Make sure you have this
+    CommentRepository commentRepository;
 
     @Autowired
     UploadController uploadController;
@@ -92,7 +92,7 @@ public class PostsController {
 
         // Adding attribute current user
         User currentUser = authenticatedUserService.getAuthenticatedUser();
-        model.addAttribute("current_user", currentUser);
+        model.addAttribute("currentUser", currentUser);
 
         // Adding attribute friends
         Set<User> friends = currentUser.getFriends();
@@ -101,6 +101,14 @@ public class PostsController {
         // Add suggested friends
         List<RecFriend> recommendedFriends = recFriendRepository.findByUser(currentUser);
         model.addAttribute("recommendedFriends", recommendedFriends);
+
+        Set<User> allFriendsForSidebar = currentUser.getFriends();
+        List<User> limitedFriendsForSidebar = new ArrayList<>(allFriendsForSidebar);
+        limitedFriendsForSidebar.sort(Comparator.comparing(User::getForename).thenComparing(User::getSurname));
+        limitedFriendsForSidebar = limitedFriendsForSidebar.stream()
+                .limit(5)
+                .collect(Collectors.toList());
+        model.addAttribute("sidebarFriends", limitedFriendsForSidebar);
 
         return "posts/globalfeed";
     }
@@ -164,11 +172,15 @@ public class PostsController {
         model.addAttribute("comment", new Comment());
 
         User currentUser = authenticatedUserService.getAuthenticatedUser();
-        model.addAttribute("current_user", currentUser);
+        model.addAttribute("currentUser", currentUser);
 
-        Set<User> allFriends = currentUser.getFriends();
-        List<User> limitedFriends = allFriends.stream().limit(5).toList();
-        model.addAttribute("friends", limitedFriends);
+        Set<User> allFriendsForSidebar = currentUser.getFriends();
+        List<User> limitedFriendsForSidebar = new ArrayList<>(allFriendsForSidebar);
+        limitedFriendsForSidebar.sort(Comparator.comparing(User::getForename).thenComparing(User::getSurname));
+        limitedFriendsForSidebar = limitedFriendsForSidebar.stream()
+                .limit(5)
+                .collect(Collectors.toList());
+        model.addAttribute("sidebarFriends", limitedFriendsForSidebar);
 
         recFriendService.generateAndStoreRecommendations();
         List<RecFriend> recommendedFriends = recFriendService.getRecommendationsForCurrentUser();

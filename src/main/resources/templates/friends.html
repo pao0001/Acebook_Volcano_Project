@@ -84,7 +84,7 @@
             <div id="friends-list" class="friends box">
                 <h1 th:text="'Friends (' + ${friendsCount} + ')'" id="friends">Friends</h1>
                 <ul class="friends-grid">
-                    <li class="friend-card" th:each="friend : ${friends}">
+                    <li class="friend-card" th:each="friend : ${allFriends}">
                         <a class="friend-link" th:href="@{/profile/{id}(id=${friend.id})}">
                             <div class="friend-avatar">
                                 <img class="profile-friend-avatar"

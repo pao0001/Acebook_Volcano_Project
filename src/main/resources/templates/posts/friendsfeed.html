@@ -24,13 +24,13 @@
                 <div class="post-form-container">
                     <!-- Profile picture circle -->
                     <div class="profile-picture-circle">
-                        <img th:src="@{${current_user.profile_image_src}}" alt="Profile picture"/>
+                        <img th:src="@{${currentUser.profile_image_src}}" alt="Profile picture"/>
                     </div>
 
                     <div class="post-content-area">
                         <label for="post-send"></label>
                         <textarea id="post-send" th:field="*{content}" class="post-textarea"
-                                  th:placeholder="|What's on your mind, ${current_user.forename}?|"
+                                  th:placeholder="|What's on your mind, ${currentUser.forename}?|"
                                   placeholder="What's on your mind?"></textarea>
 
                         <div class="post-actions">
@@ -50,9 +50,9 @@
                 </div>
 
                 <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
-                <input type="hidden" name="user_id" th:value="${current_user.id}" />
-                <input type="hidden" name="forename" th:value="${current_user.forename}" />
-                <input type="hidden" name="surname" th:value="${current_user.surname}" />
+                <input type="hidden" name="user_id" th:value="${currentUser.id}" />
+                <input type="hidden" name="forename" th:value="${currentUser.forename}" />
+                <input type="hidden" name="surname" th:value="${currentUser.surname}" />
 
 
             </form>
@@ -61,12 +61,11 @@
             <ul class="post-list">
                 <li class="post-item" th:each="post : ${posts}">
                     <div class="post-container">
-                        <div class="post-item">
+                        <div class="post-header">
                             <strong th:text="|${post.forename} ${post.surname} posted:|"></strong>
                             <span th:text="${post.formattedTimestamp}"></span>
                         </div>
-
-                        <h2 id="post-render" th:text="${post.content}"></h2>
+                        <span id="post-render" th:text="${post.content}"></span>
 
                         <!-- render img if exists -->
                         <div class="post-image-section" th:if="${post.post_image_src != null}">
@@ -82,7 +81,7 @@
                                 <input type="hidden" name="likedId" th:value="${post.id}" />
                                 <input type="hidden" name="redirectUrl" th:value="@{/}" />
 
-                                <button type="submit" class="like-link" style="background:none; border:none; cursor:pointer; margin-left: 8px;">👍</button>
+                                <button type="submit" class="like-link">👍</button>
                                 <span class="like-count" th:text="${likeCountsByPostId[post.id] ?: 0}">0</span>
                             </form>
                         </div>
@@ -93,7 +92,8 @@
                     <ul class="comment-list" th:if="${commentsByPostId[post.id]}">
                         <li class="comment-item" th:each="comment : ${commentsByPostId[post.id]}">
                             <div class="comment-header">
-                                <strong><span th:text="${comment.username}" ></span></strong> commented at: <span th:text="${comment.formattedTimestamp}"></span>
+                                <strong th:text="|${comment.username} commented at:|"></strong>
+                                <span th:text="${comment.formattedTimestamp}"></span>
                             </div>
 
                             <span id="comment-render" th:text="${comment.commentContent}"></span>
