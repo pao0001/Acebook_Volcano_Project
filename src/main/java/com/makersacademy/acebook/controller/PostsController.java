@@ -147,8 +147,6 @@ public class PostsController {
 
         List<Comment> comments = (List<Comment>) commentRepository.findAll();
         Map<Long, List<Comment>> commentsByPostId = comments.stream()
-                .filter(comment -> comment.getTimeStamp() != null &&
-                        comment.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(600)))
                 .sorted(Comparator.comparing(Comment::getTimeStamp).reversed())
                 .collect(Collectors.groupingBy(comment -> comment.getPostID().longValue()));
 
@@ -156,8 +154,6 @@ public class PostsController {
 
         Long myId = authenticatedUserService.getAuthenticatedUser().getId();
         List<Post> feedPosts = postRepository.findFeedNative(myId).stream()
-                .filter(post -> post.getTimeStamp() != null &&
-                        post.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(3000)))
                 .sorted(Comparator.comparing(Post::getTimeStamp).reversed())
                 .toList();
 
@@ -170,8 +166,9 @@ public class PostsController {
         User currentUser = authenticatedUserService.getAuthenticatedUser();
         model.addAttribute("current_user", currentUser);
 
-        Set<User> friends = currentUser.getFriends();
-        model.addAttribute("friends", friends);
+        Set<User> allFriends = currentUser.getFriends();
+        List<User> limitedFriends = allFriends.stream().limit(5).toList();
+        model.addAttribute("friends", limitedFriends);
 
         recFriendService.generateAndStoreRecommendations();
         List<RecFriend> recommendedFriends = recFriendService.getRecommendationsForCurrentUser();
