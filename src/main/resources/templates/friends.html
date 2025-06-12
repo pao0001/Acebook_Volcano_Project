@@ -52,8 +52,8 @@
             </script>
 
             <h1>Friend Requests</h1>
-            <div class="friends box" th:if="${incomingRequests != null and !incomingRequests.isEmpty()}">
-                <div th:each="request : ${incomingRequests}" class="friend-card">
+            <div id="friend-requests-list" class="friends box" th:if="${incomingRequests != null and !incomingRequests.isEmpty()}">
+                <div th:each="request : ${incomingRequests}" class="friend-card" style="margin-bottom: 20px;">
                     <a th:href="@{'/profile/' + ${request.sender.id}}" class="friend-link">
                         <div class="friend-avatar">
                             <img th:src="@{${request.sender.profile_image_src}}"
