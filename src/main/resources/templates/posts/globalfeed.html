@@ -18,6 +18,8 @@
 
         <div class="main-inner">
             <h1 style="text-align: center; color: #1877f2;">acebook feed</h1>
+            <p style="text-align:center"><a href="/feed">Go to your friends feed</a></p>
+
 
             <!-- CODE FOR FORM FOR POSTS -->
             <form class="post-form" action="#" th:action="@{/posts}" th:object="${post}" method="post" enctype="multipart/form-data">
@@ -51,6 +53,11 @@
                 </div>
 
                 <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
+                <input type="hidden" name="user_id" th:value="${current_user.id}" />
+                <input type="hidden" name="forename" th:value="${current_user.forename}" />
+                <input type="hidden" name="surname" th:value="${current_user.surname}" />
+
+
             </form>
 
             <!-- CODE FOR POST RENDERING-->
@@ -58,7 +65,7 @@
                 <li class="post-item" th:each="post : ${posts}">
                     <div class="post-container">
                         <div class="post-item">
-                            <strong th:text="${post.username}"></strong>
+                            <strong th:text="|${post.forename} ${post.surname} posted:|"></strong>
                             <span th:text="${post.formattedTimestamp}"></span>
                         </div>
 
@@ -73,7 +80,7 @@
 
                     </div>
 
-            <!-- CODE FOR COMMENT RENDERING-->
+                    <!-- CODE FOR COMMENT RENDERING-->
                     <ul class="comment-list" th:if="${commentsByPostId[post.id]}">
                         <li class="comment-item" th:each="comment : ${commentsByPostId[post.id]}">
                             <div class="comment-header">
@@ -83,7 +90,7 @@
                         </li>
                     </ul>
 
-            <!-- CODE FOR COMMENT FORM-->
+                    <!-- CODE FOR COMMENT FORM-->
                     <form class="comment-form" th:action="@{/comment}" method="post" th:object="${comment}">
                         <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
                         <input id="comment-send" type="text" th:field="*{commentContent}"

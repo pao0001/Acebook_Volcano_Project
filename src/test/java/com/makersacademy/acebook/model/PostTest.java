@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 public class PostTest {
 
-	private Post post = new Post("hello", "NULL", null, "NULL");
+	private Post post = new Post("hello", "NULL", null, "NULL", null, null, null);
 
 	@Test
 	public void postHasContent() {
