@@ -66,12 +66,12 @@
                             <span th:text="${post.formattedTimestamp}"></span>
                         </div>
 
-                        <h1 id="post-render" th:text="${post.content}"></h1>
+                        <h2 id="post-render" th:text="${post.content}"></h2>
 
-                        <div class="post-image-section" th:if="${post.post_image_src}">
-                            <!-- Display the current post image if it exists -->
+                        <!-- render img if exists -->
+                        <div class="post-image-section" th:if="${post.post_image_src != null}">
                             <div class="post-image-display">
-                                <img th:src="@{${post.post_image_src}}" alt="Post Image"/>
+                                <img th:src="@{${post.post_image_src}}" alt="Post Image" />
                             </div>
                         </div>
 
@@ -89,11 +89,11 @@
 
                     </div>
 
-            <!-- CODE FOR COMMENT RENDERING-->
+                    <!-- CODE FOR COMMENT RENDERING-->
                     <ul class="comment-list" th:if="${commentsByPostId[post.id]}">
                         <li class="comment-item" th:each="comment : ${commentsByPostId[post.id]}">
                             <div class="comment-header">
-                                <strong><span th:text="|${post.forename} ${post.surname} commented: |"></span></strong><span th:text="${comment.formattedTimestamp}"></span>
+                                <strong><span th:text="${comment.username}" ></span></strong> commented at: <span th:text="${comment.formattedTimestamp}"></span>
                             </div>
 
                             <span id="comment-render" th:text="${comment.commentContent}"></span>
@@ -113,7 +113,7 @@
                         </li>
                     </ul>
 
-            <!-- CODE FOR COMMENT FORM-->
+                    <!-- CODE FOR COMMENT FORM-->
                     <form class="comment-form" th:action="@{/comment}" method="post" th:object="${comment}">
                         <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
                         <input id="comment-send" type="text" th:field="*{commentContent}"
