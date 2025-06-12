@@ -4,38 +4,121 @@
 <head>
   <meta charset="UTF-8">
   <title>Contact</title>
+
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    .layout-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      width: 50%;
+      min-width: 300px;
+    }
+
+    form div {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    button[type="submit"] {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    .footer {
+      background-color: #f0f0f0;
+      padding: 10px;
+      margin-top: auto;
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
+<div class="layout-container">
 
-<div th:replace="fragments :: header"></div> <!--This is the header added from Fragments.html -->
+  <div th:replace="fragments :: header"></div>
 
-<h1>Contact Us</h1>
-<form action="/contact" method="post">
+  <div class="content">
+    <h1>Contact Us</h1>
+    <form action="/contact" method="post">
 
-  <div>
-    <label for="name">Name</label>
-    <input type="text" name="name" id="name" required>
+      <div>
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" required>
+      </div>
+
+      <div>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required>
+      </div>
+
+      <div>
+        <label for="message">Message</label>
+        <textarea name="message" id="message" rows="5" required></textarea>
+      </div>
+
+      <div>
+        <button type="submit">Send Email</button>
+      </div>
+
+    </form>
   </div>
 
-  <div>
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" required>
-  </div>
+  <div th:replace="fragments :: footer" class="footer"></div>
 
-  <div>
-    <label for="message">Message</label>
-    <textarea name="message" id="message" rows="4" required></textarea>
-  </div>
-
-  <div>
-    <button type="submit">Send Email</button>
-  </div>
-
-</form>
-
-<div th:replace="fragments :: footer"></div> <!--This is the footer added from Fragments.html -->
-
+</div>
 </body>
-
 </html>
