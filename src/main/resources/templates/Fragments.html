@@ -16,7 +16,7 @@
                 <div style="font-size:1.2rem; color:#333; margin-right: 1.5rem;">
                     Logged in as <b>
                         <span th:with="
-                            displayName=${(user != null ? user.forename + ' ' + user.surname :
+                            displayName=${(user != null ? currentUser.forename + ' ' + currentUser.surname :
                                           (currentUser != null ? currentUser.forename + ' ' + currentUser.surname :
                                            #authentication.principal.attributes['email']))}"
                               th:text="${displayName}">
