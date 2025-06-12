@@ -4,9 +4,9 @@ import com.makersacademy.acebook.model.FriendRequest;
 import com.makersacademy.acebook.model.RecFriend;
 import com.makersacademy.acebook.model.User;
 import com.makersacademy.acebook.repository.FriendRequestRepository;
-import com.makersacademy.acebook.repository.RecFriendRepository;
 import com.makersacademy.acebook.repository.UserRepository;
 import com.makersacademy.acebook.service.AuthenticatedUserService;
+import com.makersacademy.acebook.service.RecFriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,17 +26,18 @@ public class FriendsController {
     FriendRequestRepository friendRequestRepository;
 
     @Autowired
-    RecFriendRepository recFriendRepository;
+    AuthenticatedUserService authenticatedUserService;
 
     @Autowired
-    AuthenticatedUserService authenticatedUserService;
+    RecFriendService recFriendService;
 
     @GetMapping("/friends")
     public ModelAndView viewFriends() {
         User currentUser =  authenticatedUserService.getAuthenticatedUser();
+        recFriendService.generateAndStoreRecommendations();
         Set<User> friends = currentUser.getFriends();
         Iterable<FriendRequest> incomingRequests = friendRequestRepository.findByReceiverAndPendingTrue(currentUser);
-        List<RecFriend> recommendedFriends = recFriendRepository.findByUser(currentUser);
+        List<RecFriend> recommendedFriends = recFriendService.getRecommendationsForCurrentUser();
 
         ModelAndView mav = new ModelAndView("friends");
         mav.addObject("friends", friends);

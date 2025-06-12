@@ -3,6 +3,7 @@ package com.makersacademy.acebook.service;
 import com.makersacademy.acebook.model.User;
 import com.makersacademy.acebook.model.RecFriend;
 import com.makersacademy.acebook.repository.RecFriendRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class RecFriendService {
         this.recFriendRepository = recFriendRepository;
     }
 
+    @Transactional
     public void generateAndStoreRecommendations() {
         User currentUser = authenticatedUserService.getAuthenticatedUser();
         Set<User> currentFriends = currentUser.getFriends();
