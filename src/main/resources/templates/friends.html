@@ -34,6 +34,16 @@
 </ul>
 <p th:if="${#lists.isEmpty(incomingRequests)}">You currently have no friend requests.</p>
 
+<h1>Recommended Friends</h1>
+<ul th:if="${recommendedFriends}" th:unless="${#lists.isEmpty(recommendedFriends)}">
+    <li th:each="recFriend : ${recommendedFriends}">
+        <a th:href="@{/profile/{id}(id=${recFriend.recFriend.id})}"
+           th:text="${recFriend.recFriend.forename + ' ' + recFriend.recFriend.surname}"></a>
+        <span> (<span th:text="${recFriend.mutuals}"></span> mutual friends)</span>
+    </li>
+</ul>
+<p th:if="${#lists.isEmpty(recommendedFriends)}">Add your contact details to find people you may know!</p>
+
 <!-- Footer Fragment -->
 <div th:replace="~{fragments :: footer}"></div>
 </body>
