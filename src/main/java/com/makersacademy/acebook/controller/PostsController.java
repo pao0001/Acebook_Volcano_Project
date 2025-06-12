@@ -166,8 +166,9 @@ public class PostsController {
         User currentUser = authenticatedUserService.getAuthenticatedUser();
         model.addAttribute("current_user", currentUser);
 
-        Set<User> friends = currentUser.getFriends();
-        model.addAttribute("friends", friends);
+        Set<User> allFriends = currentUser.getFriends();
+        List<User> limitedFriends = allFriends.stream().limit(5).toList();
+        model.addAttribute("friends", limitedFriends);
 
         recFriendService.generateAndStoreRecommendations();
         List<RecFriend> recommendedFriends = recFriendService.getRecommendationsForCurrentUser();
