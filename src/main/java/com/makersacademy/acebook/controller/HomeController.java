@@ -14,8 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.Optional;
 
 
 @Controller
@@ -65,6 +68,22 @@ public class HomeController {
         return "redirect:/";
     }
 
+//       For friends search bar
+    @GetMapping("/friends/search")
+    public String searchUser(@RequestParam("query") String query, RedirectAttributes model) {
+        Optional<User> user = userRepository.findByUsernameIgnoreCase(query);
+
+        if (!user.isPresent()) {
+            user = userRepository.findFirstBySurnameIgnoreCase(query);
+        }
+
+        if (user.isPresent()) {
+            return "redirect:/profile/" + user.get().getId();
+        } else {
+            model.addFlashAttribute("searchError", "User not found");
+            return "redirect:/friends";
+            }
+    }
 
 
 }

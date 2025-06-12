@@ -52,7 +52,7 @@
 <div class="left-sidebar" th:fragment="left-sidebar">
     <!-- left sidebar -->
     <div class="sidebar-box">
-        <h3 class="sidebar-title">Friends</h3>
+        <h3 class="sidebar-title">Active Friends</h3>
         <div class="friends-list">
             <div class="friend-card" th:each="friend: ${friends}">
                 <a th:href="@{/profile/{id}(id=${friend.id})}" class="friend-link">
