@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Set;
 
@@ -133,7 +134,7 @@ public class FriendsController {
     }
 
     @PostMapping("/friends/remove")
-    public ModelAndView removeFriend(@RequestParam Long friendId) {
+    public ModelAndView removeFriend(@RequestParam Long friendId, HttpServletRequest request) {
         DefaultOidcUser principal = (DefaultOidcUser) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
@@ -152,6 +153,13 @@ public class FriendsController {
         userRepository.save(currentUser);
         userRepository.save(friend);
 
-        return new ModelAndView("redirect:/friends");
+        // Get the Referer header (the previous page URL)
+        String referer = request.getHeader("Referer");
+        if (referer == null || referer.isEmpty()) {
+            // Fallback if no referer present
+            referer = "/friends";
+        }
+
+        return new ModelAndView("redirect:" + referer);
     }
 }

@@ -295,6 +295,13 @@ body {
     display: none;
 }
 
+.image-upload-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 300px; /* Adjust for profile image size */
+}
+
 .post-submit-button {
   margin-left: auto; /* Pushes the button to the far right */
   background-color: #1877f2;
@@ -505,6 +512,12 @@ hr {
       justify-content: center;
 }
 
+.profile-banner-container.image-upload-container {
+    max-width: 100%; /* Banner usually spans full width */
+    height: 300px;
+}
+
+
 /* The grey “Profile Picture” card */
 .profile-picture-card {
   background: #b0b0b0;
@@ -682,10 +695,13 @@ hr {
         gap: 1.5rem;
 }
 
-.profile-friends-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 1.5rem;
+.profile-friend-card {
+    background: white;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
 }
 
 .profile-friend-card:hover {
@@ -702,25 +718,41 @@ hr {
 }
 
 .profile-friend-avatar-container {
-        position: relative;
-        padding-top: 100%; /* 1:1 Aspect Ratio */
+    width: 100%;
+    height: 180px; /* Fixed height for all images */
+    overflow: hidden;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f2f5;
 }
 
 .profile-friend-avatar {
-        width: 100%;
-        height: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image covers the container while maintaining aspect ratio */
+    display: block;
 }
 
 .profile-friend-info {
-        padding: 1rem;
-        text-align: center;
+    padding: 12px;
+    text-align: center;
+    flex-grow: 1; /* Allow text area to grow if needed */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center text */
 }
 
 .profile-friend-name {
-        display: block;
-        font-weight: 600;
-        margin-bottom: 0.25rem;
-        color: #050505;
+    font-weight: 600;
+    color: #050505;
+    margin-bottom: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .profile-friend-status {
@@ -746,4 +778,200 @@ hr {
 
 .profile-status-indicator.offline {
         background: #ddd;
+}
+/* Profile Action Buttons */
+.profile-action-buttons {
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.profile-action-button {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.edit-button {
+  background-color: #e7f3ff;
+  color: #1877f2;
+  border: 1px solid #1877f2;
+}
+
+.edit-button:hover {
+  background-color: #d8e6f8;
+  text-decoration: none;
+}
+
+.add-friend-button {
+  background-color: #42b72a; /* Facebook green */
+  color: white;
+}
+
+.add-friend-button:hover {
+  background-color: #36a420;
+  text-decoration: none;
+}
+
+/* Remove Friend Button (red) */
+.remove-friend-button {
+  background-color: #f02849; /* Facebook red */
+  color: white;
+}
+
+.remove-friend-button:hover {
+  background-color: #d91f3a;
+  text-decoration: none;
+}
+
+/* Container specific styles */
+.edit-button-container,
+.friend-button-container {
+  width: 100%;
+}
+
+/* Make the anchor tag behave like a button */
+a.profile-action-button {
+  display: block;
+  text-decoration: none;
+}
+
+.user-posts-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #f0f2f5;
+    border-radius: 12px;
+}
+
+.posts-title {
+    color: #1877f2;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #e4e6eb;
+    padding-bottom: 0.5rem;
+}
+.posts-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.post-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.post-user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-user-name {
+    font-weight: 600;
+    color: #050505;
+}
+
+.post-username {
+    font-size: 0.9rem;
+    color: #65676b;
+}
+
+.post-timestamp {
+    font-size: 0.8rem;
+    color: #65676b;
+}
+
+.post-content {
+    margin-bottom: 1rem;
+    white-space: pre-line;
+    line-height: 1.5;
+}
+
+.post-image-container {
+    margin-top: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.post-image {
+    width: 100%;
+    max-height: 500px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.custom-upload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    background: #1877f2;
+    color: #fff;
+    padding: 0.6em 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1em;
+    box-shadow: 0 2px 8px rgba(24,119,242,0.08);
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.custom-upload-btn:hover, .custom-upload-btn:focus {
+    background: #1455a0;
+    color: #fff;
+}
+
+.upload-input {
+    display: none;
+}
+
+.upload-icon {
+    width: 1.5em;
+    height: 1.5em;
+    filter: brightness(0) invert(1);
+}
+
+.overlay-btn {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: #1877f2;
+    color: #fff;
+    padding: 0.6em 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1em;
+    box-shadow: 0 2px 8px rgba(24,119,242,0.08);
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    transition: background 0.2s;
+    opacity: 0.92;
+    z-index: 2;
+}
+
+.overlay-btn:hover, .overlay-btn:focus {
+    background: #1455a0;
+    color: #fff;
+}
+
+.banner-overlay-btn {
+    /* For banner, you might want to put it bottom left */
+    left: 16px;
+    right: auto;
 }

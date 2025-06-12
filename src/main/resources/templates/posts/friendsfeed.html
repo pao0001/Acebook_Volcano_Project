@@ -13,31 +13,13 @@
 
     <div class="layout-container">
 
-        <!-- left sidebar -->
-        <div class="left-sidebar">
-            <div class="sidebar-box">
-                <h3 class="sidebar-title">Friends</h3>
-                <div class="friends-list">
-                    <div class="friend-card" th:each="friend: ${friends}">
-                        <a th:href="@{/profile/{id}(id=${friend.id})}" class="friend-link">
-                            <div class="friend-avatar">
-                                <img th:src="@{${friend.profile_image_src}}" alt="Friend's profile picture"
-                                     onerror="this.onerror=null; this.src='/assets/default-profile.png'"/>
-                            </div>
-                            <div class="friend-info">
-                                <span class="friend-name" th:text="${friend.forename + ' ' + friend.surname}"></span>
-                                <span class="friend-status">Active now</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- LEFT SIDEBAR -->
+        <div th:replace="~{fragments :: left-sidebar}"></div>
 
 
         <div class="main-inner">
             <h1 style="text-align: center; color: #1877f2;">Friends Feed</h1>
-<!--            <p style="text-align:center"><a href="/">Go to global feed</a></p>-->
+            <!--<p style="text-align:center"><a href="/">Go to global feed</a></p>-->
 
             <!-- CODE FOR FORM FOR POSTS -->
             <form class="post-form" action="#" th:action="@{/posts}" th:object="${post}" method="post" enctype="multipart/form-data">
@@ -88,9 +70,9 @@
 
                         <h1 id="post-render" th:text="${post.content}"></h1>
 
-                        <div class="post-image-section">
+                        <div class="post-image-section" th:if="${post.post_image_src}">
                             <!-- Display the current post image if it exists -->
-                            <div class="post-image-display" th:if="${post.post_image_src}">
+                            <div class="post-image-display">
                                 <img th:src="@{${post.post_image_src}}" alt="Post Image"/>
                             </div>
                         </div>
@@ -149,13 +131,8 @@
             </ul>
         </div>
 
-        <!-- New right sidebar -->
-        <div class="right-sidebar">
-            <div class="sidebar-box">
-                <h3 class="sidebar-title">Right Sidebar</h3>
-                <!-- Your right sidebar content here -->
-            </div>
-        </div>
+        <!-- RIGHT SIDEBAR -->
+        <div th:replace="~{fragments :: right-sidebar}"></div>
 
     </div>
 

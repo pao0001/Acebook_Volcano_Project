@@ -78,16 +78,94 @@
         <!-- Your right sidebar content here -->
     </div>
 </div>
+
 <div th:fragment="posts">
-    <h1>Posts</h1>
+    <div class="user-posts-section">
+        <h1 class="posts-title">Posts</h1>
+
+        <div class="posts-container">
+            <div class="post-card" th:each="post : ${profilePosts}" th:if="${post.user_id == user.id}">
+                <div class="post-header">
+                    <div class="post-user-info">
+                        <span class="post-user-name" th:text="${post.forename + ' ' + post.surname}"></span>
+                        <span class="post-username" th:text="'@' + ${post.username}"></span>
+                    </div>
+                    <div class="post-timestamp" th:text="${post.getFormattedTimestamp()}"></div>
+                </div>
+
+                <div class="post-content" th:text="${post.content}"></div>
+
+                <div class="post-image-container" th:if="${post.post_image_src}">
+                    <img class="post-image" th:src="@{${post.post_image_src}}" alt="Post image"/>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 <div th:fragment="about-section">
     <div class="about-details">
         <div class="detail-item">
-            <h1>About</h1>
+            <div class="profile-details-box">
+                <div class="detail-label">Name</div>
+                <div class="detail-value" th:text="${user.forename + ' ' + user.surname}"></div>
+            </div>
 
+            <div class="profile-details-box" th:if="${user.gender}">
+                <div class="detail-label">Gender</div>
+                <div class="detail-value" th:text="${user.gender}"></div>
+            </div>
+
+            <div class="profile-details-box" th:if="${user.pronouns}">
+                <div class="detail-label">Pronouns</div>
+                <div class="detail-value" th:text="${user.pronouns}"></div>
+            </div>
+
+            <div class="profile-details-box" th:if="${user.dob}">
+                <div class="detail-label">Birthday</div>
+                <div class="detail-value" th:text="${#temporals.format(user.dob, 'MMMM d, yyyy')}"></div>
+            </div>
+
+            <div class="profile-details-box" th:if="${user.currentCity}">
+                <div class="detail-label">Current City</div>
+                <div class="detail-value" th:text="${user.currentCity}"></div>
+            </div>
+
+            <div class="profile-details-box" th:if="${user.hometown}">
+                <div class="detail-label">Hometown</div>
+                <div class="detail-value" th:text="${user.hometown}"></div>
+            </div>
+
+            <div class="profile-details-box" th:if="${user.job}">
+                <div class="detail-label">Occupation</div>
+                <div class="detail-value" th:text="${user.job}"></div>
+            </div>
+
+            <div class="profile-details-box" th:if="${user.school}">
+                <div class="detail-label">Education</div>
+                <div class="detail-value" th:text="${user.school}"></div>
+            </div>
+
+            <div class="profile-details-box" th:if="${user.relationshipStatus}">
+                <div class="detail-label">Relationship Status</div>
+                <div class="detail-value" th:text="${user.relationshipStatus}"></div>
+            </div>
+
+            <div class="profile-details-box" th:if="${user.sexualOrientation}">
+                <div class="detail-label">Sexual Orientation</div>
+                <div class="detail-value" th:text="${user.sexualOrientation}"></div>
+            </div>
+
+            <div class="profile-details-box" th:if="${user.politicalViews}">
+                <div class="detail-label">Political Views</div>
+                <div class="detail-value" th:text="${user.politicalViews}"></div>
+            </div>
+
+            <div class="profile-details-box" th:if="${user.religion}">
+                <div class="detail-label">Religion</div>
+                <div class="detail-value" th:text="${user.religion}"></div>
+            </div>
         </div>
-        <!-- More about details -->
     </div>
 </div>
 
@@ -96,7 +174,7 @@
         <h1 class="profile-friends-title">Friends</h1>
         <div class="profile-friends-grid">
             <div class="profile-friend-card" th:each="friend: ${profileFriends}">
-                <a th:href="@{/profile/{id}(id=${friend.id})}" class="friend-link">
+                <a th:href="@{/profile/{id}(id=${friend.id})}" class="profile-friend-link">
                     <div class="profile-friend-avatar-container">
                         <img class="profile-friend-avatar"
                              th:src="@{${friend.profile_image_src}}"
@@ -113,11 +191,5 @@
                 </a>
             </div>
         </div>
-    </div>
-</div>
-
-<div th:fragment="photos-grid">
-    <div class="photo-albums">
-        <h1>Photos</h1>
     </div>
 </div>
