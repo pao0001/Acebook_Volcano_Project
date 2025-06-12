@@ -110,7 +110,7 @@ public class FriendsController {
     }
 
     @PostMapping("/friends/remove")
-    public ModelAndView removeFriend(@RequestParam Long friendId) {
+    public ModelAndView removeFriend(@RequestParam Long friendId, HttpServletRequest request) {
         User currentUser = authenticatedUserService.getAuthenticatedUser();
         User friend = userRepository.findById(friendId)
                 .orElseThrow(() -> new RuntimeException("Friend not found"));
