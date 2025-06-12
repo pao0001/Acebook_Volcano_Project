@@ -28,6 +28,9 @@ public class UploadController {
     @Value("${upload.posts}")
     String postsUploadDir;
 
+    @Value("${upload.banner}")
+    String bannerUploadDir;
+
     @Autowired
     UserRepository userRepository;
 
@@ -81,7 +84,7 @@ public class UploadController {
         user.setProfile_image_src("/uploads/profile/" + profileFileName);
         userRepository.save(user);
 
-        return "redirect:/myProfile";
+        return "/uploads/profile/" + profileFileName;
     }
 
     @PostMapping("/uploadPostImage")
@@ -136,6 +139,50 @@ public class UploadController {
         postRepository.save(savedPost);
         return "redirect:/";
     }
+    @PostMapping("/uploadBannerImage")
+    public String handleBannerImageUpload(
+            @RequestParam("image") MultipartFile image) throws IOException {
+
+        if (image.isEmpty()) {
+            return "redirect:/myProfile?error=empty";
+        }
+
+        // Use AuthenticatedUserService to get the current authenticated user
+        User user = authenticatedUserService.getAuthenticatedUser();
+
+        // Rename file: authId.extension
+        String extension = getFileExtension(image.getOriginalFilename());
+        String sanitizedId = user.getAuthId().replaceAll("[^a-zA-Z0-9_-]", "_");
+        String bannerFileName = sanitizedId + "_banner." + extension;
+
+        // Create upload directory if it doesn't exist
+        Path uploadPath = Paths.get(bannerUploadDir); // Define this as @Value("${upload.banner}") String bannerUploadDir;
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        // Delete old banner image if it exists
+        if (user.getBanner_image_src() != null && !user.getBanner_image_src().isEmpty()) {
+            String oldFileName = user.getBanner_image_src().replace("/uploads/banner/", "");
+            Path oldImagePath = uploadPath.resolve(oldFileName);
+            try {
+                Files.deleteIfExists(oldImagePath);
+            } catch (IOException e) {
+                System.err.println("Failed to delete old banner image: " + e.getMessage());
+            }
+        }
+
+        // Save new banner image
+        Path destination = uploadPath.resolve(bannerFileName);
+        image.transferTo(destination.toFile());
+
+        // Update user with new banner image path (web-accessible path)
+        user.setBanner_image_src("/uploads/banner/" + bannerFileName);
+        userRepository.save(user);
+
+        return "/uploads/banner/" + bannerFileName;
+    }
+
     private String getFileExtension(String filename) {
         int dotIndex = filename.lastIndexOf(".");
         return (dotIndex != -1) ? filename.substring(dotIndex + 1) : "";

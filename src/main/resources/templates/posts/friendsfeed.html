@@ -17,7 +17,7 @@
 
         <div class="main-inner">
             <h1 style="text-align: center; color: #1877f2;">Friends Feed</h1>
-<!--            <p style="text-align:center"><a href="/">Go to global feed</a></p>-->
+            <!--<p style="text-align:center"><a href="/">Go to global feed</a></p>-->
 
             <!-- CODE FOR FORM FOR POSTS -->
             <form class="post-form" action="#" th:action="@{/posts}" th:object="${post}" method="post" enctype="multipart/form-data">
@@ -68,9 +68,9 @@
 
                         <h1 id="post-render" th:text="${post.content}"></h1>
 
-                        <div class="post-image-section">
+                        <div class="post-image-section" th:if="${post.post_image_src}">
                             <!-- Display the current post image if it exists -->
-                            <div class="post-image-display" th:if="${post.post_image_src}">
+                            <div class="post-image-display">
                                 <img th:src="@{${post.post_image_src}}" alt="Post Image"/>
                             </div>
                         </div>

@@ -1,146 +1,158 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>User Profile</title>
+    <meta charset="UTF-8">
+    <title>Edit Profile</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="/main.css">
+    <script defer>
+        // Same JS as in profile.html for tab switching
+        document.addEventListener('DOMContentLoaded', function() {
+          const buttons = document.querySelectorAll('.nav-button');
+          const sections = document.querySelectorAll('.content-section');
+          buttons.forEach(button => {
+            button.addEventListener('click', function() {
+              buttons.forEach(btn => btn.classList.remove('active'));
+              sections.forEach(section => section.classList.remove('active-section'));
+              this.classList.add('active');
+              const targetId = this.getAttribute('data-target');
+              document.getElementById(targetId).classList.add('active-section');
+            });
+          });
+        });
+    </script>
 </head>
 <body>
-<!-- Header Fragment -->
+
+<!-- HEADER -->
 <div th:replace="~{fragments :: header}"></div>
 
-<h1>User Profile</h1>
+<div class="layout-container">
+    <!-- LEFT SIDEBAR -->
+    <div th:replace="~{fragments :: left-sidebar}"></div>
 
-<p><strong>Username:</strong> <span th:text="${user.username}">Email address</span></p>
-<p><strong>Description:</strong> <span th:text="${user.description}">Description</span></p>
-<p><strong>Forename:</strong> <span th:text="${user.forename}">Forename</span></p>
-<p><strong>Surname:</strong> <span th:text="${user.surname}">Surname</span></p>
-<p><strong>Gender:</strong> <span th:text="${user.gender}">Gender</span></p>
-<p><strong>Pronouns:</strong> <span th:text="${user.pronouns}">Pronouns</span></p>
-<p><strong>Current City:</strong> <span th:text="${user.currentCity}">Current City</span></p>
-<p><strong>Hometown:</strong> <span th:text="${user.hometown}">Hometown</span></p>
-<p><strong>Job:</strong> <span th:text="${user.job}">Job</span></p>
-<p><strong>School:</strong> <span th:text="${user.school}">School</span></p>
-<p><strong>Relationship Status:</strong> <span th:text="${user.relationshipStatus}">Relationship Status</span></p>
-<p><strong>Sexual Orientation:</strong> <span th:text="${user.sexualOrientation}">Sexual Orientation</span></p>
-<p><strong>Political Views:</strong> <span th:text="${user.politicalViews}">Political Views</span></p>
-<p><strong>Religion:</strong> <span th:text="${user.religion}">Religion</span></p>
+    <!-- MAIN EDIT PROFILE CONTENT -->
+    <main class="main-content">
+        <div class="main-inner">
+            <form th:action="@{/myProfile-update}" th:object="${user}" method="post" enctype="multipart/form-data">
+                <div class="profile-grid">
+                    <!-- PROFILE PICTURE -->
+                    <div class="profile-picture-container image-upload-container">
+                        <img class="profile-picture"
+                             th:src="@{${user.profile_image_src}}"
+                             alt="Profile Picture"
+                             style="width: 100%; height: 100%; object-fit: cover;">
+                        <!-- Overlayed Profile Image Upload Button -->
+                        <label for="profileImage" class="custom-upload-btn overlay-btn">
+                            <img src="/assets/camera-icon.png" alt="Upload" class="upload-icon" />
+                            <input type="file" id="profileImage" name="profileImage" accept="image/*" class="upload-input" />
+                        </label>
+                    </div>
 
-<!-- testing clickable links to user profiles -->
-<br>
-<p><strong>This is an example of how clicking your friends' usernames will return their profiles:</strong></p>
-<ul>
-    <li th:each="user : ${users}">
-        <a th:href="@{/profile/{id}(id=${user.id})}">[[${user.username}]]</a>
-    </li>
-</ul>
+                    <!-- BANNER IMAGE -->
+                    <div class="profile-banner-container image-upload-container" style="position: relative;">
+                        <img th:src="@{${user.banner_image_src}}" alt="Banner Image"
+                             style="width: 100%; height: 300px; object-fit: cover; border-radius: 12px;">
+                        <!-- Overlayed Banner Image Upload Button -->
+                        <label for="bannerImage" class="custom-upload-btn overlay-btn banner-overlay-btn">
+                            <img src="/assets/camera-icon.png" alt="Upload" class="upload-icon" />
+                            <input type="file" id="bannerImage" name="bannerImage" accept="image/*" class="upload-input" />
+                        </label>
+                    </div>
 
-<!-- testing a form for updating user -->
-<br>
-<form th:action="@{/myProfile}" th:object="${user}" method="post">
-    <input type="hidden" name="field" value="forename" />
-    <label for="forename">Forename:</label>
-    <input type="text" id="forename" th:field="*{forename}" />
-    <button type="submit" id="update forename">Update Forename</button>
-</form>
 
-<form th:action="@{/myProfile}" th:object="${user}" method="post">
-    <input type="hidden" name="field" value="surname" />
-    <label for="surname">Surname:</label>
-    <input type="text" id="surname" th:field="*{surname}" />
-    <button type="submit" id="update surname">Update Surname</button>
-</form>
+                    <!-- USER INFO (Editable) -->
+                    <div class="profile-info-container">
+                        <div class="profile-details-box">
+                            <div class="detail-label">Forename</div>
+                            <input type="text" th:field="*{forename}" class="detail-value">
+                        </div>
+                        <div class="profile-details-box">
+                            <div class="detail-label">Surname</div>
+                            <input type="text" th:field="*{surname}" class="detail-value">
+                        </div>
+                        <div class="profile-details-box">
+                            <div class="detail-label">Gender</div>
+                            <input type="text" th:field="*{gender}" class="detail-value">
+                        </div>
+                        <div class="profile-details-box">
+                            <div class="detail-label">Pronouns</div>
+                            <input type="text" th:field="*{pronouns}" class="detail-value">
+                        </div>
+                        <div class="profile-details-box">
+                            <div class="detail-label">Occupation</div>
+                            <input type="text" th:field="*{job}" class="detail-value">
+                        </div>
+                        <div class="profile-details-box">
+                            <div class="detail-label">Education</div>
+                            <input type="text" th:field="*{school}" class="detail-value">
+                        </div>
+                        <div class="profile-details-box">
+                            <div class="detail-label">Current City</div>
+                            <input type="text" th:field="*{currentCity}" class="detail-value">
+                        </div>
+                        <div class="profile-details-box">
+                            <div class="detail-label">Hometown</div>
+                            <input type="text" th:field="*{hometown}" class="detail-value">
+                        </div>
+                        <div class="profile-details-box">
+                            <div class="detail-label">Relationship Status</div>
+                            <input type="text" th:field="*{relationshipStatus}" class="detail-value">
+                        </div>
+                        <div class="profile-details-box">
+                            <div class="detail-label">Sexual Orientation</div>
+                            <input type="text" th:field="*{sexualOrientation}" class="detail-value">
+                        </div>
+                        <div class="profile-details-box">
+                            <div class="detail-label">Political Views</div>
+                            <input type="text" th:field="*{politicalViews}" class="detail-value">
+                        </div>
+                        <div class="profile-details-box">
+                            <div class="detail-label">Religion</div>
+                            <input type="text" th:field="*{religion}" class="detail-value">
+                        </div>
+                        <div class="profile-bio">
+                            <div class="detail-label">About Me</div>
+                            <textarea th:field="*{description}" class="detail-value" style="width:100%; min-height:100px;"></textarea>
+                        </div>
+                        <button type="submit" class="profile-action-button edit-button" style="margin-top: 1.5em;">
+                            Save Changes
+                        </button>
+                    </div>
 
-<form th:action="@{/myProfile}" th:object="${user}" method="post">
-    <input type="hidden" name="field" value="description" />
-    <label for="description">Description:</label>
-    <textarea id="description" th:field="*{description}"></textarea>
-    <button type="submit" id="update description">Update Description</button>
-</form>
+                    <!-- CONTENT SECTIONS (OPTIONAL, CAN ADD YOUR POSTS, FRIENDS, ETC.) -->
+                    <div class="profile-content-container">
+                        <div class="profile-nav-card">
+                            <div class="profile-buttons">
+                                <button type="button" class="nav-button active" data-target="timeline">Timeline</button>
+                                <button type="button" class="nav-button" data-target="about">About</button>
+                                <button type="button" class="nav-button" data-target="friends">Friends</button>
+                            </div>
+                        </div>
+                        <div id="timeline" class="content-section active-section">
+                            <h3>Timeline</h3>
+                            <div th:replace="~{fragments :: posts}"></div>
+                        </div>
+                        <div id="about" class="content-section">
+                            <h3>About</h3>
+                            <div th:replace="~{fragments :: about-section}"></div>
+                        </div>
+                        <div id="friends" class="content-section">
+                            <h3>Friends</h3>
+                            <div th:replace="~{fragments :: friends-list}"></div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
 
-<form th:action="@{/myProfile}" th:object="${user}" method="post">
-    <input type="hidden" name="field" value="gender" />
-    <label for="gender">Gender:</label>
-    <input type="text" id="gender" th:field="*{gender}" />
-    <button type="submit" id="update-gender">Update Gender</button>
-</form>
-
-<form th:action="@{/myProfile}" th:object="${user}" method="post">
-    <input type="hidden" name="field" value="pronouns" />
-    <label for="pronouns">Pronouns:</label>
-    <input type="text" id="pronouns" th:field="*{pronouns}" />
-    <button type="submit" id="update-pronouns">Update Pronouns</button>
-</form>
-
-<form th:action="@{/myProfile}" th:object="${user}" method="post">
-    <input type="hidden" name="field" value="currentCity" />
-    <label for="currentCity">Current City:</label>
-    <input type="text" id="currentCity" th:field="*{currentCity}" />
-    <button type="submit" id="update-currentCity">Update Current City</button>
-</form>
-
-<form th:action="@{/myProfile}" th:object="${user}" method="post">
-    <input type="hidden" name="field" value="hometown" />
-    <label for="hometown">Hometown:</label>
-    <input type="text" id="hometown" th:field="*{hometown}" />
-    <button type="submit" id="update-hometown">Update Hometown</button>
-</form>
-
-<form th:action="@{/myProfile}" th:object="${user}" method="post">
-    <input type="hidden" name="field" value="job" />
-    <label for="job">Job:</label>
-    <input type="text" id="job" th:field="*{job}" />
-    <button type="submit" id="update-job">Update Job</button>
-</form>
-
-<form th:action="@{/myProfile}" th:object="${user}" method="post">
-    <input type="hidden" name="field" value="school" />
-    <label for="school">School:</label>
-    <input type="text" id="school" th:field="*{school}" />
-    <button type="submit" id="update-school">Update School</button>
-</form>
-
-<form th:action="@{/myProfile}" th:object="${user}" method="post">
-    <input type="hidden" name="field" value="relationshipStatus" />
-    <label for="relationshipStatus">Relationship Status:</label>
-    <input type="text" id="relationshipStatus" th:field="*{relationshipStatus}" />
-    <button type="submit" id="update-relationshipStatus">Update Relationship Status</button>
-</form>
-
-<form th:action="@{/myProfile}" th:object="${user}" method="post">
-    <input type="hidden" name="field" value="sexualOrientation" />
-    <label for="sexualOrientation">Sexual Orientation:</label>
-    <input type="text" id="sexualOrientation" th:field="*{sexualOrientation}" />
-    <button type="submit" id="update-sexualOrientation">Update Sexual Orientation</button>
-</form>
-
-<form th:action="@{/myProfile}" th:object="${user}" method="post">
-    <input type="hidden" name="field" value="politicalViews" />
-    <label for="politicalViews">Political Views:</label>
-    <input type="text" id="politicalViews" th:field="*{politicalViews}" />
-    <button type="submit" id="update-politicalViews">Update Political Views</button>
-</form>
-
-<form th:action="@{/myProfile}" th:object="${user}" method="post">
-    <input type="hidden" name="field" value="religion" />
-    <label for="religion">Religion:</label>
-    <input type="text" id="religion" th:field="*{religion}" />
-    <button type="submit" id="update-religion">Update Religion</button>
-</form>
-
-<!-- Upload image form -->
-<form th:action="@{/uploadProfileImage}" method="post" enctype="multipart/form-data">
-    <label for="image">Choose profile image:</label>
-    <input type="file" id="image" name="image" accept="image/*" required />
-
-    <button type="submit">Upload</button>
-</form>
-
-<!-- Display the current profile image if it exists -->
-<div th:if="${user.profile_image_src}">
-    <p>Current Profile Image:</p>
-    <img th:src="@{${user.profile_image_src}}" alt="Profile Image" style="max-width: 200px; max-height: 200px;" />
+    <!-- RIGHT SIDEBAR -->
+    <div th:replace="~{fragments :: right-sidebar}"></div>
 </div>
 
-<!-- Footer Fragment -->
+<!-- FOOTER -->
 <div th:replace="~{fragments :: footer}"></div>
+
 </body>
 </html>
