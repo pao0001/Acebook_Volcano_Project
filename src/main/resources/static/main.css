@@ -1119,3 +1119,97 @@ ul.friends-list li:last-child {
     font-weight: 600;
     color: #050505;
 }
+
+.complete-details-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1.5rem; /* Increased padding for better spacing */
+    flex-grow: 1; /* Allows container to take available vertical space */
+    min-height: calc(100vh - 120px); /* Adjust based on header/footer height, similar to layout-container */
+    box-sizing: border-box; /* Include padding in height calculation */
+}
+
+.details-card {
+    background-color: #dce8fb; /* Light blue background from your sidebars */
+    padding: 2.5rem; /* More generous padding */
+    border-radius: 12px;
+    border: 2px solid #6c9fd8; /* Blue border from your sidebars */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Stronger shadow for prominence */
+    max-width: 550px; /* Control card width */
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.details-card h1 {
+    color: #1877f2; /* Acebook blue */
+    margin-bottom: 1.5rem;
+    font-size: 2em; /* Larger heading */
+    text-align: center; /* Ensure heading is centered */
+}
+
+.details-card .intro-text {
+    color: #333;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.details-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem; /* Spacing between form groups */
+}
+
+.form-group {
+    text-align: left; /* Align labels and inputs to the left */
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #1877f2; /* Acebook blue for labels */
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"] {
+    padding: 0.8rem 1rem;
+    border: 1px solid #a3c1ec; /* Lighter blue border */
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 100%; /* Full width within form-group */
+    box-sizing: border-box; /* Include padding in width */
+    transition: border-color 0.2s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="date"]:focus {
+    border-color: #1877f2; /* Highlight on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.2); /* Soft blue glow */
+}
+
+.submit-button {
+    background-color: #1877f2; /* Acebook blue */
+    color: white;
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1.5rem; /* Space above the button */
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    width: auto; /* Allow button to size to content */
+    align-self: center; /* Center the button within the flex column */
+}
+
+.submit-button:hover {
+    background-color: #166fe5; /* Slightly darker blue on hover */
+    transform: translateY(-1px); /* Subtle lift effect */
+}
