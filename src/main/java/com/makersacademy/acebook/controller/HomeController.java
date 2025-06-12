@@ -51,7 +51,7 @@ public class HomeController {
     private UserRepository userRepository;
 
 
-    @GetMapping("/checkDetails")
+    @GetMapping("/completeDetails")
     public String checkDetails(Principal principal, Model model){
         String authID = principal.getName();
         User user = userRepository.findUserByAuthId(authID)
@@ -66,6 +66,22 @@ public class HomeController {
             return "completeDetails";
         }
         return "redirect:/";
+    }
+
+    @PostMapping("/completeDetails")
+    public String completeDetails(@ModelAttribute User userUpdates, Principal principal) {
+        String authID = principal.getName();
+        User existingUser = userRepository.findUserByAuthId(authID)
+                .orElseThrow(() -> new RuntimeException("User not Found"));
+
+        // Update the existing user's details with the submitted form data
+        existingUser.setForename(userUpdates.getForename());
+        existingUser.setSurname(userUpdates.getSurname());
+        existingUser.setDob(userUpdates.getDob());
+
+        userRepository.save(existingUser); // Save the updated user to the database
+
+        return "redirect:/"; // Redirect to the homepage or a confirmation page
     }
 
 //       For friends search bar
