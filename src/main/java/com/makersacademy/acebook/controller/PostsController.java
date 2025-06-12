@@ -169,6 +169,10 @@ public class PostsController {
         Set<User> friends = currentUser.getFriends();
         model.addAttribute("friends", friends);
 
+        // Add suggested friends
+        List<RecFriend> recommendedFriends = recFriendRepository.findByUser(currentUser);
+        model.addAttribute("recommendedFriends", recommendedFriends);
+
         // like counts for posts
         Map<Long, Long> likeCountsByPostId = new HashMap<>();
         for (Post post : feedPosts) {
