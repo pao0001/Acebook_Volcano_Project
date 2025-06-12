@@ -19,7 +19,7 @@
             <!-- Right side: logged-in text + logout, grouped -->
             <div style="display: flex; align-items: center;" sec:authorize="isAuthenticated()">
                 <div style="font-size:1.2rem; color:#333; margin-right: 1.5rem;">
-                    Logged in as <b><span sec:authentication="principal.attributes['email']"></span></b>
+                    Logged in as <b><span th:text="${current_user.forename + ' ' + current_user.surname}"></span></b>
                 </div>
                 <a href="/logout" style="padding: 0.5rem 1rem; text-decoration:none; color:#fff; font-weight:bold; background-color: #c00; border-radius: 5px;">
                     Logout
@@ -52,8 +52,9 @@
 <div class="left-sidebar" th:fragment="left-sidebar">
     <!-- left sidebar -->
     <div class="sidebar-box">
-        <h3 class="sidebar-title">Friends</h3>
-        <div class="friends-list">
+        <h3 class="sidebar-title">Active Friends</h3>
+        <div class="friends-list limited-height">
+            <div th:if="${#lists.isEmpty(friends)}" style="height: 450px;"></div>
             <div class="friend-card" th:each="friend: ${friends}">
                 <a th:href="@{/profile/{id}(id=${friend.id})}" class="friend-link">
                     <div class="friend-avatar">
@@ -67,15 +68,44 @@
                 </a>
             </div>
         </div>
+        <div style="height: 30px;"></div>
+
+        <!-- sponsored ad -->
+        <h3 class="sidebar-title">Sponsored Ads</h3>
+        <a href="https://www.example.com" target="_blank" rel="noopener noreferrer" class="sponsored-link">
+            <img src="https://i.imgur.com/mYqpBLc.jpg" alt="Sponsored Ad" class="sponsored-image" />
+        </a>
     </div>
 </div>
 
 <!-- right-sidebar Fragment -->
 <div class="right-sidebar" th:fragment="right-sidebar">
-    <!-- New right sidebar -->
     <div class="sidebar-box">
-        <h3 class="sidebar-title">Right Sidebar</h3>
-        <!-- Your right sidebar content here -->
+        <h3 class="sidebar-title">People You May Know</h3>
+        <div class="friends-list limited-height">
+            <div th:if="${#lists.isEmpty(recommendedFriends)}" style="height: 450px;"></div>
+            <div class="friend-card" th:each="rec : ${recommendedFriends}">
+                <a th:href="@{/profile/{id}(id=${rec.recFriend.id})}" class="friend-link">
+                    <div class="friend-avatar">
+                        <img th:src="@{${rec.recFriend.profile_image_src}}"
+                             alt="Recommended friend's profile picture"
+                             onerror="this.onerror=null; this.src='/assets/default-profile.png'"/>
+                    </div>
+                    <div class="friend-info">
+                        <span class="friend-name"
+                              th:text="${rec.recFriend.forename + ' ' + rec.recFriend.surname}"></span>
+                        <span class="friend-status" th:text="${rec.mutuals + ' mutual friends'}"></span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div style="height: 30px;"></div>
+
+        <!-- sponsored ad -->
+        <h3 class="sidebar-title">Sponsored Ads</h3>
+        <a href="https://www.example.com" target="_blank" rel="noopener noreferrer" class="sponsored-link">
+            <img src="https://i.imgur.com/szD0LLU.jpg" alt="Sponsored Ad" class="sponsored-image" />
+        </a>
     </div>
 </div>
 

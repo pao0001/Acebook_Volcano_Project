@@ -56,8 +56,9 @@ body {
     padding: 1.5rem;
     border-radius: 12px;
     border: 2px solid #6c9fd8;
-    flex: 1; /* Makes sidebar boxes fill available height */
+    flex: 0;
     margin-top: 0; /* Aligns with post form */
+    padding-bottom: 30px;
 }
 
 /* Friends sidebar styling */
@@ -408,6 +409,7 @@ body {
 .comment-item {
     margin-bottom: 0.8em;
     padding-bottom: 0.8em;
+    padding-left: 1.2em;
     border-bottom: 1px solid #d0e0ff;
     list-style-type: none;
     margin-left: 0;
@@ -974,4 +976,21 @@ a.profile-action-button {
     /* For banner, you might want to put it bottom left */
     left: 16px;
     right: auto;
+
+.sponsored-image {
+    width: 100%;          /* Fill the sidebar width */
+    max-width: none;      /* Remove any max-width restriction */
+    height: 400px;        /* Taller vertical size, adjust as needed */
+    object-fit: cover;    /* Cover entire box, cropping if needed */
+    border-radius: 8px;   /* Slightly rounded corners for a nicer look */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow to pop out */
+    display: block;
+}
+
+.limited-height {
+    max-height: 400px;
+    min-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    }
 }
