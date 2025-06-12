@@ -12,45 +12,8 @@
 <div class="main-content">
 
     <div class="layout-container">
-
-        <!-- left sidebar -->
-        <div class="left-sidebar">
-            <div class="sidebar-box">
-                <h3 class="sidebar-title">Friends</h3>
-                <div class="friends-list">
-                    <div class="friend-card" th:each="friend: ${friends}">
-                        <a th:href="@{/profile/{id}(id=${friend.id})}" class="friend-link">
-                            <div class="friend-avatar">
-                                <img th:src="@{${friend.profile_image_src}}" alt="Friend's profile picture"
-                                     onerror="this.onerror=null; this.src='/assets/default-profile.png'"/>
-                            </div>
-                            <div class="friend-info">
-                                <span class="friend-name" th:text="${friend.forename + ' ' + friend.surname}"></span>
-                                <span class="friend-status">Active now</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <h3 class="sidebar-title">People You May Know</h3>
-                <div class="friends-list">
-                    <div class="friend-card" th:each="rec : ${recommendedFriends}">
-                        <a th:href="@{/profile/{id}(id=${rec.recFriend.id})}" class="friend-link">
-                            <div class="friend-avatar">
-                                <img th:src="@{${rec.recFriend.profile_image_src}}"
-                                     alt="Recommended friend's profile picture"
-                                     onerror="this.onerror=null; this.src='/assets/default-profile.png'"/>
-                            </div>
-                            <div class="friend-info">
-                        <span class="friend-name"
-                              th:text="${rec.recFriend.forename + ' ' + rec.recFriend.surname}"></span>
-                                <span class="friend-status" th:text="${rec.mutuals + ' mutual friends'}"></span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <!-- LEFT SIDEBAR -->
+        <div th:replace="~{fragments :: left-sidebar}"></div>
 
         <div class="main-inner">
             <h1 style="text-align: center; color: #1877f2;">Friends Feed</h1>

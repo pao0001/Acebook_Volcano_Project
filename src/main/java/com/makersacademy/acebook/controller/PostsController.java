@@ -9,6 +9,7 @@ import com.makersacademy.acebook.repository.PostRepository;
 import com.makersacademy.acebook.repository.RecFriendRepository;
 import com.makersacademy.acebook.repository.LikeRepository;
 import com.makersacademy.acebook.service.AuthenticatedUserService;
+import com.makersacademy.acebook.service.RecFriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,6 +47,9 @@ public class PostsController {
 
     @Autowired
     RecFriendRepository recFriendRepository;
+
+    @Autowired
+    RecFriendService recFriendService;
 
     @GetMapping("/globalfeed")
     public String index(Model model) {
@@ -169,8 +173,8 @@ public class PostsController {
         Set<User> friends = currentUser.getFriends();
         model.addAttribute("friends", friends);
 
-        // Add suggested friends
-        List<RecFriend> recommendedFriends = recFriendRepository.findByUser(currentUser);
+        recFriendService.generateAndStoreRecommendations();
+        List<RecFriend> recommendedFriends = recFriendService.getRecommendationsForCurrentUser();
         model.addAttribute("recommendedFriends", recommendedFriends);
 
         // like counts for posts
