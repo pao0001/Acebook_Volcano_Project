@@ -436,32 +436,30 @@ INSERT INTO friends (user_id, friend_id) VALUES
 (21, 1),
 
 -- Mutual friendships among the 20 friends (reciprocal pairs)
-(2, 3),
-(3, 2),
-(2, 4),
-(4, 2),
-(3, 5),
-(5, 3),
-(4, 6),
-(6, 4),
-(5, 7),
-(7, 5),
-(6, 8),
-(8, 6),
-(7, 9),
-(9, 7),
-(8, 10),
-(10, 8),
-(9, 11),
-(11, 9),
-(10, 12),
-(12, 10),
-(11, 13),
-(13, 11),
-(12, 14),
-(14, 12),
-(13, 15),
-(15, 13);
+-- Mutual 22 friends
+(22, 2), (2, 22),
+(22, 3), (3, 22),
+(22, 4), (4, 22),
+
+-- Mutual 23 friends
+(23, 5), (5, 23),
+(23, 6), (6, 23),
+(23, 7), (7, 23),
+
+-- Mutual 24 friends
+(24, 8), (8, 24),
+(24, 9), (9, 24),
+(24, 10), (10, 24),
+
+-- Mutual 25 friends
+(25, 11), (11, 25),
+(25, 12), (12, 25),
+(25, 13), (13, 25),
+
+-- Mutual 26 friends
+(26, 14), (14, 26),
+(26, 15), (15, 26),
+(26, 16), (16, 26);
 
 -- 🔴 SEEDING FRIEND REQUESTS TABLE 🔴 --
 INSERT INTO friend_requests (sender_id, receiver_id, pending, sent_at)
