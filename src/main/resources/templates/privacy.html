@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Privacy and Cookies</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #ffffff, #f2f6fc);
+    }
+
+    .content-wrapper {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 20px;
+    text-align: center;
+
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 80px auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #1877f2;
+      margin-bottom: 10px;
+      letter-spacing: -1.2px;
+    }
+
+    .tagline {
+      font-size: 1.25rem;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+      ul {
+      list-style: none;
+      padding-left: 0;
+      margin-left: 0;
+    }
+
+    ul.features {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 30px;
+      color: #444;
+      font-size: 1rem;
+    }
+
+    ul.features li {
+      list-style: none;
+      margin: 10px 0;
+    }
+
+    .login-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .login-button:hover {
+      background-color: #0056b3;
+    }
+
+    .signup {
+      margin-top: 15px;
+      font-size: 0.95rem;
+    }
+
+    .signup a {
+      color: #1877f2;
+      text-decoration: none;
+    }
+
+    .signup a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+<div th:replace="fragments :: header"></div>
+<div class="content-wrapper">
+  <h1>Privacy & Cookie Policy <span class="emoji">🍪🔒</span></h1>
+
+  <p>Welcome to Acebook! Before you get too cozy, here’s the deal with your data and our cookies — not the edible kind sadly.</p>
+
+  <h2><span class="emoji">🕵️‍♂️</span> What We Collect</h2>
+  <ul>
+    <li><strong>Your secrets.</strong> We collect all the info you <em>voluntarily</em> share and sell them to the highest bidder. This can include but is not limited to, your name, email, and any embarrassing posts you make at 3 AM.</li>
+    <li><strong>Cookies.</strong> Our website cookies help us remember who you are — because honestly, we have a hard time separating you from our vast collection of database tables.</li>
+  </ul>
+
+  <h2><span class="emoji">🛡️</span> What We Do With Your Data</h2>
+  <ul>
+    <li>We keep it safe — in a super-secret vault guarded by ninjas known as GitHub.</li>
+    <li>We use it to make Acebook awesome, so you can stalk your friends.</li>
+    <li>Occasionally, we might send you some emails. Mostly harmless...promise.</li>
+  </ul>
+
+  <h2><span class="emoji">🍪</span> Cookies, Cookies Everywhere</h2>
+  <ul>
+    <li>Our cookies help you stay logged in and to remember your preferences.</li>
+    <li>You can disable cookies, but then you’ll have to explain to us who you are every single time. It's just not worth it.</li>
+  </ul>
+
+  <h2><span class="emoji">🚫</span> Sharing Your Data</h2>
+  <ul>
+    <li>We sell your data to everyone! This includes any aliens, robots, or marketers we may come across.</li>
+    <li>We honestly just hope you don't read this until you've used us for two years!</li>
+  </ul>
+
+  <h2><span class="emoji">👤</span> Your Rights</h2>
+  <ul>
+    <li>You can always log out, close the browser, and live your best private life.</li>
+  </ul>
+
+  <h2><span class="emoji">❓</span> Got Questions?</h2>
+  <p>Just use our Contact Us page you'll find at the bottom of our website, and hope we are paying attention to our inbox.</p>
+
+  <p>Thanks for trusting Acebook — where your data is about as safe and your cookies.</p>
+</div>
+<div th:replace="fragments :: footer"></div>
+</body>
+
+</html>

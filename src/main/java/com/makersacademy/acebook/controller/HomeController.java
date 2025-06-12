@@ -29,6 +29,10 @@ public class HomeController {
     public String Contact() { return "contact";
     }
 
+    @GetMapping("/privacy")
+    public String Privacy() { return "privacy";
+    }
+
     // EMAIL FUNCTION
     @Autowired
     private ContactMail mail;

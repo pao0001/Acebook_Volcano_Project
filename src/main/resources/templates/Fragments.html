@@ -1,7 +1,4 @@
 <!-- Fragments.html -->
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <!-- Header Fragment -->
 <div th:fragment="header">
@@ -43,11 +40,84 @@
 <!-- Footer Fragment -->
 <div th:fragment="footer" style="text-align:center; padding:2rem; background:#f1f1f1; margin-top:3rem; font-size: 1.2rem;">
     <footer>
-        <a href="/contact" th:href="@{/contact}" style="text-decoration:none; color:#777; font-weight:500;">Contact Us</a>
+        <a href="/contact" th:href="@{/contact}" style="text-decoration:none; color:#777; font-weight:500; margin-right: 20px;">Contact Us</a>
+        <a href="/privacy" th:href="@{/privacy}" style="text-decoration:none; color:#777; font-weight:500;">Privacy and Cookies</a>
         <div style="margin-top: 1rem; color: #777;">
-            &copy; 2023 Acebook. All rights reserved.
+            &copy; 2025 Acebook. All rights reserved.
         </div>
     </footer>
 </div>
 
-</html>
+<!-- left-sidebar Fragment -->
+<div class="left-sidebar" th:fragment="left-sidebar">
+    <!-- left sidebar -->
+    <div class="sidebar-box">
+        <h3 class="sidebar-title">Friends</h3>
+        <div class="friends-list">
+            <div class="friend-card" th:each="friend: ${friends}">
+                <a th:href="@{/profile/{id}(id=${friend.id})}" class="friend-link">
+                    <div class="friend-avatar">
+                        <img th:src="@{${friend.profile_image_src}}" alt="Friend's profile picture"
+                                 onerror="this.onerror=null; this.src='/assets/default-profile.png'"/>
+                    </div>
+                    <div class="friend-info">
+                        <span class="friend-name" th:text="${friend.forename + ' ' + friend.surname}"></span>
+                        <span class="friend-status">Active now</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- right-sidebar Fragment -->
+<div class="right-sidebar" th:fragment="right-sidebar">
+    <!-- New right sidebar -->
+    <div class="sidebar-box">
+        <h3 class="sidebar-title">Right Sidebar</h3>
+        <!-- Your right sidebar content here -->
+    </div>
+</div>
+<div th:fragment="posts">
+    <h1>Posts</h1>
+</div>
+<div th:fragment="about-section">
+    <div class="about-details">
+        <div class="detail-item">
+            <h1>About</h1>
+
+        </div>
+        <!-- More about details -->
+    </div>
+</div>
+
+<div th:fragment="friends-list">
+    <div class="profile-friends-section">
+        <h1 class="profile-friends-title">Friends</h1>
+        <div class="profile-friends-grid">
+            <div class="profile-friend-card" th:each="friend: ${profileFriends}">
+                <a th:href="@{/profile/{id}(id=${friend.id})}" class="friend-link">
+                    <div class="profile-friend-avatar-container">
+                        <img class="profile-friend-avatar"
+                             th:src="@{${friend.profile_image_src}}"
+                             alt="Friend's profile picture"
+                             onerror="this.onerror=null; this.src='/assets/default-profile.png'"/>
+                    </div>
+                    <div class="profile-friend-info">
+                        <span class="profile-friend-name" th:text="${friend.forename + ' ' + friend.surname}"></span>
+                        <span class="profile-friend-status">
+                            <span class="profile-status-indicator active"></span>
+                            Active now
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="photos-grid">
+    <div class="photo-albums">
+        <h1>Photos</h1>
+    </div>
+</div>

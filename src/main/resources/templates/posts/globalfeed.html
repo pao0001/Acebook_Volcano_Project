@@ -50,6 +50,8 @@
                 </div>
             </div>
         </div>
+        <!-- Left sidebar from fragments -->
+        <div th:replace="fragments :: left-sidebar"></div>
 
         <div class="main-inner">
             <h1 style="text-align: center; color: #1877f2;">acebook feed</h1>
@@ -59,26 +61,27 @@
             <!-- CODE FOR FORM FOR POSTS -->
             <form class="post-form" action="#" th:action="@{/posts}" th:object="${post}" method="post" enctype="multipart/form-data">
                 <div class="post-form-container">
-                    <!-- Profile picture circle -->
-                    <div class="profile-picture-circle">
-                        <img th:src="@{${current_user.profile_image_src}}" alt="Profile picture"/>
+                    <!-- Left: Profile -->
+                    <div class="profile-col">
+                        <div class="profile-picture-circle">
+                            <img th:src="@{${current_user.profile_image_src}}" alt="Profile picture"/>
+                        </div>
+                        <div class="user-name-block">
+                            <span class="user-forename" th:text="${current_user.forename}">Forename</span>
+                            <span class="user-surname" th:text="${current_user.surname}">Surname</span>
+                        </div>
                     </div>
-
-                    <div class="post-content-area">
-                        <label for="post-send"></label>
+                    <!-- Right: Textarea and actions -->
+                    <div class="composer-col">
                         <textarea id="post-send" th:field="*{content}" class="post-textarea"
-                                  th:placeholder="|What's on your mind, ${current_user.forename}?|"
-                                  placeholder="What's on your mind?"></textarea>
-
+                            th:placeholder="|What's on your mind, ${current_user.forename}?|"
+                            placeholder="What's on your mind?"></textarea>
                         <div class="post-actions">
-                            <!-- Image upload button as asset -->
                             <label for="image-upload" class="image-upload-label">
                                 <img th:src="@{/assets/attachment.png}" alt="Add image" class="image-upload-icon"/>
                                 <span>Attach Photo</span>
                                 <input id="image-upload" type="file" name="image" accept="image/*" class="image-upload-input"/>
                             </label>
-
-                            <!-- Styled submit button -->
                             <button type="submit" class="post-submit-button">
                                 <span>Post</span>
                             </button>
@@ -105,9 +108,9 @@
 
                         <h1 id="post-render" th:text="${post.content}"></h1>
 
-                        <div class="post-image-section">
+                        <div class="post-image-section" th:if="${post.post_image_src}">
                             <!-- Display the current post image if it exists -->
-                            <div class="post-image-display" th:if="${post.post_image_src}">
+                            <div class="post-image-display">
                                 <img th:src="@{${post.post_image_src}}" alt="Post Image"/>
                             </div>
                         </div>
@@ -140,13 +143,7 @@
             </ul>
         </div>
 
-        <!-- New right sidebar -->
-        <div class="right-sidebar">
-            <div class="sidebar-box">
-                <h3 class="sidebar-title">Right Sidebar</h3>
-                <!-- Your right sidebar content here -->
-            </div>
-        </div>
+        <div th:replace="fragments :: right-sidebar"></div>
 
     </div>
 
