@@ -470,154 +470,155 @@ VALUES
 -- Posts for Test User (id=1) --
 INSERT INTO posts (user_id, forename, surname, content, post_image_src, time_stamp)
 VALUES
-    (1, 'Test', 'User', 'Just finished a great hike today! Feeling refreshed and alive.', NULL, NOW() - INTERVAL '5 days'),
-    (1, 'Test', 'User', 'Experimenting with some new code ideas. Excited to see where this goes!', NULL, NOW() - INTERVAL '4 days 3 hours'),
-    (1, 'Test', 'User', NULL, 'https://images.unsplash.com/photo-1640880793908-b0afa07238f1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGVnbyUyMG1hbnxlbnwwfDJ8MHx8fDA%3D', NOW() - INTERVAL '3 days 5 hours'),
-    (1, 'Test', 'User', NULL, 'https://images.unsplash.com/photo-1711032265178-3d06d4bfbf18?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bGVnbyUyMG1hbnxlbnwwfDJ8MHx8fDA%3D', NOW() - INTERVAL '2 days 6 hours'),
-    (1, 'Test', 'User', 'Looking forward to the weekend and some quality downtime.', NULL, NOW() - INTERVAL '1 day 4 hours'),
+    (1, 'Test', 'User', 'Just finished a great hike today! Feeling refreshed and alive.', NULL, '2025-05-22 18:43:10'),
+    (1, 'Test', 'User', 'Experimenting with some new code ideas. Excited to see where this goes!', NULL, '2025-05-29 20:14:08'),
+    (1, 'Test', 'User', NULL, 'https://images.unsplash.com/photo-1640880793908-b0afa07238f1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGVnbyUyMG1hbnxlbnwwfDJ8MHx8fDA%3D', '2025-06-07 15:36:54'),
+    (1, 'Test', 'User', NULL, 'https://images.unsplash.com/photo-1711032265178-3d06d4bfbf18?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bGVnbyUyMG1hbnxlbnwwfDJ8MHx8fDA%3D', '2025-06-03 09:57:21'),
+    (1, 'Test', 'User', 'Looking forward to the weekend and some quality downtime.', NULL, '2025-05-22 18:43:10'),
 
 -- Posts for friends of Test User --
 -- Alice Smith (id=2) --
-    (2, 'Alice', 'Smith', 'Spinning my favorite vinyls all day. Music is the soul’s therapy!', NULL, NOW() - INTERVAL '5 days 2 hours'),
-    (2, 'Alice', 'Smith', 'Discovered a rare jazz record this weekend. Pure gold!', NULL, NOW() - INTERVAL '3 days 4 hours'),
-    (2, 'Alice', 'Smith', NULL, 'https://images.unsplash.com/photo-1724390265362-c58d0bc7d17a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG11c2ljJTIwZmVzdGl2YWx8ZW58MHwyfDB8fHww', NOW() - INTERVAL '1 day 1 hour'),
+    (2, 'Alice', 'Smith', 'Spinning my favorite vinyls all day. Music is the soul’s therapy!', NULL, '2025-05-22 03:26:42'),
+    (2, 'Alice', 'Smith', 'Discovered a rare jazz record this weekend. Pure gold!', NULL, '2025-05-23 18:12:17'),
+    (2, 'Alice', 'Smith', NULL, 'https://images.unsplash.com/photo-1724390265362-c58d0bc7d17a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fG11c2ljJTIwZmVzdGl2YWx8ZW58MHwyfDB8fHww', '2025-05-25 13:30:45'),
 
 -- Bob Johnson (id=3) --
-    (3, 'Bob', 'Johnson', 'Spent the afternoon planting some new herbs in the garden. Feels great!', NULL, NOW() - INTERVAL '4 days 6 hours'),
-    (3, 'Bob', 'Johnson', 'Green thumbs unite! Any tips for keeping basil alive?', NULL, NOW() - INTERVAL '2 days 2 hours'),
-    (3, 'Bob', 'Johnson', NULL, 'https://images.unsplash.com/photo-1627989147125-a004d05946d3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2FyZGVuaW5nfGVufDB8MnwwfHx8MA%3D%3D', NOW() - INTERVAL '12 hours'),
+    (3, 'Bob', 'Johnson', 'Spent the afternoon planting some new herbs in the garden. Feels great!', NULL, '2025-05-24 13:24:32'),
+    (3, 'Bob', 'Johnson', 'Green thumbs unite! Any tips for keeping basil alive?', NULL, '2025-05-26 01:53:43'),
+    (3, 'Bob', 'Johnson', NULL, 'https://images.unsplash.com/photo-1627989147125-a004d05946d3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z2FyZGVuaW5nfGVufDB8MnwwfHx8MA%3D%3D', '2025-05-28 13:47:34'),
 
 -- Cara Lee (id=4) --
-    (4, 'Cara', 'Lee', 'Chasing sunsets around the city. Every shot tells a story.', NULL, NOW() - INTERVAL '6 days 5 hours'),
-    (4, 'Cara', 'Lee', NULL, 'https://images.unsplash.com/photo-1690514570719-36875c9c3e7f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHN0cmVldCUyMGFydHxlbnwwfDJ8MHx8fDA%3D', NOW() - INTERVAL '3 days 3 hours'),
-    (4, 'Cara', 'Lee', 'Photography is my way of freezing moments in time.', NULL, NOW() - INTERVAL '1 day 5 hours'),
+    (4, 'Cara', 'Lee', 'Chasing sunsets around the city. Every shot tells a story.', NULL, '2025-05-25 00:42:09'),
+    (4, 'Cara', 'Lee', NULL, 'https://images.unsplash.com/photo-1690514570719-36875c9c3e7f?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHN0cmVldCUyMGFydHxlbnwwfDJ8MHx8fDA%3D', '2025-05-30 06:21:43'),
+    (4, 'Cara', 'Lee', 'Photography is my way of freezing moments in time.', NULL, '2025-05-31 01:28:11'),
 
 -- David Chen (id=5) --
-    (5, 'David', 'Chen', 'Brainstorming the next big AI project with the team.', NULL, NOW() - INTERVAL '5 days 4 hours'),
-    (5, 'David', 'Chen', 'Innovation never sleeps! Excited for what’s next.', NULL, NOW() - INTERVAL '2 days 7 hours'),
-    (5, 'David', 'Chen', NULL, 'https://images.unsplash.com/photo-1529353721-ae64f46030b6?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3RyZWV0JTIwYXJ0fGVufDB8MnwwfHx8MA%3D%3D', NOW() - INTERVAL '1 day'),
+    (5, 'David', 'Chen', 'Brainstorming the next big AI project with the team.', NULL, '2025-05-14 22:37:40'),
+    (5, 'David', 'Chen', 'Innovation never sleeps! Excited for what’s next.', NULL, '2025-05-20 15:15:32'),
+    (5, 'David', 'Chen', NULL, 'https://images.unsplash.com/photo-1529353721-ae64f46030b6?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3RyZWV0JTIwYXJ0fGVufDB8MnwwfHx8MA%3D%3D', '2025-06-03 18:39:20'),
 
 -- Ella Brown (id=6) --
-    (6, 'Ella', 'Brown', 'Yoga at sunrise is the best way to start the day.', NULL, NOW() - INTERVAL '4 days 8 hours'),
-    (6, 'Ella', 'Brown', 'Guided meditation sessions are helping my students unwind.', NULL, NOW() - INTERVAL '3 days 1 hour'),
-    (6, 'Ella', 'Brown', NULL, 'https://images.unsplash.com/photo-1611800065476-b295f882c8ea?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHlvZ2F8ZW58MHwyfDB8fHww', NOW() - INTERVAL '12 hours'),
+    (6, 'Ella', 'Brown', 'Yoga at sunrise is the best way to start the day.', NULL, '2025-05-20 15:50:19'),
+    (6, 'Ella', 'Brown', 'Guided meditation sessions are helping my students unwind.', NULL, '2025-05-23 14:32:28'),
+    (6, 'Ella', 'Brown', NULL, 'https://images.unsplash.com/photo-1611800065476-b295f882c8ea?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHlvZ2F8ZW58MHwyfDB8fHww', '2025-05-27 21:43:39'),
 
 -- Frank Davis (id=7) --
-    (7, 'Frank', 'Davis', 'Lost in a good book this weekend. Recommendations welcome!', NULL, NOW() - INTERVAL '6 days 2 hours'),
-    (7, 'Frank', 'Davis', 'Podcasts keep me company on long walks.', NULL, NOW() - INTERVAL '4 days 3 hours'),
-    (7, 'Frank', 'Davis', NULL, 'https://images.unsplash.com/photo-1517596107285-5ce3dd0f61df?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGJvb2t8ZW58MHwyfDB8fHww', NOW() - INTERVAL '1 day 4 hours'),
+    (7, 'Frank', 'Davis', 'Lost in a good book this weekend. Recommendations welcome!', NULL, '2025-05-18 20:44:57'),
+    (7, 'Frank', 'Davis', 'Podcasts keep me company on long walks.', NULL, '2025-05-28 00:17:22'),
+    (7, 'Frank', 'Davis', NULL, 'https://images.unsplash.com/photo-1517596107285-5ce3dd0f61df?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGJvb2t8ZW58MHwyfDB8fHww', '2025-05-30 15:25:51'),
 
 -- Grace Evans (id=8) --
-    (8, 'Grace', 'Evans', 'New blog post live! Exploring sustainable fashion.', NULL, NOW() - INTERVAL '5 days 6 hours'),
-    (8, 'Grace', 'Evans', NULL, 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZmFzaGlvbnxlbnwwfDJ8MHx8fDA%3D', NOW() - INTERVAL '3 days 2 hours'),
-    (8, 'Grace', 'Evans', 'Style is a way to say who you are without speaking.', NULL, NOW() - INTERVAL '1 day 3 hours'),
+    (8, 'Grace', 'Evans', 'New blog post live! Exploring sustainable fashion.', NULL, '2025-05-22 03:55:53'),
+    (8, 'Grace', 'Evans', NULL, 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZmFzaGlvbnxlbnwwfDJ8MHx8fDA%3D', '2025-05-22 23:10:49'),
+    (8, 'Grace', 'Evans', 'Style is a way to say who you are without speaking.', NULL, '2025-05-27 14:07:15'),
 
 -- Henry Foster (id=9) --
-    (9, 'Henry', 'Foster', 'Weekend ride through the mountains was epic!', NULL, NOW() - INTERVAL '6 days 7 hours'),
-    (9, 'Henry', 'Foster', 'Pushing limits and loving every second.', NULL, NOW() - INTERVAL '3 days 5 hours'),
-    (9, 'Henry', 'Foster', NULL, 'https://images.unsplash.com/photo-1679233767426-713ca299cd0a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGJpa2luZ3xlbnwwfDJ8MHx8fDA%3D', NOW() - INTERVAL '12 hours'),
+    (9, 'Henry', 'Foster', 'Weekend ride through the mountains was epic!', NULL, '2025-05-30 18:40:57'),
+    (9, 'Henry', 'Foster', 'Pushing limits and loving every second.', NULL, '2025-06-02 01:22:15'),
+    (9, 'Henry', 'Foster', NULL, 'https://images.unsplash.com/photo-1679233767426-713ca299cd0a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGJpa2luZ3xlbnwwfDJ8MHx8fDA%3D', '2025-06-03 10:46:54'),
 
 -- Isabella Garcia (id=10) --
-    (10, 'Isabella', 'Garcia', 'Experimenting with new vegan dessert recipes.', NULL, NOW() - INTERVAL '5 days 1 hour'),
-    (10, 'Isabella', 'Garcia', 'Sweet treats don’t have to be unhealthy.', NULL, NOW() - INTERVAL '3 days 6 hours'),
-    (10, 'Isabella', 'Garcia', NULL, 'https://plus.unsplash.com/premium_photo-1726797728786-efdc34d29aeb?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dmVnYW4lMjBkZXNzZXJ0fGVufDB8MnwwfHx8MA%3D%3D', NOW() - INTERVAL '1 day 2 hours'),
+    (10, 'Isabella', 'Garcia', 'Experimenting with new vegan dessert recipes.', NULL, '2025-05-17 11:16:40'),
+    (10, 'Isabella', 'Garcia', 'Sweet treats don’t have to be unhealthy.', NULL, '2025-05-24 19:41:14'),
+    (10, 'Isabella', 'Garcia', NULL, 'https://plus.unsplash.com/premium_photo-1726797728786-efdc34d29aeb?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dmVnYW4lMjBkZXNzZXJ0fGVufDB8MnwwfHx8MA%3D%3D', '2025-05-26 19:26:15'),
 
 -- Jack Harris (id=11) --
-    (11, 'Jack', 'Harris', 'Drafting ideas for my next novel. Writer’s block? Never heard of it.', NULL, NOW() - INTERVAL '4 days 9 hours'),
-    (11, 'Jack', 'Harris', 'Everyday life holds the best stories.', NULL, NOW() - INTERVAL '2 days 4 hours'),
+    (11, 'Jack', 'Harris', 'Drafting ideas for my next novel. Writer’s block? Never heard of it.', NULL, '2025-05-19 09:11:22'),
+    (11, 'Jack', 'Harris', 'Everyday life holds the best stories.', NULL, '2025-05-29 17:56:34'),
+    (11, 'Jack', 'Harris', NULL, 'https://plus.unsplash.com/premium_photo-1677567996070-68fa4181775a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Ym9va3N8ZW58MHwwfDB8fHww', '2025-06-03 18:47:31'),
 
 -- Kara Iverson (id=12) --
-    (12, 'Kara', 'Iverson', 'Inspiring minds one lesson at a time.', NULL, NOW() - INTERVAL '5 days 3 hours'),
-    (12, 'Kara', 'Iverson', 'Education is the key to a brighter future.', NULL, NOW() - INTERVAL '3 days 4 hours'),
-    (12, 'Kara', 'Iverson', NULL, 'https://plus.unsplash.com/premium_photo-1723568428336-4b4e21ec91af?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dGVhY2hpbmd8ZW58MHwyfDB8fHww', NOW() - INTERVAL '1 day 1 hour'),
+    (12, 'Kara', 'Iverson', 'Inspiring minds one lesson at a time.', NULL, '2025-05-15 18:40:31'),
+    (12, 'Kara', 'Iverson', 'Education is the key to a brighter future.', NULL, '2025-05-27 17:39:52'),
+    (12, 'Kara', 'Iverson', NULL, 'https://plus.unsplash.com/premium_photo-1723568428336-4b4e21ec91af?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8dGVhY2hpbmd8ZW58MHwyfDB8fHww', '2025-06-01 10:59:42'),
 
 -- Liam Jackson (id=13) --
-    (13, 'Liam', 'Jackson', 'Organizing a beach cleanup this weekend.', NULL, NOW() - INTERVAL '6 days 4 hours'),
-    (13, 'Liam', 'Jackson', 'Protecting our planet starts with us.', NULL, NOW() - INTERVAL '3 days 3 hours'),
-    (13, 'Liam', 'Jackson', NULL, 'https://images.unsplash.com/photo-1627118976394-990852371725?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmVhY2glMjBjbGVhbnVwfGVufDB8MnwwfHx8MA%3D%3D', NOW() - INTERVAL '1 day 2 hours'),
+    (13, 'Liam', 'Jackson', 'Organizing a beach cleanup this weekend.', NULL, '2025-05-26 22:40:34'),
+    (13, 'Liam', 'Jackson', 'Protecting our planet starts with us.', NULL, '2025-05-27 03:50:02'),
+    (13, 'Liam', 'Jackson', NULL, 'https://images.unsplash.com/photo-1627118976394-990852371725?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YmVhY2glMjBjbGVhbnVwfGVufDB8MnwwfHx8MA%3D%3D', '2025-05-29 06:42:22'),
 
 -- Mia Kim (id=14) --
-    (14, 'Mia', 'Kim', 'Live streaming tonight! Join me for some fun and games.', NULL, NOW() - INTERVAL '5 days 7 hours'),
-    (14, 'Mia', 'Kim', 'Thankful for the amazing community I have.', NULL, NOW() - INTERVAL '3 days 6 hours'),
-    (14, 'Mia', 'Kim', NULL, 'https://images.unsplash.com/photo-1622649755106-1f61a6b1b445?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGdhbWluZ3xlbnwwfDJ8MHx8fDA%3D', NOW() - INTERVAL '1 day 3 hours'),
+    (14, 'Mia', 'Kim', 'Live streaming tonight! Join me for some fun and games.', NULL, '2025-05-19 03:02:58'),
+    (14, 'Mia', 'Kim', 'Thankful for the amazing community I have.', NULL, '2025-05-28 10:39:14'),
+    (14, 'Mia', 'Kim', NULL, 'https://images.unsplash.com/photo-1622649755106-1f61a6b1b445?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fGdhbWluZ3xlbnwwfDJ8MHx8fDA%3D', '2025-05-30 20:56:13'),
 
 -- Noah Lopez (id=15) --
-    (15, 'Noah', 'Lopez', 'Exploring the urban jungle through my lens.', NULL, NOW() - INTERVAL '6 days 6 hours'),
-    (15, 'Noah', 'Lopez', NULL, 'https://plus.unsplash.com/premium_photo-1682124843954-eb395dfa50ea?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dXJiYW4lMjBqdW5nbGV8ZW58MHwyfDB8fHww', NOW() - INTERVAL '3 days 2 hours'),
-    (15, 'Noah', 'Lopez', 'Photography is an adventure without limits.', NULL, NOW() - INTERVAL '1 day 4 hours'),
+    (15, 'Noah', 'Lopez', 'Exploring the urban jungle through my lens.', NULL, '2025-05-18 19:42:44'),
+    (15, 'Noah', 'Lopez', NULL, 'https://plus.unsplash.com/premium_photo-1682124843954-eb395dfa50ea?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dXJiYW4lMjBqdW5nbGV8ZW58MHwyfDB8fHww', '2025-05-27 07:34:34'),
+    (15, 'Noah', 'Lopez', 'Photography is an adventure without limits.', NULL, '2025-05-30 08:48:12'),
 
 -- Olivia Martinez (id=16) --
-    (16, 'Olivia', 'Martinez', 'Writing songs that speak from the heart.', NULL, NOW() - INTERVAL '5 days 5 hours'),
-    (16, 'Olivia', 'Martinez', 'Music is my language.', NULL, NOW() - INTERVAL '3 days 7 hours'),
-    (16, 'Olivia', 'Martinez', NULL, 'https://images.unsplash.com/photo-1524650359799-842906ca1c06?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bXVzaWN8ZW58MHwyfDB8fHww', NOW() - INTERVAL '1 day 1 hour'),
+    (16, 'Olivia', 'Martinez', 'Writing songs that speak from the heart.', NULL, '2025-05-18 00:25:55'),
+    (16, 'Olivia', 'Martinez', 'Music is my language.', NULL, '2025-06-01 07:30:52'),
+    (16, 'Olivia', 'Martinez', NULL, 'https://images.unsplash.com/photo-1524650359799-842906ca1c06?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bXVzaWN8ZW58MHwyfDB8fHww', '2025-06-03 01:40:03'),
 
 -- Peter Nguyen (id=17) --
-    (17, 'Peter', 'Nguyen', 'Debugging code and drinking espresso. Perfect combo.', NULL, NOW() - INTERVAL '6 days 3 hours'),
-    (17, 'Peter', 'Nguyen', 'Launched a new app feature today!', NULL, NOW() - INTERVAL '4 days 5 hours'),
-    (17, 'Peter', 'Nguyen', NULL, 'https://images.unsplash.com/photo-1611691934391-5a8805e0bd1a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZXNwcmVzc298ZW58MHwyfDB8fHww', NOW() - INTERVAL '1 day 2 hours'),
+    (17, 'Peter', 'Nguyen', 'Debugging code and drinking espresso. Perfect combo.', NULL, '2025-05-15 01:12:14'),
+    (17, 'Peter', 'Nguyen', 'Launched a new app feature today!', NULL, '2025-05-25 06:45:02'),
+    (17, 'Peter', 'Nguyen', NULL, 'https://images.unsplash.com/photo-1611691934391-5a8805e0bd1a?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZXNwcmVzc298ZW58MHwyfDB8fHww', '2025-06-03 23:06:12'),
 
 -- Quinn Jefferson (id=18) --
-    (18, 'Quinn', 'Jefferson', 'Training for the marathon. Every mile counts!', NULL, NOW() - INTERVAL '5 days 8 hours'),
-    (18, 'Quinn', 'Jefferson', 'Fitness is a journey, not a destination.', NULL, NOW() - INTERVAL '3 days 2 hours'),
-    (18, 'Quinn', 'Jefferson', NULL, 'https://plus.unsplash.com/premium_photo-1664304823165-888f56fc101b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cnVubmluZ3xlbnwwfDJ8MHx8fDA%3D', NOW() - INTERVAL '1 day 3 hours'),
+    (18, 'Quinn', 'Jefferson', 'Training for the marathon. Every mile counts!', NULL, '2025-05-23 12:46:04'),
+    (18, 'Quinn', 'Jefferson', 'Fitness is a journey, not a destination.', NULL, '2025-05-24 04:26:09'),
+    (18, 'Quinn', 'Jefferson', NULL, 'https://plus.unsplash.com/premium_photo-1664304823165-888f56fc101b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cnVubmluZ3xlbnwwfDJ8MHx8fDA%3D', '2025-06-04 11:41:13'),
 
 -- Ryan Patel (id=19) --
-    (19, 'Ryan', 'Patel', 'Mentoring young entrepreneurs is so rewarding.', NULL, NOW() - INTERVAL '6 days 5 hours'),
-    (19, 'Ryan', 'Patel', 'Pitching ideas and learning every day.', NULL, NOW() - INTERVAL '4 days 3 hours'),
-    (19, 'Ryan', 'Patel', NULL, 'https://plus.unsplash.com/premium_photo-1665520346947-a07db617d300?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dGVhY2hpbmd8ZW58MHwyfDB8fHww', NOW() - INTERVAL '1 day 2 hours'),
+    (19, 'Ryan', 'Patel', 'Mentoring young entrepreneurs is so rewarding.', NULL, '2025-05-24 08:46:28'),
+    (19, 'Ryan', 'Patel', 'Pitching ideas and learning every day.', NULL, '2025-05-26 09:22:34'),
+    (19, 'Ryan', 'Patel', NULL, 'https://plus.unsplash.com/premium_photo-1665520346947-a07db617d300?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dGVhY2hpbmd8ZW58MHwyfDB8fHww', '2025-05-28 06:56:06'),
 
 -- Sophia Quinn (id=20) --
-    (20, 'Sophia', 'Quinn', 'Trying out a new vegan recipe today.', NULL, NOW() - INTERVAL '5 days 6 hours'),
-    (20, 'Sophia', 'Quinn', 'Food blogging is my passion.', NULL, NOW() - INTERVAL '3 days 5 hours'),
-    (20, 'Sophia', 'Quinn', NULL, 'https://plus.unsplash.com/premium_photo-1698867577020-38ae235fd612?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dmVnYW4lMjBmb29kfGVufDB8MnwwfHx8MA%3D%3D', NOW() - INTERVAL '1 day 4 hours'),
+    (20, 'Sophia', 'Quinn', 'Trying out a new vegan recipe today.', NULL, '2025-05-17 14:35:48'),
+    (20, 'Sophia', 'Quinn', 'Food blogging is my passion.', NULL, '2025-05-24 20:47:30'),
+    (20, 'Sophia', 'Quinn', NULL, 'https://plus.unsplash.com/premium_photo-1698867577020-38ae235fd612?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dmVnYW4lMjBmb29kfGVufDB8MnwwfHx8MA%3D%3D', '2025-06-01 03:28:15'),
 
 -- Tom Henderson (id=21) --
-    (21, 'Tom', 'Henderson', 'Performed at an open mic night. Loved every second!', NULL, NOW() - INTERVAL '6 days 1 hour'),
-    (21, 'Tom', 'Henderson', 'Laughter is the best medicine.', NULL, NOW() - INTERVAL '4 days 4 hours'),
-    (21, 'Tom', 'Henderson', NULL, 'https://images.unsplash.com/photo-1730875647521-81e8bc2fca1c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Z2lnfGVufDB8MnwwfHx8MA%3D%3D', NOW() - INTERVAL '1 day 3 hours'),
+    (21, 'Tom', 'Henderson', 'Performed at an open mic night. Loved every second!', NULL, '2025-05-16 13:44:42'),
+    (21, 'Tom', 'Henderson', 'Laughter is the best medicine.', NULL, '2025-05-31 11:55:25'),
+    (21, 'Tom', 'Henderson', NULL, 'https://images.unsplash.com/photo-1730875647521-81e8bc2fca1c?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Z2lnfGVufDB8MnwwfHx8MA%3D%3D', '2025-06-03 14:00:29'),
 
 -- Posts for possible mutuals --
 -- Nina Khan (id=22) --
-    (22, 'Nina', 'Khan', 'Just booked my next trip to Kyoto! Can’t wait to explore the temples and sushi spots.', NULL, NOW() - INTERVAL '5 days 3 hours'),
-    (22, 'Nina', 'Khan', 'Learning Japanese every day. まだまだ勉強が必要ですね!', NULL, NOW() - INTERVAL '3 days 7 hours'),
-    (22, 'Nina', 'Khan', NULL, 'https://plus.unsplash.com/premium_photo-1664304460618-e27a37b4f05b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmVhY2glMjBzdW5zZXR8ZW58MHwyfDB8fHww', NOW() - INTERVAL '1 day 5 hours'),
+    (22, 'Nina', 'Khan', 'Just booked my next trip to Kyoto! Can’t wait to explore the temples and sushi spots.', NULL, '2025-05-15 21:53:51'),
+    (22, 'Nina', 'Khan', 'Learning Japanese every day. まだまだ勉強が必要ですね!', NULL, '2025-05-30 01:19:27'),
+    (22, 'Nina', 'Khan', NULL, 'https://plus.unsplash.com/premium_photo-1664304460618-e27a37b4f05b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmVhY2glMjBzdW5zZXR8ZW58MHwyfDB8fHww', '2025-06-04 04:53:41'),
 
 -- Oscar Nguyen (id=23) --
-    (23, 'Oscar', 'Nguyen', 'Built a new PC setup over the weekend. Loving the RGB glow!', NULL, NOW() - INTERVAL '6 days 6 hours'),
-    (23, 'Oscar', 'Nguyen', 'Streaming some co-op games tonight. Come hang out!', NULL, NOW() - INTERVAL '3 days 4 hours'),
-    (23, 'Oscar', 'Nguyen', NULL, 'https://images.unsplash.com/photo-1579493593963-2ca325e3703e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHJnYiUyMHBjfGVufDB8MnwwfHx8MA%3D%3D', NOW() - INTERVAL '1 day 3 hours'),
+    (23, 'Oscar', 'Nguyen', 'Built a new PC setup over the weekend. Loving the RGB glow!', NULL, '2025-05-16 00:07:06'),
+    (23, 'Oscar', 'Nguyen', 'Streaming some co-op games tonight. Come hang out!', NULL, '2025-05-29 10:01:37'),
+    (23, 'Oscar', 'Nguyen', NULL, 'https://images.unsplash.com/photo-1579493593963-2ca325e3703e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHJnYiUyMHBjfGVufDB8MnwwfHx8MA%3D%3D', '2025-06-05 22:20:48'),
 
 -- Priya Desai (id=24) --
-    (24, 'Priya', 'Desai', 'Experimented with a new spicy curry recipe. Friends loved it!', NULL, NOW() - INTERVAL '5 days 2 hours'),
-    (24, 'Priya', 'Desai', NULL, 'https://plus.unsplash.com/premium_photo-1726797618903-1bca7ac038ff?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y3Vycnl8ZW58MHwyfDB8fHww', NOW() - INTERVAL '3 days 5 hours'),
-    (24, 'Priya', 'Desai', 'Nothing beats a homemade meal shared with family.', NULL, NOW() - INTERVAL '1 day 4 hours'),
+    (24, 'Priya', 'Desai', 'Experimented with a new spicy curry recipe. Friends loved it!', NULL, '2025-05-16 14:03:47'),
+    (24, 'Priya', 'Desai', NULL, 'https://plus.unsplash.com/premium_photo-1726797618903-1bca7ac038ff?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y3Vycnl8ZW58MHwyfDB8fHww', '2025-05-17 10:42:08'),
+    (24, 'Priya', 'Desai', 'Nothing beats a homemade meal shared with family.', NULL, '2025-06-04 17:25:07'),
 
 -- Lucas Morris (id=25) --
-    (25, 'Lucas', 'Morris', 'Started planting heirloom tomatoes in the community garden.', NULL, NOW() - INTERVAL '6 days 7 hours'),
-    (25, 'Lucas', 'Morris', 'Urban farming is the future. Who’s with me?', NULL, NOW() - INTERVAL '3 days 2 hours'),
-    (25, 'Lucas', 'Morris', NULL, 'https://plus.unsplash.com/premium_photo-1723377607590-5aac4e48bb06?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dG9tYXRvZXN8ZW58MHwyfDB8fHww', NOW() - INTERVAL '1 day 1 hour'),
+    (25, 'Lucas', 'Morris', 'Started planting heirloom tomatoes in the community garden.', NULL, '2025-05-16 07:44:37'),
+    (25, 'Lucas', 'Morris', 'Urban farming is the future. Who’s with me?', NULL, '2025-06-02 05:37:13'),
+    (25, 'Lucas', 'Morris', NULL, 'https://plus.unsplash.com/premium_photo-1723377607590-5aac4e48bb06?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dG9tYXRvZXN8ZW58MHwyfDB8fHww', '2025-06-05 02:55:45'),
 
 -- Maya Patel (id=26) --
-    (26, 'Maya', 'Patel', 'Painting a new mural downtown. Can’t wait to show the final piece!', NULL, NOW() - INTERVAL '5 days 4 hours'),
-    (26, 'Maya', 'Patel', 'Creativity flows best with coffee and good music.', NULL, NOW() - INTERVAL '3 days 3 hours'),
-    (26, 'Maya', 'Patel', NULL, 'https://images.unsplash.com/photo-1551366895-3532ca1f7ebb?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bXVyYWx8ZW58MHwyfDB8fHww', NOW() - INTERVAL '1 day 6 hours'),
+    (26, 'Maya', 'Patel', 'Painting a new mural downtown. Can’t wait to show the final piece!', NULL, '2025-05-19 22:11:54'),
+    (26, 'Maya', 'Patel', 'Creativity flows best with coffee and good music.', NULL, '2025-05-22 04:47:45'),
+    (26, 'Maya', 'Patel', NULL, 'https://images.unsplash.com/photo-1551366895-3532ca1f7ebb?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bXVyYWx8ZW58MHwyfDB8fHww', '2025-06-02 15:32:47'),
 
 -- 1 post each for request users --
-    (27, 'Quinn', 'Turner', 'Jamming on some new tunes today — feeling inspired! 🎶', NULL, NOW() - INTERVAL '2 days 4 hours'),
-    (28, 'Raj', 'Singh', 'Early morning run done — pushing limits every day! 🏃‍♂️', NULL, NOW() - INTERVAL '3 days 2 hours'),
-    (29, 'Sara', 'Martinez', 'Working on a new poem inspired by the city lights.', NULL, NOW() - INTERVAL '1 day 6 hours'),
-    (30, 'Theo', 'Clark', 'Brainstorming ideas for my next eco-startup. Sustainability first!', NULL, NOW() - INTERVAL '4 days 3 hours'),
-    (31, 'Vera', 'Kim', 'Experimenting with digital and traditional paints — love the blend.', NULL, NOW() - INTERVAL '2 days 5 hours'),
-    (32, 'Wendy', 'Lopez', 'Just posted my latest travel blog — adventures await! ✈️', NULL, NOW() - INTERVAL '1 day 7 hours'),
-    (33, 'Xander', 'Morris', 'Sketching new comic characters — superheroes in the making!', NULL, NOW() - INTERVAL '3 days 4 hours'),
-    (34, 'Yara', 'Nguyen', 'Perfected a new latte art design today — coffee bliss.', NULL, NOW() - INTERVAL '2 days 3 hours'),
-    (35, 'Zach', 'Daniels', 'Wrapping up edits on my latest short film — storytelling at its best.', NULL, NOW() - INTERVAL '5 days 6 hours'),
-    (36, 'Amy', 'Parker', 'Collecting data on climate patterns — science in action.', NULL, NOW() - INTERVAL '3 days 5 hours'),
-    (37, 'Brian', 'Quinn', 'Training a new rescue pup — progress is amazing!', NULL, NOW() - INTERVAL '4 days 2 hours'),
-    (38, 'Clara', 'Reed', 'Captured some stunning shots of the forest wildlife today.', NULL, NOW() - INTERVAL '1 day 8 hours'),
-    (39, 'Derek', 'Santos', 'Cooked up a fusion feast last night — flavors exploded!', NULL, NOW() - INTERVAL '2 days 6 hours'),
-    (40, 'Emily', 'Taylor', 'Leading a mindfulness session — peace and calm everywhere.', NULL, NOW() - INTERVAL '1 day 4 hours'),
-    (41, 'Felix', 'Upton', 'Pushed a new update to my open-source project. Code is life.', NULL, NOW() - INTERVAL '3 days 7 hours');
+    (27, 'Quinn', 'Turner', 'Jamming on some new tunes today — feeling inspired! 🎶', NULL, '2025-05-17 07:37:45'),
+    (28, 'Raj', 'Singh', 'Early morning run done — pushing limits every day! 🏃‍♂️', NULL, '2025-05-27 09:50:01'),
+    (29, 'Sara', 'Martinez', 'Working on a new poem inspired by the city lights.', NULL, '2025-05-22 22:40:20'),
+    (30, 'Theo', 'Clark', 'Brainstorming ideas for my next eco-startup. Sustainability first!', NULL, '2025-05-25 20:45:36'),
+    (31, 'Vera', 'Kim', 'Experimenting with digital and traditional paints — love the blend.', NULL, '2025-05-26 00:42:08'),
+    (32, 'Wendy', 'Lopez', 'Just posted my latest travel blog — adventures await! ✈️', NULL, '2025-05-29 02:16:45'),
+    (33, 'Xander', 'Morris', 'Sketching new comic characters — superheroes in the making!', NULL, '2025-05-25 01:56:41'),
+    (34, 'Yara', 'Nguyen', 'Perfected a new latte art design today — coffee bliss.', NULL, '2025-05-28 20:56:59'),
+    (35, 'Zach', 'Daniels', 'Wrapping up edits on my latest short film — storytelling at its best.', NULL, '2025-05-19 23:43:43'),
+    (36, 'Amy', 'Parker', 'Collecting data on climate patterns — science in action.', NULL, '2025-05-23 03:21:22'),
+    (37, 'Brian', 'Quinn', 'Training a new rescue pup — progress is amazing!', NULL, '2025-05-14 16:46:14'),
+    (38, 'Clara', 'Reed', 'Captured some stunning shots of the forest wildlife today.', NULL, '2025-05-23 09:40:29'),
+    (39, 'Derek', 'Santos', 'Cooked up a fusion feast last night — flavors exploded!', NULL, '2025-05-25 10:17:16'),
+    (40, 'Emily', 'Taylor', 'Leading a mindfulness session — peace and calm everywhere.', NULL, '2025-05-31 04:44:58'),
+    (41, 'Felix', 'Upton', 'Pushed a new update to my open-source project. Code is life.', NULL, '2025-06-01 15:28:28');
 
 -- 🔴 SEEDING COMMENTS TABLE 🔴 --
 INSERT INTO comments (postid, username, comment, time_stamp) VALUES
