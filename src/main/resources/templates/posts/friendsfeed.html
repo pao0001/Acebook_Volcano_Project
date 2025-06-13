@@ -94,6 +94,7 @@
                         <li class="comment-item" th:each="comment : ${commentsByPostId[post.id]}">
                             <div class="comment-header">
                                 <strong th:text="|${comment.username} commented at:|"></strong>
+<!--                                <strong th:text="|${comment.forename} ${comment.surname} commented at:|"></strong>-->
                                 <span th:text="${comment.formattedTimestamp}"></span>
                             </div>
 
@@ -117,6 +118,8 @@
                     <!-- CODE FOR COMMENT FORM-->
                     <form class="comment-form" th:action="@{/comment}" method="post" th:object="${comment}">
                         <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
+<!--                        <input type="hidden" name="forename" th:value="${currentUser.forename}" />-->
+<!--                        <input type="hidden" name="surname" th:value="${currentUser.surname}" />-->
                         <input id="comment-send" type="text" th:field="*{commentContent}"
                                placeholder="Write a comment..." />
                         <input type="hidden" name="postID" th:value="${post.id}"/>

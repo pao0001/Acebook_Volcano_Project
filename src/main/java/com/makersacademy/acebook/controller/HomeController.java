@@ -42,7 +42,7 @@ public class HomeController {
 
     @PostMapping("/contact")
     public String submitContactForm(@ModelAttribute Contact contact) {
-        mail.sendEmail(contact);  // call on the instance, NOT the class
+        mail.sendEmail(contact);
         return "redirect:/contact?success";
     }
 

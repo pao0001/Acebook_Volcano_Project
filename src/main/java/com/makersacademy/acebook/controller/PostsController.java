@@ -51,67 +51,67 @@ public class PostsController {
     @Autowired
     RecFriendService recFriendService;
 
-    @GetMapping("/globalfeed")
-    public String index(Model model) {
-        List<Post> recentSortedPosts = StreamSupport.stream(postRepository.findAll().spliterator(), false)
-                .filter(post -> post.getTimeStamp() != null &&
-                        post.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(3000)))
-                .sorted(Comparator.comparing(Post::getTimeStamp).reversed())
-                .toList();
-
-        List<Comment> comments = (List<Comment>) commentRepository.findAll();
-        Map<Long, List<Comment>> commentsByPostId = comments.stream()
-                .filter(comment -> comment.getTimeStamp() != null &&
-                        comment.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(600)))
-                .sorted(Comparator.comparing(Comment::getTimeStamp).reversed())
-                .collect(Collectors.groupingBy(comment -> comment.getPostID().longValue()));
-
-        model.addAttribute("commentsByPostId", commentsByPostId);
-        model.addAttribute("posts", recentSortedPosts);
-        model.addAttribute("post", new Post());
-
-        // For posts
-        Map<Long, Long> postLikeCounts = new HashMap<>();
-        for (Post post : recentSortedPosts) {
-            long count = likeRepository.countByLikedTypeAndLikedId("post", post.getId());
-            postLikeCounts.put(post.getId(), count);
-        }
-        model.addAttribute("likeCountsByPostId", postLikeCounts);
-
-        // For comments
-        Map<Long, Long> commentLikeCounts = new HashMap<>();
-        for (Comment comment : comments) {
-            long count = likeRepository.countByLikedTypeAndLikedId("comment", comment.getId());
-            commentLikeCounts.put(comment.getId(), count);
-        }
-        model.addAttribute("likeCountsByCommentId", commentLikeCounts);
-
-        // Adding attribute comments
-        model.addAttribute("comments", comments);
-        model.addAttribute("comment", new Comment());
-
-        // Adding attribute current user
-        User currentUser = authenticatedUserService.getAuthenticatedUser();
-        model.addAttribute("currentUser", currentUser);
-
-        // Adding attribute friends
-        Set<User> friends = currentUser.getFriends();
-        model.addAttribute("friends", friends);
-
-        // Add suggested friends
-        List<RecFriend> recommendedFriends = recFriendRepository.findByUser(currentUser);
-        model.addAttribute("recommendedFriends", recommendedFriends);
-
-        Set<User> allFriendsForSidebar = currentUser.getFriends();
-        List<User> limitedFriendsForSidebar = new ArrayList<>(allFriendsForSidebar);
-        limitedFriendsForSidebar.sort(Comparator.comparing(User::getForename).thenComparing(User::getSurname));
-        limitedFriendsForSidebar = limitedFriendsForSidebar.stream()
-                .limit(5)
-                .collect(Collectors.toList());
-        model.addAttribute("sidebarFriends", limitedFriendsForSidebar);
-
-        return "posts/globalfeed";
-    }
+//    @GetMapping("/globalfeed")
+//    public String index(Model model) {
+//        List<Post> recentSortedPosts = StreamSupport.stream(postRepository.findAll().spliterator(), false)
+//                .filter(post -> post.getTimeStamp() != null &&
+//                        post.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(3000)))
+//                .sorted(Comparator.comparing(Post::getTimeStamp).reversed())
+//                .toList();
+//
+//        List<Comment> comments = (List<Comment>) commentRepository.findAll();
+//        Map<Long, List<Comment>> commentsByPostId = comments.stream()
+//                .filter(comment -> comment.getTimeStamp() != null &&
+//                        comment.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(600)))
+//                .sorted(Comparator.comparing(Comment::getTimeStamp).reversed())
+//                .collect(Collectors.groupingBy(comment -> comment.getPostID().longValue()));
+//
+//        model.addAttribute("commentsByPostId", commentsByPostId);
+//        model.addAttribute("posts", recentSortedPosts);
+//        model.addAttribute("post", new Post());
+//
+//        // For posts
+//        Map<Long, Long> postLikeCounts = new HashMap<>();
+//        for (Post post : recentSortedPosts) {
+//            long count = likeRepository.countByLikedTypeAndLikedId("post", post.getId());
+//            postLikeCounts.put(post.getId(), count);
+//        }
+//        model.addAttribute("likeCountsByPostId", postLikeCounts);
+//
+//        // For comments
+//        Map<Long, Long> commentLikeCounts = new HashMap<>();
+//        for (Comment comment : comments) {
+//            long count = likeRepository.countByLikedTypeAndLikedId("comment", comment.getId());
+//            commentLikeCounts.put(comment.getId(), count);
+//        }
+//        model.addAttribute("likeCountsByCommentId", commentLikeCounts);
+//
+//        // Adding attribute comments
+//        model.addAttribute("comments", comments);
+//        model.addAttribute("comment", new Comment());
+//
+//        // Adding attribute current user
+//        User currentUser = authenticatedUserService.getAuthenticatedUser();
+//        model.addAttribute("currentUser", currentUser);
+//
+//        // Adding attribute friends
+//        Set<User> friends = currentUser.getFriends();
+//        model.addAttribute("friends", friends);
+//
+//        // Add suggested friends
+//        List<RecFriend> recommendedFriends = recFriendRepository.findByUser(currentUser);
+//        model.addAttribute("recommendedFriends", recommendedFriends);
+//
+//        Set<User> allFriendsForSidebar = currentUser.getFriends();
+//        List<User> limitedFriendsForSidebar = new ArrayList<>(allFriendsForSidebar);
+//        limitedFriendsForSidebar.sort(Comparator.comparing(User::getForename).thenComparing(User::getSurname));
+//        limitedFriendsForSidebar = limitedFriendsForSidebar.stream()
+//                .limit(5)
+//                .collect(Collectors.toList());
+//        model.addAttribute("sidebarFriends", limitedFriendsForSidebar);
+//
+//        return "posts/globalfeed";
+//    }
 
     @PostMapping("/posts")
     public RedirectView createPost(@ModelAttribute Post post,
@@ -137,9 +137,12 @@ public class PostsController {
     @PostMapping("/comment")
     public RedirectView createComment(@ModelAttribute Comment comment,
                                       @RequestParam String username,
-                                      @RequestParam Integer postID) {
+                                      @RequestParam Integer postID,
+                                      @RequestParam String forename, @RequestParam String surname) {
         comment.setTimeStamp(LocalDateTime.now());
         comment.setUsername(username);
+        comment.setSurname(surname);
+        comment.setForename(forename);
         comment.setPostID(postID);
         commentRepository.save(comment);
         return new RedirectView("/");
@@ -147,15 +150,10 @@ public class PostsController {
 
     @GetMapping("/")
     public String feed(Model model) {
-//        List<Post> recentSortedPosts = StreamSupport.stream(postRepository.findAll().spliterator(), false)
-//                .filter(post -> post.getTimeStamp() != null &&
-//                        post.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(3000)))
-//                .sorted(Comparator.comparing(Post::getTimeStamp).reversed())
-//                .toList();
 
         List<Comment> comments = (List<Comment>) commentRepository.findAll();
         Map<Long, List<Comment>> commentsByPostId = comments.stream()
-                .sorted(Comparator.comparing(Comment::getTimeStamp).reversed())
+                .sorted(Comparator.comparing(Comment::getTimeStamp))
                 .collect(Collectors.groupingBy(comment -> comment.getPostID().longValue()));
 
         model.addAttribute("commentsByPostId", commentsByPostId);
