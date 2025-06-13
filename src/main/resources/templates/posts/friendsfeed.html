@@ -115,8 +115,6 @@
 
                     <input type="hidden" name="forename" th:value="${currentUser.forename}"/>
                      <input type="hidden" name="surname" th:value="${currentUser.surname}"/>
-                        <input id="comment-send" type="text" th:field="*{commentContent}"
-                               placeholder="Write a comment..." />
 
                         <input type="hidden" name="postID" th:value="${post.id}"/>
                         <input id="comment-input-field" type="text" name="commentContent" placeholder="Write a comment..." required/>
