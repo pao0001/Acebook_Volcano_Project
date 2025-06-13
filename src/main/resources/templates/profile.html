@@ -42,7 +42,7 @@
     <div class="main-inner">
       <div class="profile-grid">
         <!-- TOP LEFT: PROFILE PICTURE -->
-        <div class="profile-picture-container">
+        <div class="profile-picture-container image-upload-container">
           <img class="profile-picture"
                th:src="@{${user.profile_image_src}}"
                onerror="this.src='/assets/default-profile.png'"
@@ -51,7 +51,7 @@
         </div>
 
         <!-- TOP RIGHT: BANNER IMAGE + NAVIGATION -->
-        <div class="profile-banner-container">
+        <div class="profile-banner-container image-upload-container">
           <div style="text-align: center; color: white; font-weight: bold; font-size: 2rem;">
             <img class="profile-picture"
                  th:src="@{${user.banner_image_src}}"
