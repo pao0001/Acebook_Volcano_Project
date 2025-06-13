@@ -146,7 +146,11 @@ public class PostsController {
     }
 
     @GetMapping("/")
-    public String feed(Model model) {
+    public String feed(@RequestParam(value = "showAll", defaultValue = "false") boolean showAll, Model model) {
+
+
+
+
 //        List<Post> recentSortedPosts = StreamSupport.stream(postRepository.findAll().spliterator(), false)
 //                .filter(post -> post.getTimeStamp() != null &&
 //                        post.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(3000)))
@@ -160,12 +164,25 @@ public class PostsController {
 
         model.addAttribute("commentsByPostId", commentsByPostId);
 
+
+
+        //code to load limited content
+
         Long myId = authenticatedUserService.getAuthenticatedUser().getId();
         List<Post> feedPosts = postRepository.findFeedNative(myId).stream()
                 .sorted(Comparator.comparing(Post::getTimeStamp).reversed())
                 .toList();
 
+        if (!showAll) {
+            feedPosts = feedPosts.stream().limit(5).collect(Collectors.toList());
+        }
+
         model.addAttribute("posts", feedPosts);
+        model.addAttribute("showAll", showAll); // <-- new attribute
+
+
+        //other code
+
         model.addAttribute("post", new Post());
 
         model.addAttribute("comments", comments);

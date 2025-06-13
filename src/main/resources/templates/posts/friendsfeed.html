@@ -127,7 +127,23 @@
 
                 </li>
             </ul>
+
+            <!-- Code to show a show all button> -->
+            <div style="text-align: center; margin: 20px;">
+                <a th:href="@{/ (showAll=${!showAll})}" class="btn btn-primary">
+                <span th:text="${showAll} ? 'Show Less' : 'Show All'">Show All</span>
+                </a>
+            </div>
+
+
+
         </div>
+
+
+
+
+
+
 
         <!-- RIGHT SIDEBAR -->
         <div th:replace="~{fragments :: right-sidebar}"></div>
