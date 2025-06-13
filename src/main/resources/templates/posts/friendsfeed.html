@@ -114,8 +114,8 @@
                     <form class="comment-form" th:id="'commentForm_' + ${post.id}" th:action="@{/comment}" method="post">
                         <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
 
-                    <input type="hidden" name="forename" th:value="${currentUser.forename}"
-                     <input type="hidden" name="surname" th:value="${currentUser.surname}"
+                    <input type="hidden" name="forename" th:value="${currentUser.forename}"/>
+                     <input type="hidden" name="surname" th:value="${currentUser.surname}"/>
                         <input id="comment-send" type="text" th:field="*{commentContent}"
                                placeholder="Write a comment..." />
 
