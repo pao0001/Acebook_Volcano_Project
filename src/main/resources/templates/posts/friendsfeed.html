@@ -5,6 +5,21 @@
     <meta charset="UTF-8"/>
     <title>Friends Feed</title>
     <link rel="stylesheet" href="/main.css" />
+<style>
+    .btn.btn-primary {
+    background-color: #1877f2;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    }
+    .btn.btn-primary:hover {
+    background-color: #155ab6;
+    }
+</style>
+
+
 </head>
 <body>
 <div th:replace="fragments :: header"></div> <!--This is the header added from Fragments.html -->
@@ -128,23 +143,20 @@
                 </li>
             </ul>
 
-            <!-- Code to show a show all button> -->
-            <div style="text-align: center; margin: 20px;">
-                <a th:href="@{/ (showAll=${!showAll})}" class="btn btn-primary">
-                <span th:text="${showAll} ? 'Show Less' : 'Show All'">Show All</span>
+            <!-- Code to show a "show all" or "show less" button> -->
+            <div style="text-align: center; margin: 20px;"> <!-- aligns the text to the centre of the page-->
+                <a th:href="@{/ (showAll=${!showAll})}" class="btn btn-primary"> <!-- generates a dynamic url,
+                    if showAll is set to true, it generates /?showAll=false
+                    if showAll is set to false, it generates /?showAll=true
+                    so that we can just reload the files with those values -->
+                <span th:text="${showAll} ? 'Show Less' : 'Show All'">Show All</span><!-- this is for the actual visual button
+                    if showAll is true it will show "Show less" and vice versa, so that you can do the opposite of
+                    what you currently see-->
                 </a>
             </div>
 
 
-
         </div>
-
-
-
-
-
-
-
         <!-- RIGHT SIDEBAR -->
         <div th:replace="~{fragments :: right-sidebar}"></div>
 
