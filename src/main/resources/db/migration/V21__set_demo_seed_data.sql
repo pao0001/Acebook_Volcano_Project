@@ -295,7 +295,7 @@ INSERT INTO users (
  'Female', 'She/her', 'New Orleans', 'Mumbai', 'Chef', 'Culinary Institute', 'Married',
  'Heterosexual', 'Moderate', 'Hindu', '1987-11-02'),
 
-('mutual4@example.com', TRUE, NULL,
+('zehad.tech@gmail.com', TRUE, 'google-oauth2|117492230645137351617',
  'Passionate about urban farming and community gardens.',
  'Lucas', 'Morris',
  'https://images.unsplash.com/photo-1616578853146-cb0b5e732b83?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGhpcHBpZSUyMG1hbnxlbnwwfDJ8MHx8fDA%3D',
@@ -689,7 +689,7 @@ INSERT INTO comments (postid, username, forename, surname, comment, time_stamp) 
 -- Alice Smith's posts
 (6, 'request2@example.com', 'Raj', 'Singh', 'Vinyls are timeless. What’s spinning today?', NOW() - INTERVAL '4 days 22 hours'),
 (7, 'mutual5@example.com', 'Maya', 'Patel', 'Jazz is life! Got any recommendations?', NOW() - INTERVAL '3 days 2 hours'),
-(8, 'mutual4@example.com', 'Lucas', 'Morris', 'Music festivals always bring the best vibes!', NOW() - INTERVAL '23 hours'),
+(8, 'zehad.tech@gmail.com', 'Lucas', 'Morris', 'Music festivals always bring the best vibes!', NOW() - INTERVAL '23 hours'),
 
 -- Bob Johnson's posts
 (9, 'giulianopaolini91@gmail.com', 'Priya', 'Desai', 'Basil can be tricky, but keep it sunny and watered.', NOW() - INTERVAL '2 days'),
