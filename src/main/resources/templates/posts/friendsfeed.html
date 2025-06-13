@@ -1,63 +1,51 @@
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head lang="en">
     <meta charset="UTF-8"/>
     <title>Friends Feed</title>
     <link rel="stylesheet" href="/main.css" />
+
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 <body>
-<div th:replace="fragments :: header"></div> <!--This is the header added from Fragments.html -->
+<div th:replace="fragments :: header"></div>
 
 <div class="main-content">
-
     <div class="layout-container">
-        <!-- LEFT SIDEBAR -->
         <div th:replace="~{fragments :: left-sidebar}"></div>
 
         <div class="main-inner">
             <h1 style="text-align: center; color: #1877f2;">Friends Feed</h1>
-            <!--<p style="text-align:center"><a href="/">Go to global feed</a></p>-->
 
-            <!-- CODE FOR FORM FOR POSTS -->
             <form class="post-form" action="#" th:action="@{/posts}" th:object="${post}" method="post" enctype="multipart/form-data">
                 <div class="post-form-container">
-                    <!-- Profile picture circle -->
                     <div class="profile-picture-circle">
                         <img th:src="@{${currentUser.profile_image_src}}" alt="Profile picture"/>
                     </div>
-
                     <div class="post-content-area">
                         <label for="post-send"></label>
                         <textarea id="post-send" th:field="*{content}" class="post-textarea"
                                   th:placeholder="|What's on your mind, ${currentUser.forename}?|"
                                   placeholder="What's on your mind?"></textarea>
-
                         <div class="post-actions">
-                            <!-- Image upload button as asset -->
                             <label for="image-upload" class="image-upload-label">
                                 <img th:src="@{/assets/attachment.png}" alt="Add image" class="image-upload-icon"/>
                                 <span>Attach Photo</span>
                                 <input id="image-upload" type="file" name="image" accept="image/*" class="image-upload-input"/>
                             </label>
-
-                            <!-- Styled submit button -->
                             <button type="submit" class="post-submit-button">
                                 <span>Post</span>
                             </button>
                         </div>
                     </div>
                 </div>
-
                 <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
                 <input type="hidden" name="user_id" th:value="${currentUser.id}" />
                 <input type="hidden" name="forename" th:value="${currentUser.forename}" />
                 <input type="hidden" name="surname" th:value="${currentUser.surname}" />
-
-
             </form>
 
-            <!-- CODE FOR POST RENDERING-->
             <ul class="post-list">
                 <li class="post-item" th:each="post : ${posts}">
                     <div class="post-container">
@@ -67,76 +55,174 @@
                         </div>
                         <span id="post-render" th:text="${post.content}"></span>
 
-                        <!-- render img if exists -->
                         <div class="post-image-section" th:if="${post.post_image_src != null}">
                             <div class="post-image-display">
                                 <img th:src="@{${post.post_image_src}}" alt="Post Image" />
                             </div>
                         </div>
 
-                        <!-- 👍 like button - posts -->
                         <div class="post-likes">
-                            <form th:action="@{/like}" method="post" style="display:inline;">
+                            <form class="like-form" th:action="@{/like}" method="post">
                                 <input type="hidden" name="likedType" value="post" />
                                 <input type="hidden" name="likedId" th:value="${post.id}" />
                                 <input type="hidden" name="redirectUrl" th:value="@{/}" />
 
-                                <button type="submit" class="like-link">👍</button>
-                                <span class="like-count" th:text="${likeCountsByPostId[post.id] ?: 0}">0</span>
+                                <button type="submit" class="like-button">👍</button>
+                                <span class="like-count" th:id="'postLikeCount_' + ${post.id}" th:text="${likeCountsByPostId[post.id] ?: 0}">0</span>
                             </form>
                         </div>
-
                     </div>
 
-                    <!-- CODE FOR COMMENT RENDERING-->
-                    <ul class="comment-list" th:if="${commentsByPostId[post.id]}">
+                    <ul class="comment-list" th:id="'commentsContainer_' + ${post.id}">
                         <li class="comment-item" th:each="comment : ${commentsByPostId[post.id]}">
                             <div class="comment-header">
                                 <strong th:text="|${comment.username} commented at:|"></strong>
                                 <span th:text="${comment.formattedTimestamp}"></span>
                             </div>
+                            <span th:id="'comment-render_' + ${comment.id}" th:text="${comment.commentContent}"></span>
 
-                            <span id="comment-render" th:text="${comment.commentContent}"></span>
-
-                            <!-- 👍 like button - comments -->
                             <div class="comment-likes">
-                                <form th:action="@{/like}" method="post" style="display:inline;">
+                                <form class="like-form" th:action="@{/like}" method="post">
                                     <input type="hidden" name="likedType" value="comment" />
                                     <input type="hidden" name="likedId" th:value="${comment.id}" />
                                     <input type="hidden" name="redirectUrl" th:value="@{/}" />
 
-                                    <button type="submit" class="like-link" style="background:none; border:none; cursor:pointer; padding:0;">👍</button>
-                                    <span class="like-count" th:text="${likeCountsByCommentId[comment.id] ?: 0}">0</span>
+                                    <button type="submit" class="like-button" style="background:none; border:none; cursor:pointer; padding:0;">👍</button>
+                                    <span class="like-count" th:id="'commentLikeCount_' + ${comment.id}" th:text="${likeCountsByCommentId[comment.id] ?: 0}">0</span>
                                 </form>
                             </div>
-
                         </li>
                     </ul>
 
-                    <!-- CODE FOR COMMENT FORM-->
-                    <form class="comment-form" th:action="@{/comment}" method="post" th:object="${comment}">
+                    <form class="comment-form" th:id="'commentForm_' + ${post.id}" th:action="@{/comment}" method="post">
                         <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
-                        <input id="comment-send" type="text" th:field="*{commentContent}"
-                               placeholder="Write a comment..." />
                         <input type="hidden" name="postID" th:value="${post.id}"/>
-                        <!-- Styled comment button -->
+                        <input id="comment-input-field" type="text" name="commentContent" placeholder="Write a comment..." required/>
                         <button type="submit" class="comment-submit-button">
                             <span>Comment</span>
                         </button>
                     </form>
-
                 </li>
             </ul>
         </div>
 
-        <!-- RIGHT SIDEBAR -->
         <div th:replace="~{fragments :: right-sidebar}"></div>
-
     </div>
-
 </div>
-<div th:replace="fragments :: footer"></div> <!--This is the footer added from Fragments.html -->
+<div th:replace="fragments :: footer"></div>
+
+<script>
+    // Get CSRF token and header from meta tags
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+    // --- AJAX for Comments ---
+    document.querySelectorAll('.comment-form').forEach(form => {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(form);
+            const postId = formData.get('postID'); // Get postID from form data
+            const commentsContainer = document.getElementById('commentsContainer_' + postId);
+            const commentInputField = form.querySelector('input[name="commentContent"]');
+            const commentContent = commentInputField.value.trim(); // Get the content and trim whitespace
+
+            // Don't submit empty comments
+            if (commentContent === "") {
+                return;
+            }
+
+            fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    [csrfHeader]: csrfToken, // Add CSRF header
+                },
+                body: formData // FormData handles multipart/form-data for you
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json(); // Expect JSON response from the server
+                })
+                .then(newComment => {
+                    // Clear the input field
+                    commentInputField.value = '';
+
+                    // Create and prepend the new comment HTML
+                    const newCommentLi = document.createElement('li');
+                    newCommentLi.classList.add('comment-item');
+                    // Construct the HTML for the new comment. You'll need to replicate your existing structure.
+                    newCommentLi.innerHTML = `
+                    <div class="comment-header">
+                        <strong>${newComment.username} commented at:</strong>
+                        <span>${newComment.formattedTimestamp}</span>
+                    </div>
+                    <span id="comment-render_${newComment.id}">${newComment.commentContent}</span>
+                    <div class="comment-likes">
+                        <form class="like-form" action="/like" method="post">
+                            <input type="hidden" name="likedType" value="comment" />
+                            <input type="hidden" name="likedId" value="${newComment.id}" />
+                            <input type="hidden" name="redirectUrl" value="/" />
+                            <button type="submit" class="like-button" style="background:none; border:none; cursor:pointer; padding:0;">👍</button>
+                            <span class="like-count" id="commentLikeCount_${newComment.id}">0</span>
+                        </form>
+                    </div>
+                `;
+                    commentsContainer.prepend(newCommentLi); // Add to the top of the list
+
+                    // Re-attach event listener for the new like button on the new comment
+                    attachLikeFormListener(newCommentLi.querySelector('.like-form'));
+                })
+                .catch(error => {
+                    console.error('Error submitting comment:', error);
+                    alert('Failed to submit comment. Please try again.');
+                });
+        });
+    });
+
+    // --- AJAX for Likes (General function to attach to all like forms) ---
+    function attachLikeFormListener(form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(form);
+            const likedId = formData.get('likedId');
+            const likedType = formData.get('likedType');
+            const likeCountSpan = document.getElementById(likedType + 'LikeCount_' + likedId); // e.g., 'postLikeCount_123' or 'commentLikeCount_456'
+
+            fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    [csrfHeader]: csrfToken, // Add CSRF header
+                },
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json(); // Assuming your /like endpoint returns the new count
+                })
+                .then(data => {
+                    if (likeCountSpan) {
+                        likeCountSpan.textContent = data.newLikeCount; // Update the displayed count
+                    }
+                    // Optional: Toggle active/liked state of the button here if you have styles for it
+                })
+                .catch(error => {
+                    console.error('Error submitting like:', error);
+                    alert('Failed to submit like. Please try again.');
+                });
+        });
+    }
+
+    // Attach listeners to all existing like forms when the page loads
+    document.querySelectorAll('.like-form').forEach(form => {
+        attachLikeFormListener(form);
+    });
+
+</script>
 
 </body>
-
 </html>

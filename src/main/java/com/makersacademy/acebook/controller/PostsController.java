@@ -11,12 +11,10 @@ import com.makersacademy.acebook.repository.LikeRepository;
 import com.makersacademy.acebook.service.AuthenticatedUserService;
 import com.makersacademy.acebook.service.RecFriendService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -135,14 +133,20 @@ public class PostsController {
     }
 
     @PostMapping("/comment")
-    public RedirectView createComment(@ModelAttribute Comment comment,
+    @ResponseBody
+    public ResponseEntity<Comment> createComment(@ModelAttribute Comment comment,
                                       @RequestParam String username,
                                       @RequestParam Integer postID) {
         comment.setTimeStamp(LocalDateTime.now());
         comment.setUsername(username);
         comment.setPostID(postID);
-        commentRepository.save(comment);
-        return new RedirectView("/");
+        // You'll need to format the timestamp here or ensure your Comment model has a getter for a formatted one
+        // For example: comment.setFormattedTimestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm - dd/MM/yyyy")));
+        Comment savedComment = commentRepository.save(comment);
+
+        // Return the saved comment as JSON. Ensure the Comment object can be serialized to JSON.
+        // If your Comment model has a 'formattedTimestamp' field, it will be included in the JSON.
+        return ResponseEntity.ok(savedComment);
     }
 
     @GetMapping("/")
