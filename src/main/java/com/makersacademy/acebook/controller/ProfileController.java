@@ -70,7 +70,9 @@ public class ProfileController {
         model.addAttribute("recommendedFriends", recommendedFriends);
 
         // Adding attribute for posts by the current user
-        List<Post> profilePosts = postRepository.findFeedNative(currentUser.getId());
+        List<Post> profilePosts = postRepository.findFeedNative(currentUser.getId()).stream()
+                .sorted(Comparator.comparing(Post::getTimeStamp).reversed())
+                .toList();
         model.addAttribute("profilePosts", profilePosts);
         return "myProfile";
     }

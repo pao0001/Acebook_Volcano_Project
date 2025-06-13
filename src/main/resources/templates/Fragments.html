@@ -113,7 +113,6 @@
                 <div class="post-header">
                     <div class="post-user-info">
                         <span class="post-user-name" th:text="${post.forename + ' ' + post.surname}"></span>
-                        <span class="post-username" th:text="'@' + ${post.username}"></span>
                     </div>
                     <div class="post-timestamp" th:text="${post.getFormattedTimestamp()}"></div>
                 </div>

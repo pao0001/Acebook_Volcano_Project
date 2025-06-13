@@ -2,9 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Edit Profile</title>
+    <title>acebook | Edit Profile</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="/main.css">
+    <link rel="icon" href="/assets/favicon.ico">
     <script defer>
         // Same JS as in profile.html for tab switching
         document.addEventListener('DOMContentLoaded', function() {
@@ -63,6 +64,13 @@
 
                     <!-- USER INFO (Editable) -->
                     <div class="profile-info-container">
+                        <div class="profile-action-buttons">
+                            <div class="edit-button-container">
+                                <a th:href="@{/profile/{id}(id=${user.id})}" class="profile-action-button edit-button">
+                                    View Profile
+                                </a>
+                            </div>
+                        </div>
                         <div class="profile-details-box">
                             <div class="detail-label">Forename</div>
                             <input type="text" th:field="*{forename}" class="detail-value">
