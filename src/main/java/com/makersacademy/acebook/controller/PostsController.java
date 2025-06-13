@@ -153,7 +153,19 @@ public class PostsController {
     }
 
     @GetMapping("/")
-    public String feed(Model model) {
+    public String feed(@RequestParam(value = "showAll", defaultValue = "false") boolean showAll, Model model) {
+    // @RequestParam(value = "showAll", defaultValue = "false" :
+            //this reads /?showAll=true or /?showAll=false from the url
+            //if it doesn't receive anything it defaults showAll to false.
+
+
+
+//        List<Post> recentSortedPosts = StreamSupport.stream(postRepository.findAll().spliterator(), false)
+//                .filter(post -> post.getTimeStamp() != null &&
+//                        post.getTimeStamp().isAfter(LocalDateTime.now().minusSeconds(3000)))
+//                .sorted(Comparator.comparing(Post::getTimeStamp).reversed())
+//                .toList();
+
 
         List<Comment> comments = (List<Comment>) commentRepository.findAll();
         Map<Long, List<Comment>> commentsByPostId = comments.stream()
@@ -162,12 +174,26 @@ public class PostsController {
 
         model.addAttribute("commentsByPostId", commentsByPostId);
 
-        Long myId = authenticatedUserService.getAuthenticatedUser().getId();
-        List<Post> feedPosts = postRepository.findFeedNative(myId).stream()
-                .sorted(Comparator.comparing(Post::getTimeStamp).reversed())
+
+
+        //code to load limited content
+
+        Long myId = authenticatedUserService.getAuthenticatedUser().getId(); //this gets the id of the currently logged in user
+        List<Post> feedPosts = postRepository.findFeedNative(myId).stream() //this gets the feed of all the friends
+                .sorted(Comparator.comparing(Post::getTimeStamp).reversed()) //this reverses the time, so that the latest posts are
+                    //at the top
                 .toList();
 
+        if (!showAll) { //if showAll=false then it limits the posts to only 5 by using .limit()
+            feedPosts = feedPosts.stream().limit(5).collect(Collectors.toList());
+        }
+
         model.addAttribute("posts", feedPosts);
+        model.addAttribute("showAll", showAll); // this makes showAll available to thymeleaf templates
+
+
+        //other code
+
         model.addAttribute("post", new Post());
 
         model.addAttribute("comments", comments);
