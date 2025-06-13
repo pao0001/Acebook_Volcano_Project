@@ -15,7 +15,7 @@ public class UsersController {
     @GetMapping("/users/after-login")
     public RedirectView afterLogin() {
         authenticatedUserService.getAuthenticatedUser();
-        return new RedirectView("/checkDetails");
+        return new RedirectView("/completeDetails");
     }
 
     //used for saving the details of new users after sign up.

@@ -1,28 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Details</title>
+    <meta charset="UTF-8" />
+    <title>Welcome To Acebook!</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="/main.css" />
 </head>
 <body>
-<br>
-    <form th:action="@{/saveNewUserDetails}" th:object="${user}" method="post">
-        <fieldset>
-            <legend>Kindly enter all your details so we can give you more "personalised" ads ;)</legend>
-                <label for="forename">Forename: </label>
-                    <input type="text" id="forename" th:field="*{forename}" required >
-                    <br>
-                    <label for="surname">Surname: </label>
-                    <input type="text" id="surname" th:field="*{surname}" required>
-                    <br>
-                    <label for="dob">Enter Date Of Birth</label>
-                <input type="date" id="dob" th:field="*{dob}" required>
-        </fieldset>
-        <br>
-        <button type="submit">Submit</button>
-    </form>
-<br>
 
+<!-- Replaced header fragment for testing so I can remove "logged in as" -->
+<div th:fragment="header">
+    <header style="background: #fff; border-bottom: 2px solid #ddd;">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2rem;">
+
+            <a class="acebook-logo" href="/" th:href="@{/}" style="
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: #1877f2;
+                text-decoration: none;
+                letter-spacing: -1.5px;">
+                acebook
+            </a>
+
+        </div>
+
+        <nav style="background:#eee; padding:1rem 2rem; font-size: 1.2rem;">
+            <a href="/" th:href="@{/}" style="margin-right:2rem; text-decoration:none; color:#555; font-weight:500;">Home</a>
+            <a href="/myProfile" th:href="@{/myProfile}" style="margin-right:2rem; text-decoration:none; color:#555; font-weight:500;">Profile</a>
+            <a href="/friends" th:href="@{/friends}" style="margin-right:2rem; text-decoration:none; color:#555; font-weight:500;">Friends</a>
+        </nav>
+    </header>
+</div>
+
+<div class="complete-details-container">
+    <div class="details-card">
+        <h1>Complete Your Profile</h1>
+        <p class="intro-text">
+            To get started, please provide a few more details to complete your profile.
+            This information helps us personalize your experience.
+        </p>
+
+        <form th:action="@{/completeDetails}" th:object="${user}" method="post" class="details-form">
+            <div class="form-group">
+                <label for="forename">First Name:</label>
+                <input type="text" id="forename" th:field="*{forename}" placeholder="Enter your first name" required />
+            </div>
+
+            <div class="form-group">
+                <label for="surname">Last Name:</label>
+                <input type="text" id="surname" th:field="*{surname}" placeholder="Enter your last name" required />
+            </div>
+
+            <div class="form-group">
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" th:field="*{dob}" required />
+            </div>
+
+            <button type="submit" class="submit-button">Save Details</button>
+        </form>
+    </div>
+</div>
+
+<div th:replace="~{fragments :: footer}"></div>
 </body>
 </html>

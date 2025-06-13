@@ -31,6 +31,7 @@ body {
     flex: 0 0 300px;
     display: flex;
     flex-direction: column;
+    overflow: visible;
 }
 
 .main-content {
@@ -56,9 +57,11 @@ body {
     padding: 1.5rem;
     border-radius: 12px;
     border: 2px solid #6c9fd8;
-    flex: 0;
-    margin-top: 0; /* Aligns with post form */
-    padding-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: auto;
+    box-sizing: border-box;
 }
 
 /* Friends sidebar styling */
@@ -137,17 +140,18 @@ body {
     .post-form-container {
         flex-direction: column;
         gap: 1rem;
-      }
+    }
     .profile-col {
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
         max-width: none;
-      }
-    .profile-grid {
-            grid-template-columns: 1fr;
-            grid-template-rows: auto auto auto auto;
     }
+    .profile-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+    }
+
     .profile-picture-container {
         max-width: 400px;
         margin: 0 auto;
@@ -159,14 +163,21 @@ body {
     .user-name-block {
         text-align: left;
         margin-left: 1rem;
-      }
+    }
+
+    .profile-picture-container.image-upload-container {
+        max-width: 300px;   /* same max width as before */
+        height: 300px;      /* explicitly set height to match banner */
+        aspect-ratio: auto; /* disable aspect ratio or adjust */
+    }
+
     .layout-container {
         flex-direction: column;
         min-height: auto;
     }
     .friends-grid {
-       grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-       gap: 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 1rem;
     }
 }
 
@@ -194,36 +205,36 @@ body {
 }
 
 .post-form-container {
-  display: flex;
-  flex-direction: row;
-  gap: 2rem; /* Space between left and right */
-  align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem; /* Space between left and right */
+    align-items: flex-start;
 }
 
 .profile-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-width: 100px;
-  max-width: 130px;
-  flex-shrink: 0;
-  gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100px;
+    max-width: 130px;
+    flex-shrink: 0;
+    gap: 0.5rem;
 }
 
 
 .profile-picture-circle {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid #e4e6eb;
-  margin-bottom: 0.5rem;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #e4e6eb;
+    margin-bottom: 0.5rem;
 }
 
 .profile-picture-circle img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .profile-and-name-row {
@@ -234,7 +245,7 @@ body {
 }
 
 .user-name-block {
-  text-align: center;
+    text-align: center;
 }
 
 .user-forename, .user-surname {
@@ -244,10 +255,10 @@ body {
 }
 
 .composer-col {
-  flex: 1 1 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .post-content-area {
@@ -255,23 +266,23 @@ body {
 }
 
 .post-textarea {
-  width: 100%;
-  min-height: 90px;
-  padding: 1rem;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  font-family: inherit;
-  resize: vertical;
-  box-sizing: border-box;
+    width: 100%;
+    min-height: 90px;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-family: inherit;
+    resize: vertical;
+    box-sizing: border-box;
 }
 
 .post-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: auto;
-  width: 100%;
-  position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    width: 100%;
+    position: relative;
 }
 
 .image-upload-label {
@@ -304,18 +315,18 @@ body {
 }
 
 .post-submit-button {
-  margin-left: auto; /* Pushes the button to the far right */
-  background-color: #1877f2;
-  color: white;
-  border: none;
-  padding: 0.5rem 1.5rem;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: background-color 0.2s;
+    margin-left: auto; /* Pushes the button to the far right */
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.2s;
 }
 
 .post-submit-button:hover {
@@ -341,15 +352,28 @@ body {
     padding: 1.5em;
     border-radius: 12px;
     border: 2px solid #6c9fd8;
-    margin: 0; /* Reset margin */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds subtle shadow */
+    margin: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+/*
 .post-container {
-    margin-bottom: 0; /* Remove margin-bottom from post-container */
-    padding: 0; /* Remove padding from post-container */
-    background-color: transparent; /* Make background transparent */
-    border: none; /* Remove border */
+    margin-bottom: 0;
+    padding: 0;
+    background-color: #eef5ff;
+     border-radius: 10px;
+     border: 1px solid #a3c1ec;
+}*/
+
+.post-container {
+    padding: 0.8em 1.2em 0.8em 1.2em; /* top/right/bottom/left */
+    margin-bottom: 0.8em;
+    border-bottom: 1px solid #d0e0ff;
+
+    /* keep your existing styles */
+    background-color: #eef5ff;
+    border-radius: 10px;
+    border: 1px solid #a3c1ec;
 }
 
 .post-header {
@@ -364,6 +388,12 @@ body {
     box-sizing: border-box;
     padding: 0.8em;
     margin-bottom: 0.5em;
+}
+
+#post-render {
+    font-size: 1.25rem; /* or use 20px, or any value you like */
+    line-height: 1.6;   /* optional: improves readability */
+    font-weight: 400;   /* optional: control text weight */
 }
 
 .comment-form {
@@ -413,6 +443,7 @@ body {
     border-bottom: 1px solid #d0e0ff;
     list-style-type: none;
     margin-left: 0;
+    text-align: right;
 }
 
 .comment-item:last-child {
@@ -421,12 +452,15 @@ body {
     padding-bottom: 0;
 }
 
+.comment-header {
+    margin-bottom: 0.8em; /* Adds vertical space under the title/timestamp block */
+}
+
 .post-image-section {
-    margin-top: 1em;
-    padding: 1em;
-    background-color: #e6f0ff;
-    border-radius: 10px;
-    border: 1px solid #a3c1ec;
+    margin-top: 1em; /* Keep some spacing */
+    padding: 0;
+    background-color: transparent; /* No background */
+    border: none; /* Remove border */
 }
 
 .post-image-upload {
@@ -453,41 +487,41 @@ hr {
 }
 
 .profile-container {
-  display: grid;
-  grid-template-columns: 260px 1.5fr 2.5fr 1fr;
-  gap: 1.5rem;
-  max-width: 1400px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+    display: grid;
+    grid-template-columns: 260px 1.5fr 2.5fr 1fr;
+    gap: 1.5rem;
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 1rem;
 }
 
 
-/* Style the center two columns as one unified “blue” background area */
+/* Style the center two columns as one unified Ã¢â‚¬Å“blueÃ¢â‚¬Â background area */
 .profile-main {
-  flex: 1;
-  grid-column: 2 / span 2;
-  display: grid;
-  grid-template-rows: auto auto;
-  gap: 1.5rem;
-  background: #dce8fb;        /* light blue wrapper */
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 6px rgba(24,119,242,0.1);
+    flex: 1;
+    grid-column: 2 / span 2;
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+    background: #dce8fb;        /* light blue wrapper */
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 6px rgba(24,119,242,0.1);
 }
 
 .profile-grid {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      grid-template-rows: auto auto;
-      gap: 1.5rem;
-      margin: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+    margin: 1.5rem;
 }
 
 /* Top row: picture card & banner card side-by-side */
 .profile-top {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.5rem;
 }
 
 .profile-picture-container {
@@ -499,19 +533,19 @@ hr {
     display: flex;
     align-items: center;
     justify-content: center;
-    aspect-ratio: 1/1; /* Maintain square aspect ratio */
+    aspect-ratio: auto; /* Maintain square aspect ratio */
 }
 
 .profile-banner-container {
-      grid-row: 1;
-      grid-column: 2;
-      background: #b0b0b0;
-      border-radius: 12px;
-      overflow: hidden;
-      min-height: 300px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    grid-row: 1;
+    grid-column: 2;
+    background: #b0b0b0;
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .profile-banner-container.image-upload-container {
@@ -520,127 +554,127 @@ hr {
 }
 
 
-/* The grey “Profile Picture” card */
+/* The grey Ã¢â‚¬Å“Profile PictureÃ¢â‚¬Â card */
 .profile-picture-card {
-  background: #b0b0b0;
-  border-radius: 12px;
-  padding: 1rem;           /* add padding around the image */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 6px rgba(24,119,242,0.1);
+    background: #b0b0b0;
+    border-radius: 12px;
+    padding: 1rem;           /* add padding around the image */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(24,119,242,0.1);
 }
 
 .profile-picture {
-  width: 400px;             /* smaller width */
-  height: 400px;            /* smaller height */
-  border-radius: 12px;
-  object-fit: cover;
+    width: 400px;             /* smaller width */
+    height: 400px;            /* smaller height */
+    border-radius: 12px;
+    object-fit: cover;
 }
 
-/* The grey “Banner Image” card */
+/* The grey Ã¢â‚¬Å“Banner ImageÃ¢â‚¬Â card */
 .profile-banner {
-  background: #b0b0b0;
-  border-radius: 12px;
-  min-height: 700px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: bold;
+    background: #b0b0b0;
+    border-radius: 12px;
+    min-height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
 }
 
 .profile-nav-card {
-      background: #e4eefe;
-      border: 1px solid #a3c1ec;
-      border-radius: 12px;
-      padding: 1rem;
-      margin-top: 1.5rem;
+    background: #e4eefe;
+    border: 1px solid #a3c1ec;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-top: 1.5rem;
 }
 
 /* The button row under the banner */
 .profile-buttons {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .profile-buttons button {
-      flex: 1;
-      min-width: 100px;
-      background: #fff;
-      border: 1px solid #6c9fd8;
-      border-radius: 8px;
-      padding: 0.75rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      font-weight: 600;
+    flex: 1;
+    min-width: 100px;
+    background: #fff;
+    border: 1px solid #6c9fd8;
+    border-radius: 8px;
+    padding: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 600;
 }
 
 .profile-buttons button:hover {
-  background: #c7daf7;
-  transform: translateY(-2px);
+    background: #c7daf7;
+    transform: translateY(-2px);
 }
 
 /* Bottom row: details column + content column */
 .profile-details-section {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1.5rem;
 }
 
 /* Left details panel */
 .profile-info-box {
-  background: #e4eefe;
-  border-radius: 12px;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
+    background: #e4eefe;
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
 }
 
 .profile-info-container {
-      grid-row: 2;
-      grid-column: 1;
-      background: #e4eefe;
-      border-radius: 12px;
-      padding: 1.5rem;
-      border: 1px solid #a3c1ec;
+    grid-row: 2;
+    grid-column: 1;
+    background: #e4eefe;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #a3c1ec;
 }
 
 /* Each detail line as its own pill */
 .profile-details-box {
-      background: white;
-      border: 1px solid #a3c1ec;
-      border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1rem;
+    background: white;
+    border: 1px solid #a3c1ec;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
 }
 
 /* Bio box taller */
 .profile-bio {
-      background: white;
-      border: 1px solid #a3c1ec;
-      border-radius: 8px;
-      padding: 1rem;
-      min-height: 150px;
+    background: white;
+    border: 1px solid #a3c1ec;
+    border-radius: 8px;
+    padding: 1rem;
+    min-height: 150px;
 }
 
 /* Right content panel */
 .profile-content {
-  background: #b7d3f7;
-  border-radius: 10px;
-  padding: 1.5rem;
-  box-shadow: inset 0 0 10px rgba(24,119,242,0.1);
-  min-height: 300px;
+    background: #b7d3f7;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: inset 0 0 10px rgba(24,119,242,0.1);
+    min-height: 300px;
 }
 
 .profile-content-container {
-      grid-row: 2;
-      grid-column: 2;
-      background: #b7d3f7;
-      border-radius: 12px;
-      padding: 1.5rem;
+    grid-row: 2;
+    grid-column: 2;
+    background: #b7d3f7;
+    border-radius: 12px;
+    padding: 1.5rem;
 }
 
 .detail-label {
@@ -659,42 +693,42 @@ hr {
 }
 
 .content-section {
-  display: none;
-  padding: 1.5rem;
-  background: #dce8fb;
-  border-radius: 10px;
-  margin-top: 1.5rem;
+    display: none;
+    padding: 1.5rem;
+    background: #dce8fb;
+    border-radius: 10px;
+    margin-top: 1.5rem;
 }
 
 .content-section.active-section {
-  display: block;
+    display: block;
 }
 
 .nav-button.active {
-  background-color: #1877f2;
-  color: white;
-  border-color: #1877f2;
+    background-color: #1877f2;
+    color: white;
+    border-color: #1877f2;
 }
 
 .profile-friends-section {
-        padding: 1.5rem;
-        background: #f0f2f5;
-        border-radius: 12px;
-        margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: #f0f2f5;
+    border-radius: 12px;
+    margin-top: 1.5rem;
 }
 
 .profile-friends-title {
-        color: #1877f2;
-        margin-bottom: 1.5rem;
-        font-size: 1.5rem;
-        border-bottom: 2px solid #e4e6eb;
-        padding-bottom: 0.5rem;
+    color: #1877f2;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #e4e6eb;
+    padding-bottom: 0.5rem;
 }
 
 .profile-friends-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.5rem;
 }
 
 .profile-friend-card {
@@ -707,16 +741,16 @@ hr {
 }
 
 .profile-friend-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
 .profile-friend-link {
-        display: flex;
-        flex-direction: column;
-        text-decoration: none;
-        color: inherit;
-        height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
 }
 
 .profile-friend-avatar-container {
@@ -758,91 +792,91 @@ hr {
 }
 
 .profile-friend-status {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.85rem;
-        color: #65676b;
-        gap: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    color: #65676b;
+    gap: 0.25rem;
 }
 
 .profile-status-indicator {
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #31a24c;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #31a24c;
 }
 
 .profile-status-indicator.active {
-        background: #31a24c;
+    background: #31a24c;
 }
 
 .profile-status-indicator.offline {
-        background: #ddd;
+    background: #ddd;
 }
 /* Profile Action Buttons */
 .profile-action-buttons {
-  margin-bottom: 1.5rem;
-  width: 100%;
+    margin-bottom: 1.5rem;
+    width: 100%;
 }
 
 .profile-action-button {
-  width: 100%;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  transition: all 0.2s ease;
-  text-align: center;
-  display: block;
-  text-decoration: none;
-  box-sizing: border-box;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    box-sizing: border-box;
 }
 
 .edit-button {
-  background-color: #e7f3ff;
-  color: #1877f2;
-  border: 1px solid #1877f2;
+    background-color: #e7f3ff;
+    color: #1877f2;
+    border: 1px solid #1877f2;
 }
 
 .edit-button:hover {
-  background-color: #d8e6f8;
-  text-decoration: none;
+    background-color: #d8e6f8;
+    text-decoration: none;
 }
 
 .add-friend-button {
-  background-color: #42b72a; /* Facebook green */
-  color: white;
+    background-color: #42b72a; /* Facebook green */
+    color: white;
 }
 
 .add-friend-button:hover {
-  background-color: #36a420;
-  text-decoration: none;
+    background-color: #36a420;
+    text-decoration: none;
 }
 
 /* Remove Friend Button (red) */
 .remove-friend-button {
-  background-color: #f02849; /* Facebook red */
-  color: white;
+    background-color: #f02849; /* Facebook red */
+    color: white;
 }
 
 .remove-friend-button:hover {
-  background-color: #d91f3a;
-  text-decoration: none;
+    background-color: #d91f3a;
+    text-decoration: none;
 }
 
 /* Container specific styles */
 .edit-button-container,
 .friend-button-container {
-  width: 100%;
+    width: 100%;
 }
 
 /* Make the anchor tag behave like a button */
 a.profile-action-button {
-  display: block;
-  text-decoration: none;
+    display: block;
+    text-decoration: none;
 }
 
 .user-posts-section {
@@ -871,10 +905,7 @@ a.profile-action-button {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 .post-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8em; /* Adds vertical space under the title/timestamp block */
 }
 .post-user-info {
     display: flex;
@@ -976,14 +1007,15 @@ a.profile-action-button {
     /* For banner, you might want to put it bottom left */
     left: 16px;
     right: auto;
+}
 
 .sponsored-image {
-    width: 100%;          /* Fill the sidebar width */
-    max-width: none;      /* Remove any max-width restriction */
-    height: 400px;        /* Taller vertical size, adjust as needed */
-    object-fit: cover;    /* Cover entire box, cropping if needed */
-    border-radius: 8px;   /* Slightly rounded corners for a nicer look */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow to pop out */
+    width: 100%;
+    height: auto; /* let it size naturally */
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: block;
 }
 
@@ -992,5 +1024,238 @@ a.profile-action-button {
     min-height: 400px;
     overflow-y: auto;
     margin-bottom: 20px;
-    }
+}
+
+
+.friends-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+/* Title styling */
+h1 {
+    text-align: center;
+    color: #2c3e50;
+}
+
+/* List styling */
+ul.friends-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Individual friend item */
+ul.friends-list li {
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+/* Hover effect on friend item */
+ul.friends-list li:hover {
+    background-color: #eaeaea;
+}
+
+/* Last item border removal */
+ul.friends-list li:last-child {
+    border-bottom: none;
+}
+
+#friend-requests-list {
+    background-color: #dce8fb;
+    padding: 1.5em;
+    border-radius: 12px;
+    border: 2px solid #6c9fd8;
+    margin-bottom: 2em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Friends page styling */
+
+/* Box container styling */
+#friends-list {
+    background-color: #dce8fb;
+    padding: 1.5em;
+    border-radius: 12px;
+    border: 2px solid #6c9fd8;
+    margin-bottom: 2em;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Override H1 styling to remove top padding */
+#friends-list > h1 {
+    margin-top: 0.5em; /* or try 0 or a smaller value to reduce space */
+    padding-top: 0;
+}
+
+/* Grid layout for friends */
+#friends-list .friends-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/* Make friend links vertical and centered */
+#friends-list .friend-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Avatar size and spacing */
+#friends-list .friend-avatar {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 8px;
+}
+
+/* Avatar image styling */
+#friends-list .friend-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #e4e6eb;
+}
+
+/* Friend name styling */
+#friends-list .friend-name {
+    margin-top: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #050505;
+}
+
+.complete-details-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 1.5rem; /* Increased padding for better spacing */
+    flex-grow: 1; /* Allows container to take available vertical space */
+    min-height: calc(100vh - 120px); /* Adjust based on header/footer height, similar to layout-container */
+    box-sizing: border-box; /* Include padding in height calculation */
+}
+
+.details-card {
+    background-color: #dce8fb; /* Light blue background from your sidebars */
+    padding: 2.5rem; /* More generous padding */
+    border-radius: 12px;
+    border: 2px solid #6c9fd8; /* Blue border from your sidebars */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Stronger shadow for prominence */
+    max-width: 550px; /* Control card width */
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.details-card h1 {
+    color: #1877f2; /* Acebook blue */
+    margin-bottom: 1.5rem;
+    font-size: 2em; /* Larger heading */
+    text-align: center; /* Ensure heading is centered */
+}
+
+.details-card .intro-text {
+    color: #333;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.details-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem; /* Spacing between form groups */
+}
+
+.form-group {
+    text-align: left; /* Align labels and inputs to the left */
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #1877f2; /* Acebook blue for labels */
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"] {
+    padding: 0.8rem 1rem;
+    border: 1px solid #a3c1ec; /* Lighter blue border */
+    border-radius: 8px;
+    font-size: 1rem;
+    width: 100%; /* Full width within form-group */
+    box-sizing: border-box; /* Include padding in width */
+    transition: border-color 0.2s ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="date"]:focus {
+    border-color: #1877f2; /* Highlight on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.2); /* Soft blue glow */
+}
+
+.submit-button {
+    background-color: #1877f2; /* Acebook blue */
+    color: white;
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1.5rem; /* Space above the button */
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    width: auto; /* Allow button to size to content */
+    align-self: center; /* Center the button within the flex column */
+}
+
+.submit-button:hover {
+    background-color: #166fe5; /* Slightly darker blue on hover */
+    transform: translateY(-1px); /* Subtle lift effect */
+}
+
+/* Styling for likes */
+
+.post-likes {
+    margin-top: 0.75em;
+    display: flex;
+    justify-content: flex-end; /* Pushes content to the right */
+    gap: 0.5em;
+}
+
+.like-link {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: transform 0.2s ease;
+}
+
+.like-link:hover {
+    transform: scale(1.1);
+}
+
+.like-count {
+    font-weight: bold;
+    color: #3b5998;
 }

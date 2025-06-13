@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*; // Ensure java.util.Comparator is imported implicitly or explicitly
 import java.util.stream.Collectors;
 
 @Controller
@@ -41,37 +38,39 @@ public class ProfileController {
 
     @Autowired
     private UploadController uploadController;
-    
+
     @Autowired
     private RecFriendRepository recFriendRepository;
 
+    @Autowired
+    RecFriendService recFriendService;
+
     @GetMapping("/myProfile")
     public String showMyProfile(Model model) {
-
-        // Adding authenticated user
-        User user = authenticatedUserService.getAuthenticatedUser();
-        model.addAttribute("user", user);
-
-        // Test data for navigating between profiles (optional)
+        User currentUser = authenticatedUserService.getAuthenticatedUser();
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("user", currentUser);
         Iterable<User> users = userRepository.findAll();
         model.addAttribute("users", users);
 
-        // Adding attribute friends
-        Set<User> userFriends = user.getFriends();
-        model.addAttribute("friends", userFriends);
-        // Adding redundant attribute to keep friends fragment functional
-        model.addAttribute("profileFriends", userFriends);
-
-        // Adding limited friends
-        List<User> friendList = new ArrayList<>(userFriends);
-        Collections.shuffle(friendList);
-        List<User> limitedFriends = friendList.stream()
-                .limit(4)
+        Set<User> allMyFriends = currentUser.getFriends();
+        List<User> limitedFriendsForSidebar = new ArrayList<>(allMyFriends);
+        // Sort for consistent display in the sidebar
+        limitedFriendsForSidebar.sort(Comparator.comparing(User::getForename).thenComparing(User::getSurname));
+        limitedFriendsForSidebar = limitedFriendsForSidebar.stream()
+                .limit(5)
                 .collect(Collectors.toList());
-        model.addAttribute("friends", limitedFriends);
+        model.addAttribute("sidebarFriends", limitedFriendsForSidebar); // Use specific name for sidebar
 
-        // Adding attribute friends
-        List<Post> profilePosts = postRepository.findFeedNative(user.getId());
+        model.addAttribute("profileFriends", allMyFriends); // Renamed for clarity in template
+
+        // Recommended friends
+        recFriendService.generateAndStoreRecommendations();
+        List<RecFriend> recommendedFriends = recFriendService.getRecommendationsForCurrentUser();
+        model.addAttribute("recommendedFriends", recommendedFriends);
+
+        // Adding attribute for posts by the current user
+        List<Post> profilePosts = postRepository.findFeedNative(currentUser.getId());
         model.addAttribute("profilePosts", profilePosts);
         return "myProfile";
     }
@@ -82,43 +81,38 @@ public class ProfileController {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         User currentUser = authenticatedUserService.getAuthenticatedUser();
+        model.addAttribute("currentUser", currentUser);
+
+        model.addAttribute("user", profileUser);
 
         boolean isAlreadyFriends = currentUser.getFriends().contains(profileUser);
         boolean hasPendingRequest = friendRequestRepository
                 .existsBySenderAndReceiverAndPendingTrue(currentUser, profileUser);
         boolean isSelfProfile = currentUser.equals(profileUser);
 
-        model.addAttribute("user", profileUser);
         model.addAttribute("isAlreadyFriends", isAlreadyFriends);
         model.addAttribute("hasPendingRequest", hasPendingRequest);
         model.addAttribute("isSelfProfile", isSelfProfile);
 
-        // Adding attribute friends
-        Set<User> currentUserFriends = currentUser.getFriends();
-        model.addAttribute("friends", currentUserFriends);
+        Set<User> allMyFriends = currentUser.getFriends();
+        List<User> limitedFriendsForSidebar = new ArrayList<>(allMyFriends);
+        limitedFriendsForSidebar.sort(Comparator.comparing(User::getForename).thenComparing(User::getSurname));
+        limitedFriendsForSidebar = limitedFriendsForSidebar.stream()
+                .limit(5)
+                .collect(Collectors.toList());
+        model.addAttribute("sidebarFriends", limitedFriendsForSidebar);
 
-        // Adding attribute friends
         Set<User> profileUserFriends = profileUser.getFriends();
+        model.addAttribute("profileUserFullFriendsList", profileUserFriends);
         model.addAttribute("profileFriends", profileUserFriends);
 
-        // Add suggested friends
+        // Recommended friends (for current user)
         List<RecFriend> recommendedFriends = recFriendRepository.findByUser(currentUser);
         model.addAttribute("recommendedFriends", recommendedFriends);
 
-        // Adding limited friends
-        List<User> friendList = new ArrayList<>(currentUserFriends);
-        Collections.shuffle(friendList);
-        List<User> limitedFriends = friendList.stream()
-                .limit(4)
-                .collect(Collectors.toList());
-        model.addAttribute("friends", limitedFriends);
-
-        // Adding attribute friends
+        // Adding attribute for posts by the profile user
         List<Post> profilePosts = postRepository.findFeedNative(profileUser.getId());
         model.addAttribute("profilePosts", profilePosts);
-
-        // Adding current user
-        model.addAttribute("currentUser", currentUser);
 
         return "profile";
     }

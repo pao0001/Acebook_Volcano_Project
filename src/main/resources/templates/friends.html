@@ -1,91 +1,111 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Friends</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="/main.css" />
 </head>
 <body>
-<!-- Header Fragment -->
 <div th:replace="~{fragments :: header}"></div>
 
-<div id="search-error" th:if="${searchError}"
-     style="position: absolute; top: 235px; right: 295px;
-            color: black; font-size: 0.9rem; font-weight: bold;
-            background: rgba(255,255,255,0.95); padding: 5px 10px;
-            border: 1px solid #ccc; border-radius: 4px;
-            opacity: 1; transition: opacity 1s ease;">
-    <span th:text="${searchError}"></span>
+<div class="layout-container">
+    <div th:replace="~{fragments :: left-sidebar}"></div>
+
+    <main class="main-content">
+        <div class="main-inner">
+
+            <div id="search-error" th:if="${searchError}"
+                 style="position: absolute; top: 235px; right: 295px;
+                        color: black; font-size: 0.9rem; font-weight: bold;
+                        background: rgba(255,255,255,0.95); padding: 5px 10px;
+                        border: 1px solid #ccc; border-radius: 4px;
+                        opacity: 1; transition: opacity 1s ease;">
+                <span th:text="${searchError}"></span>
+            </div>
+
+            <form action="/friends/search" method="get" style="text-align: right; margin-top: 30px; padding-right: 20px;">
+                <input
+                        type="text"
+                        name="query"
+                        placeholder="Search for your friends by email or surname"
+                        style="padding: 10px; width: 300px; border: 1px solid #ccc; border-radius: 4px;"
+                        required
+                />
+                <button type="submit" style="padding: 10px 20px; margin-left: 15px; font-weight:bold; background-color: #1877f2; color: white; border: none; border-radius: 5px;">
+                    Search
+                </button>
+            </form>
+
+            <script>
+                window.addEventListener('DOMContentLoaded', () => {
+                    const errorDiv = document.getElementById('search-error');
+                    if (errorDiv) {
+                        setTimeout(() => {
+                            errorDiv.style.opacity = '0';
+                            setTimeout(() => {
+                                errorDiv.style.display = 'none';
+                            }, 1000); // wait for fade-out to complete
+                        }, 3000); // delay before fading starts
+                    }
+                });
+            </script>
+
+            <h1>Friend Requests</h1>
+            <div id="friend-requests-list" class="friends box" th:if="${incomingRequests != null and !incomingRequests.isEmpty()}">
+                <div th:each="request : ${incomingRequests}" class="friend-card" style="margin-bottom: 20px;">
+                    <a th:href="@{'/profile/' + ${request.sender.id}}" class="friend-link">
+                        <div class="friend-avatar">
+                            <img th:src="@{${request.sender.profile_image_src}}"
+                                 alt="Requester's profile picture"
+                                 onerror="this.onerror=null; this.src='/assets/default-profile.png'"/>
+                        </div>
+                        <div class="friend-info">
+                            <span class="friend-name" th:text="${request.sender.forename + ' ' + request.sender.surname}">Friend Name</span>
+                            <span class="friend-status">Wants to be friends</span>
+                        </div>
+                    </a>
+                    <div class="friend-request-actions" style="display: flex; gap: 10px; margin-top: 5px; justify-content: flex-end;">
+                        <form th:action="@{/friend-requests/accept}" method="post" style="margin: 0;">
+                            <input type="hidden" name="requestId" th:value="${request.id}" />
+                            <button type="submit" class="btn-accept" style="background-color: #28a745; color: white; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer;">Accept</button>
+                        </form>
+                        <form th:action="@{/friend-requests/decline}" method="post" style="margin: 0;">
+                            <input type="hidden" name="requestId" th:value="${request.id}" />
+                            <button type="submit" class="btn-decline" style="background-color: #dc3545; color: white; padding: 8px 12px; border: none; border-radius: 5px; cursor: pointer;">Decline</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <p th:if="${#lists.isEmpty(incomingRequests)}">You currently have no friend requests.</p>
+
+            <!-- My Friends section -->
+            <div id="friends-list" class="friends box">
+                <h1 th:text="'Friends (' + ${friendsCount} + ')'" id="friends">Friends</h1>
+                <ul class="friends-grid">
+                    <li class="friend-card" th:each="friend : ${allFriends}">
+                        <a class="friend-link" th:href="@{/profile/{id}(id=${friend.id})}">
+                            <div class="friend-avatar">
+                                <img class="profile-friend-avatar"
+                                     th:src="@{${friend.profile_image_src}}"
+                                     alt="Friend's profile picture"
+                                     onerror="this.onerror=null; this.src='/assets/default-profile.png'" />
+                            </div>
+                            <div class="friend-info">
+                                <span class="friend-name" th:text="${friend.forename + ' ' + friend.surname}">Name</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="~{fragments :: right-sidebar}"></div>
 </div>
 
-<!--Search bar for friends-->
-<form action="/friends/search" method="get" style="text-align: right; margin-top: 30px; padding-right: 20px;">
-    <input
-            type="text"
-            name="query"
-            placeholder="Search for your friends by email or surname"
-            style="padding: 10px; width: 300px; border: 1px solid #ccc; border-radius: 4px;"
-            required
-    />
-    <button type="submit" style="padding: 10px 20px; margin-left: 15px; font-weight:bold; background-color: #1877f2; color: white; border: none; border-radius: 5px;">
-        Search
-    </button>
-</form>
-
-
-<!-- Auto-hide script -->
-<script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const errorDiv = document.getElementById('search-error');
-      if (errorDiv) {
-        setTimeout(() => {
-          errorDiv.style.opacity = '0';
-          setTimeout(() => {
-            errorDiv.style.display = 'none';
-          }, 1000); // wait for fade-out to complete
-        }, 3000); // delay before fading starts
-      }
-    });
-</script>
-
-<!--You can create your own ids for elements-->
-<h1 th:text="'Friends (' + ${friendsCount} + ')'" id="friends">Friends</h1>
-    <ul th:each="friend: ${friends}">
-        <li>
-            <a th:href="@{/profile/{id}(id=${friend.id})}"
-               th:text="${friend.forename + ' ' + friend.surname}"></a>
-        </li>
-    </ul>
-
-
-
-<h1>Friend Requests</h1>
-<ul th:if="${incomingRequests}">
-    <li th:each="request : ${incomingRequests}">
-        <span th:text="${request.sender.forename + ' ' + request.sender.surname}"></span>
-        <form th:action="@{/friend-requests/accept}" method="post" style="display:inline;">
-            <input type="hidden" name="requestId" th:value="${request.id}" />
-            <button type="submit">Accept</button>
-        </form>
-        <form th:action="@{/friend-requests/decline}" method="post" style="display:inline;">
-            <input type="hidden" name="requestId" th:value="${request.id}" />
-            <button type="submit">Decline</button>
-        </form>
-    </li>
-</ul>
-<p th:if="${#lists.isEmpty(incomingRequests)}">You currently have no friend requests.</p>
-
-<h1>Recommended Friends</h1>
-<ul th:if="${recommendedFriends}" th:unless="${#lists.isEmpty(recommendedFriends)}">
-    <li th:each="recFriend : ${recommendedFriends}">
-        <a th:href="@{/profile/{id}(id=${recFriend.recFriend.id})}"
-           th:text="${recFriend.recFriend.forename + ' ' + recFriend.recFriend.surname}"></a>
-        <span> (<span th:text="${recFriend.mutuals}"></span> mutual friends)</span>
-    </li>
-</ul>
-<p th:if="${#lists.isEmpty(recommendedFriends)}">Add your contact details to find people you may know!</p>
-
-<!-- Footer Fragment -->
 <div th:replace="~{fragments :: footer}"></div>
+
 </body>
 </html>
