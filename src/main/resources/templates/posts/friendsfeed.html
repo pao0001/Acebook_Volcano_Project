@@ -92,7 +92,6 @@
                     <ul class="comment-list" th:id="'commentsContainer_' + ${post.id}">
                         <li class="comment-item" th:each="comment : ${commentsByPostId[post.id]}">
                             <div class="comment-header">
-                                <!—- <strong th:text="|${comment.username} commented at:|"></strong> --> 
                                 <strong th:text="|${comment.forename} ${comment.surname} commented at:|"></strong>
                                 <span th:text="${comment.formattedTimestamp}"></span>
                             </div>
@@ -143,7 +142,7 @@
 
         </div>
         <!-- RIGHT SIDEBAR -->
-        <div th:replace="~{fragments :: right-sidebar}"></div>
+        <div th:replace="fragments :: right-sidebar"></div>
     </div>
 </div>
 <div th:replace="fragments :: footer"></div>
