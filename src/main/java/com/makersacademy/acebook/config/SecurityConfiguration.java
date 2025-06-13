@@ -58,7 +58,7 @@ public class SecurityConfiguration {
         return (request, response, authentication) -> {
             try {
 //                String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
-                response.sendRedirect(issuer + "v2/logout?client_id=" + clientId + "&returnTo=" + "http://localhost:8080/welcome");
+                response.sendRedirect(issuer + "v2/logout?client_id=" + clientId + "&returnTo=" + "http://acebook.duckdns.org/welcome");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

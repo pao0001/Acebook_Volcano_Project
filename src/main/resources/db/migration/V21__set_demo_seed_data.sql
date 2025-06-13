@@ -76,6 +76,8 @@ CREATE TABLE posts (
 CREATE TABLE comments (
                           id BIGSERIAL PRIMARY KEY,
                           username VARCHAR(255),
+                          forename TEXT,
+                          surname TEXT,
                           comment TEXT,
                           postid INT,
                           time_stamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -99,12 +101,13 @@ INSERT INTO users (
     sexual_orientation, political_views, religion, dob
 ) VALUES
 -- Test user (1) --
-('test.user@example.com', TRUE, NULL,
- 'Adventurous spirit and passionate coder. Loves hiking, coffee, and good conversations.',
- 'Test', 'User',
- 'https://randomuser.me/api/portraits/lego/1.jpg', 'https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
- 'Non-binary', 'They/them', 'San Francisco', 'Denver', 'Software Developer', 'MIT', 'Single',
- 'Pansexual', 'Progressive', 'None', '1990-05-20'),
+('fparsons595@gmail.com', TRUE, 'google-oauth2|115795854088591160458',
+ 'Big ears, bigger heart — causing cartoon chaos since 1928.',
+ 'Mickey', 'Mouse',
+ 'https://images.unsplash.com/photo-1722816738620-5eb5fc059487?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWlja2V5JTIwbW91c2V8ZW58MHwyfDB8fHww',
+ 'https://images.unsplash.com/photo-1616776219911-83b9ca3402ce?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWlja2V5JTIwbW91c2V8ZW58MHwwfDB8fHww',
+ 'Non-binary', 'They/them', 'Disneyland', 'Mouseton', 'Actor/Mascot', 'MIT', 'Married',
+ 'Pansexual', 'Progressive', 'Spiritual', '1928-11-18'),
 
 -- Test user’s 20 friends (2-21) --
 ('friend1@example.com', TRUE, NULL,
@@ -268,7 +271,7 @@ INSERT INTO users (
  'Heterosexual', 'Moderate', 'None', '1989-06-28'),
 
 -- Mutual friend recommendations (friends of friends, 22-26) --
-('mutual1@example.com', TRUE, NULL,
+('karencorless@yahoo.co.uk', TRUE, 'auth0|684c1beaceefa87fe2d16701',
  'Avid traveler and language learner. Currently obsessed with Japanese culture.',
  'Nina', 'Khan',
  'https://plus.unsplash.com/premium_photo-1726711248673-d79354b0920e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fG11c2xpbSUyMHdvbWFufGVufDB8MnwwfHx8MA%3D%3D',
@@ -276,7 +279,7 @@ INSERT INTO users (
  'Female', 'She/her', 'San Diego', 'Karachi', 'Translator', 'UCLA', 'Single',
  'Heterosexual', 'Progressive', 'Muslim', '1991-03-05'),
 
-('mutual2@example.com', TRUE, NULL,
+('barrymorealexandre@gmail.com', TRUE, 'google-oauth2|106529522194946585623',
  'Tech geek and gamer. Loves building PCs and streaming gameplays.',
  'Oscar', 'Nguyen',
  'https://images.unsplash.com/photo-1674456736570-3c6df9791b76?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fG1hbiUyMHZpZXRuYW1lc2V8ZW58MHwyfDB8fHww',
@@ -284,7 +287,7 @@ INSERT INTO users (
  'Male', 'He/him', 'Austin', 'Hanoi', 'Software Engineer', 'UT Austin', 'Single',
  'Gay', 'Liberal', 'Atheist', '1994-09-17'),
 
-('mutual3@example.com', TRUE, NULL,
+('giulianopaolini91@gmail.com', TRUE, 'auth0|683868cbb2fd0f68bc0670d5',
  'Chef with a love for spicy dishes and sharing meals with friends.',
  'Priya', 'Desai',
  'https://plus.unsplash.com/premium_photo-1723485857548-3f77b877c0ea?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW5kaWFuJTIwd29tYW58ZW58MHwyfDB8fHww',
@@ -510,11 +513,11 @@ VALUES
 -- Posts for Test User (id=1) --
 INSERT INTO posts (user_id, forename, surname, content, post_image_src, time_stamp)
 VALUES
-    (1, 'Test', 'User', 'Just finished a great hike today! Feeling refreshed and alive.', NULL, '2025-05-22 18:43:10'),
-    (1, 'Test', 'User', 'Experimenting with some new code ideas. Excited to see where this goes!', NULL, '2025-05-29 20:14:08'),
-    (1, 'Test', 'User', NULL, 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y29mZmVlfGVufDB8MHwwfHx8MA%3D%3D', '2025-06-07 15:36:54'),
-    (1, 'Test', 'User', NULL, 'https://images.unsplash.com/photo-1711032265178-3d06d4bfbf18?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bGVnbyUyMG1hbnxlbnwwfDJ8MHx8fDA%3D', '2025-06-03 09:57:21'),
-    (1, 'Test', 'User', 'Looking forward to the weekend and some quality downtime.', NULL, '2025-05-22 18:43:10'),
+    (1, 'Mickey', 'Mouse', 'Just finished a great hike today! Feeling refreshed and alive.', NULL, '2025-05-22 18:43:10'),
+    (1, 'Mickey', 'Mouse', 'Experimenting with some new code ideas. Excited to see where this goes!', NULL, '2025-05-29 20:14:08'),
+    (1, 'Mickey', 'Mouse', NULL, 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=1400&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y29mZmVlfGVufDB8MHwwfHx8MA%3D%3D', '2025-06-07 15:36:54'),
+    (1, 'Mickey', 'Mouse', NULL, 'https://images.unsplash.com/photo-1711032265178-3d06d4bfbf18?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bGVnbyUyMG1hbnxlbnwwfDJ8MHx8fDA%3D', '2025-06-03 09:57:21'),
+    (1, 'Mickey', 'Mouse', 'Looking forward to the weekend and some quality downtime.', NULL, '2025-05-22 18:43:10'),
 
 -- Posts for friends of Test User --
 -- Alice Smith (id=2) --
@@ -661,100 +664,100 @@ VALUES
     (41, 'Felix', 'Upton', 'Pushed a new update to my open-source project. Code is life.', NULL, '2025-06-01 15:28:28');
 
 -- 🔴 SEEDING COMMENTS TABLE 🔴 --
-INSERT INTO comments (postid, username, comment, time_stamp) VALUES
+INSERT INTO comments (postid, username, forename, surname, comment, time_stamp) VALUES
 
 -- Test User - Post 1 comments
-(1, 'friend1@example.com', 'Sounds amazing, hiking always resets my mind! Which trail did you hit?', NOW() - INTERVAL '4 days 20 hours'),
-(1, 'friend2@example.com', 'Nothing beats fresh mountain air. Glad you had a great time!', NOW() - INTERVAL '4 days 18 hours'),
-(1, 'friend3@example.com', 'Beautiful! Hope you snapped some photos to share.', NOW() - INTERVAL '4 days 15 hours'),
+(1, 'friend1@example.com', 'Alice', 'Smith', 'Sounds amazing, hiking always resets my mind! Which trail did you hit?', NOW() - INTERVAL '4 days 20 hours'),
+(1, 'friend2@example.com', 'Bob', 'Johnson', 'Nothing beats fresh mountain air. Glad you had a great time!', NOW() - INTERVAL '4 days 18 hours'),
+(1, 'friend3@example.com', 'Cara', 'Lee', 'Beautiful! Hope you snapped some photos to share.', NOW() - INTERVAL '4 days 15 hours'),
 
 -- Test User - Post 2 comments
-(2, 'friend4@example.com', 'Excited to hear about this.', NOW() - INTERVAL '3 days 20 hours'),
+(2, 'friend4@example.com', 'David', 'Chen', 'Excited to hear about this.', NOW() - INTERVAL '3 days 20 hours'),
 
 -- Test User - Post 3 comments
-(3, 'friend5@example.com', 'Always! My morning ritual is incomplete without coffee.', NOW() - INTERVAL '2 days 22 hours'),
-(3, 'friend6@example.com', 'Coffee is the secret ingredient to my creativity.', NOW() - INTERVAL '2 days 20 hours'),
-(3, 'friend7@example.com', 'You’re speaking my language! What’s your favorite brew?', NOW() - INTERVAL '2 days 18 hours'),
-(3, 'friend8@example.com', 'I’m more of a chai person, but coffee is a close second!', NOW() - INTERVAL '2 days 17 hours'),
-(3, 'friend9@example.com', 'Big yes! Currently debugging with a latte on my desk.', NOW() - INTERVAL '2 days 16 hours'),
+(3, 'friend5@example.com', 'Ella', 'Brown', 'Always! My morning ritual is incomplete without coffee.', NOW() - INTERVAL '2 days 22 hours'),
+(3, 'friend6@example.com', 'Frank', 'Davis', 'Coffee is the secret ingredient to my creativity.', NOW() - INTERVAL '2 days 20 hours'),
+(3, 'friend7@example.com', 'Grace', 'Evans', 'You’re speaking my language! What’s your favorite brew?', NOW() - INTERVAL '2 days 18 hours'),
+(3, 'friend8@example.com', 'Henry', 'Foster', 'I’m more of a chai person, but coffee is a close second!', NOW() - INTERVAL '2 days 17 hours'),
+(3, 'friend9@example.com', 'Isabella', 'Garcia', 'Big yes! Currently debugging with a latte on my desk.', NOW() - INTERVAL '2 days 16 hours'),
 
 -- Test User - Post 5 comments
-(5, 'friend10@example.com', 'You deserve it! Hope you get some great rest.', NOW() - INTERVAL '1 day 20 hours'),
-(5, 'friend11@example.com', 'Weekend plans sound good — any outdoor adventures?', NOW() - INTERVAL '1 day 18 hours'),
+(5, 'friend10@example.com', 'Jack', 'Harris', 'You deserve it! Hope you get some great rest.', NOW() - INTERVAL '1 day 20 hours'),
+(5, 'friend11@example.com', 'Kara', 'Iverson', 'Weekend plans sound good — any outdoor adventures?', NOW() - INTERVAL '1 day 18 hours'),
 
 -- Comments for test user's friend's posts
 -- Alice Smith's posts
-(6, 'request2@example.com', 'Vinyls are timeless. What’s spinning today?', NOW() - INTERVAL '4 days 22 hours'),
-(7, 'mutual5@example.com', 'Jazz is life! Got any recommendations?', NOW() - INTERVAL '3 days 2 hours'),
-(8, 'mutual4@example.com', 'Music festivals always bring the best vibes!', NOW() - INTERVAL '23 hours'),
+(6, 'request2@example.com', 'Raj', 'Singh', 'Vinyls are timeless. What’s spinning today?', NOW() - INTERVAL '4 days 22 hours'),
+(7, 'mutual5@example.com', 'Maya', 'Patel', 'Jazz is life! Got any recommendations?', NOW() - INTERVAL '3 days 2 hours'),
+(8, 'mutual4@example.com', 'Lucas', 'Morris', 'Music festivals always bring the best vibes!', NOW() - INTERVAL '23 hours'),
 
 -- Bob Johnson's posts
-(9, 'mutual3@example.com', 'Basil can be tricky, but keep it sunny and watered.', NOW() - INTERVAL '2 days'),
-(10, 'mutual1@example.com', 'Herb gardens are the best! Fresh pesto is the reward.', NOW() - INTERVAL '10 hours'),
+(9, 'giulianopaolini91@gmail.com', 'Priya', 'Desai', 'Basil can be tricky, but keep it sunny and watered.', NOW() - INTERVAL '2 days'),
+(10, 'karencorless@yahoo.co.uk', 'Nina', 'Khan', 'Herb gardens are the best! Fresh pesto is the reward.', NOW() - INTERVAL '10 hours'),
 
 -- Cara Lee's posts
-(12, 'friend6@example.com', 'Sunsets make everything magical.', NOW() - INTERVAL '6 days'),
-(13, 'request12@example.com', 'Street art colors always inspire me!', NOW() - INTERVAL '3 days 1 hour'),
+(12, 'friend6@example.com', 'Frank', 'Davis', 'Sunsets make everything magical.', NOW() - INTERVAL '6 days'),
+(13, 'request12@example.com', 'Clara', 'Reed', 'Street art colors always inspire me!', NOW() - INTERVAL '3 days 1 hour'),
 
 -- David Chen's posts
-(15, 'friend16@example.com', 'AI projects sound exciting! Can’t wait to hear about it.', NOW() - INTERVAL '5 days'),
-(16, 'friend18@example.com', 'Tech conferences are where the magic happens.', NOW() - INTERVAL '1 day 20 hours'),
+(15, 'friend16@example.com', 'Peter', 'Tran', 'AI projects sound exciting! Can’t wait to hear about it.', NOW() - INTERVAL '5 days'),
+(16, 'friend18@example.com', 'Ryan', 'Patel', 'Tech conferences are where the magic happens.', NOW() - INTERVAL '1 day 20 hours'),
 
 -- Ella Brown's posts
-(18, 'request14@example.com', 'Yoga at sunrise is truly refreshing!', NOW() - INTERVAL '4 days 6 hours'),
-(19, 'friend13@example.com', 'Meditation really helps me stay focused.', NOW() - INTERVAL '2 days 22 hours'),
+(18, 'request14@example.com', 'Emily', 'Taylor', 'Yoga at sunrise is truly refreshing!', NOW() - INTERVAL '4 days 6 hours'),
+(19, 'friend13@example.com', 'Mia', 'Kim', 'Meditation really helps me stay focused.', NOW() - INTERVAL '2 days 22 hours'),
 
 -- Frank Davis's posts
-(21, 'request3@example.com', 'Books and podcasts — perfect combo for a lazy weekend.', NOW() - INTERVAL '5 days 20 hours'),
+(21, 'request3@example.com', 'Sara', 'Martinez', 'Books and podcasts — perfect combo for a lazy weekend.', NOW() - INTERVAL '5 days 20 hours'),
 
 --Grace Evans's posts
-(24, 'request5@example.com', 'Sustainable fashion is the future!', NOW() - INTERVAL '5 days'),
-(25, 'request6@example.com', 'Fashion week vibes are so inspiring.', NOW() - INTERVAL '2 days 21 hours'),
+(24, 'request5@example.com', 'Vera', 'Kim', 'Sustainable fashion is the future!', NOW() - INTERVAL '5 days'),
+(25, 'request6@example.com', 'Wendy', 'Lopez', 'Fashion week vibes are so inspiring.', NOW() - INTERVAL '2 days 21 hours'),
 
 --Henry Foster's posts
-(27, 'request2@example.com', 'Epic rides are the best way to recharge.', NOW() - INTERVAL '5 days 22 hours'),
+(27, 'request2@example.com', 'Raj', 'Singh', 'Epic rides are the best way to recharge.', NOW() - INTERVAL '5 days 22 hours'),
 
 -- Isabella Garcia's posts
-(31, 'friend19@example.com', 'Raw chocolate tart? Yum, sounds delicious!', NOW() - INTERVAL '1 day'),
+(31, 'friend19@example.com', 'Sophia', 'Quinn', 'Raw chocolate tart? Yum, sounds delicious!', NOW() - INTERVAL '1 day'),
 
 --Jack Hsrris's posts
-(33, 'request3@example.com', 'Writer’s block is real, but you’re smashing it!', NOW() - INTERVAL '3 days 10 hours'),
+(33, 'request3@example.com', 'Sara', 'Martinez', 'Writer’s block is real, but you’re smashing it!', NOW() - INTERVAL '3 days 10 hours'),
 
-(37, 'request4@example.com', 'Creative curriculums shape the future.', NOW() - INTERVAL '3 days'),
+(37, 'request4@example.com', 'Theo', 'Clark', 'Creative curriculums shape the future.', NOW() - INTERVAL '3 days'),
 
-(39, 'request10@example.com', 'Beach cleanups are so important for the environment.', NOW() - INTERVAL '5 days'),
+(39, 'request10@example.com', 'Amy', 'Parker', 'Beach cleanups are so important for the environment.', NOW() - INTERVAL '5 days'),
 
-(43, 'request6@example.com', 'Congrats on the milestone! Keep streaming.', NOW() - INTERVAL '2 days'),
+(43, 'request6@example.com', 'Wendy', 'Lopez', 'Congrats on the milestone! Keep streaming.', NOW() - INTERVAL '2 days'),
 
-(45, 'request12@example.com', 'Cityscapes always tell a unique story.', NOW() - INTERVAL '3 days'),
+(45, 'request12@example.com', 'Clara', 'Reed', 'Cityscapes always tell a unique story.', NOW() - INTERVAL '3 days'),
 
-(48, 'request1@example.com', 'Local gigs have the best vibes. Keep it up!', NOW() - INTERVAL '1 day 12 hours'),
+(48, 'request1@example.com', 'Gloria`', 'Turner', 'Local gigs have the best vibes. Keep it up!', NOW() - INTERVAL '1 day 12 hours'),
 
-(51, 'request15@example.com', 'Coffee and code — can’t live without them.', NOW() - INTERVAL '1 day 4 hours'),
+(51, 'request15@example.com', 'Felix', 'Upton', 'Coffee and code — can’t live without them.', NOW() - INTERVAL '1 day 4 hours'),
 
-(54, 'request2@example.com', 'Every mile counts. Keep pushing!', NOW() - INTERVAL '2 days'),
+(54, 'request2@example.com', 'Raj', 'Singh', 'Every mile counts. Keep pushing!', NOW() - INTERVAL '2 days'),
 
-(58, 'request4@example.com', 'Startup life is wild but so rewarding.', NOW() - INTERVAL '3 days'),
+(58, 'request4@example.com', 'Theo', 'Clark', 'Startup life is wild but so rewarding.', NOW() - INTERVAL '3 days'),
 
-(61, 'request5@example.com', 'Keep on keeping on. Strength and love.', NOW() - INTERVAL '2 days'),
+(61, 'request5@example.com', 'Vera', 'Kim', 'Keep on keeping on. Strength and love.', NOW() - INTERVAL '2 days'),
 
-(63, 'friend1@example.com', 'Open mic nights are such a great way to connect.', NOW() - INTERVAL '5 days'),
+(63, 'friend1@example.com', 'Alice', 'Smith', 'Open mic nights are such a great way to connect.', NOW() - INTERVAL '5 days'),
 
-(66, 'friend12@example.com', 'Kyoto is amazing! Don’t miss the bamboo forest.', NOW() - INTERVAL '4 days 20 hours'),
-(67, 'friend19@example.com', 'Learning Japanese is so rewarding, 頑張って!', NOW() - INTERVAL '3 days 4 hours'),
-(68, 'friend13@example.com', 'That sunset looks stunning! Perfect travel vibes.', NOW() - INTERVAL '23 hours'),
+(66, 'friend12@example.com', 'Liam', 'Jackson', 'Kyoto is amazing! Don’t miss the bamboo forest.', NOW() - INTERVAL '4 days 20 hours'),
+(67, 'friend19@example.com', 'Sophia', 'Quinn', 'Learning Japanese is so rewarding, 頑張って!', NOW() - INTERVAL '3 days 4 hours'),
+(68, 'friend13@example.com', 'Mia', 'Kim', 'That sunset looks stunning! Perfect travel vibes.', NOW() - INTERVAL '23 hours'),
 
-(69, 'friend10@example.com', 'RGB lighting really sets the mood, nice setup!', NOW() - INTERVAL '6 days 2 hours'),
-(70, 'friend3@example.com', 'Co-op gaming sounds fun. Count me in!', NOW() - INTERVAL '2 days 22 hours'),
+(69, 'friend10@example.com', 'Jack', 'Harris', 'RGB lighting really sets the mood, nice setup!', NOW() - INTERVAL '6 days 2 hours'),
+(70, 'friend3@example.com', 'Cara', 'Lee', 'Co-op gaming sounds fun. Count me in!', NOW() - INTERVAL '2 days 22 hours'),
 
-(72, 'friend5@example.com', 'Spicy curry sounds delicious. Recipe, please?', NOW() - INTERVAL '5 days'),
-(74, 'friend1@example.com', 'Homemade meals are the best kind of love.', NOW() - INTERVAL '1 day 3 hours 52 minutes'),
+(72, 'friend5@example.com', 'Ella', 'Brown', 'Spicy curry sounds delicious. Recipe, please?', NOW() - INTERVAL '5 days'),
+(74, 'friend1@example.com', 'Alice', 'Smith', 'Homemade meals are the best kind of love.', NOW() - INTERVAL '1 day 3 hours 52 minutes'),
 
-(75, 'friend12@example.com', 'Heirloom tomatoes are the tastiest!', NOW() - INTERVAL '5 days 22 hours'),
-(76, 'request2@example.com', 'Urban farming is definitely the future.', NOW() - INTERVAL '2 days 23 hours'),
+(75, 'friend12@example.com', 'Liam', 'Jackson', 'Heirloom tomatoes are the tastiest!', NOW() - INTERVAL '5 days 22 hours'),
+(76, 'request2@example.com', 'Raj', 'Singh', 'Urban farming is definitely the future.', NOW() - INTERVAL '2 days 23 hours'),
 
-(78, 'friend15@example.com', 'Can’t wait to see your mural!', NOW() - INTERVAL '4 days 23 hours 11 minutes'),
-(79, 'friend18@example.com', 'Coffee and creativity are a perfect combo.', NOW() - INTERVAL '3 days 1 hour 47 minutes');
+(78, 'friend15@example.com', 'Olivia', 'Martinez', 'Can’t wait to see your mural!', NOW() - INTERVAL '4 days 23 hours 11 minutes'),
+(79, 'friend18@example.com', 'Ryan', 'Patel', 'Coffee and creativity are a perfect combo.', NOW() - INTERVAL '3 days 1 hour 47 minutes');
 
 -- 🔴 SEEDING LIKES TABLE 🔴 --
 

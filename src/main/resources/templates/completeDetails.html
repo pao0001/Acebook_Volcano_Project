@@ -10,7 +10,7 @@
 <body>
 
 <!-- Replaced header fragment for testing so I can remove "logged in as" -->
-<div th:fragment="header">
+<div>
     <header style="background: #fff; border-bottom: 2px solid #ddd;">
         <div style="display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2rem;">
 
@@ -63,6 +63,6 @@
     </div>
 </div>
 
-<div th:replace="~{fragments :: footer}"></div>
+<div th:replace="fragments :: footer"></div>
 </body>
 </html>
