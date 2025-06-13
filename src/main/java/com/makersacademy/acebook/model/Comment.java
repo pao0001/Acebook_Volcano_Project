@@ -22,16 +22,20 @@ public class Comment {
         private Integer postID;
         @Column(name = "time_stamp", updatable = false)
         private LocalDateTime timeStamp;
+        private String forename;
+        private String surname;
 
 
         public Comment() {}
 
         public Comment(String username, String commentContent,
-                       Integer postID, LocalDateTime timeStamp) {
+                       Integer postID, LocalDateTime timeStamp, String forename, String surname) {
             this.username = username;
             this.commentContent = commentContent;
             this.postID = postID;
             this.timeStamp = timeStamp;
+            this.forename = forename;
+            this.surname = surname;
         }
     public String getFormattedTimestamp() {
         if (timeStamp == null) return "No Time Stamp";

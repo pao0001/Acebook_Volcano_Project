@@ -2,9 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>User Profile</title>
+  <title>acebook | User Profile</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="/main.css">
+  <link rel="icon" href="/assets/favicon.ico">
   <script defer>
     document.addEventListener('DOMContentLoaded', function() {
       const buttons = document.querySelectorAll('.nav-button');
@@ -42,7 +43,7 @@
     <div class="main-inner">
       <div class="profile-grid">
         <!-- TOP LEFT: PROFILE PICTURE -->
-        <div class="profile-picture-container">
+        <div class="profile-picture-container image-upload-container">
           <img class="profile-picture"
                th:src="@{${user.profile_image_src}}"
                onerror="this.src='/assets/default-profile.png'"
@@ -51,7 +52,7 @@
         </div>
 
         <!-- TOP RIGHT: BANNER IMAGE + NAVIGATION -->
-        <div class="profile-banner-container">
+        <div class="profile-banner-container image-upload-container">
           <div style="text-align: center; color: white; font-weight: bold; font-size: 2rem;">
             <img class="profile-picture"
                  th:src="@{${user.banner_image_src}}"

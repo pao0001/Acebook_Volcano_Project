@@ -2,11 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head lang="en">
     <meta charset="UTF-8"/>
-    <title>Friends Feed</title>
+    <title>acebook | Friends Feed</title>
     <link rel="stylesheet" href="/main.css" />
 
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+  
+    <link rel="icon" href="/assets/favicon.ico">
+
 </head>
 <body>
 <div th:replace="fragments :: header"></div>
@@ -76,7 +79,8 @@
                     <ul class="comment-list" th:id="'commentsContainer_' + ${post.id}">
                         <li class="comment-item" th:each="comment : ${commentsByPostId[post.id]}">
                             <div class="comment-header">
-                                <strong th:text="|${comment.username} commented at:|"></strong>
+                                <!—- <strong th:text="|${comment.username} commented at:|"></strong> --> 
+                                <strong th:text="|${comment.forename} ${comment.surname} commented at:|"></strong>
                                 <span th:text="${comment.formattedTimestamp}"></span>
                             </div>
                             <span th:id="'comment-render_' + ${comment.id}" th:text="${comment.commentContent}"></span>
@@ -96,6 +100,12 @@
 
                     <form class="comment-form" th:id="'commentForm_' + ${post.id}" th:action="@{/comment}" method="post">
                         <input type="hidden" name="username" th:value="${#authentication.principal.attributes['email']}" />
+
+                    <input type="hidden" name="forename" th:value="${currentUser.forename}"
+                     <input type="hidden" name="surname" th:value="${currentUser.surname}"
+                        <input id="comment-send" type="text" th:field="*{commentContent}"
+                               placeholder="Write a comment..." />
+
                         <input type="hidden" name="postID" th:value="${post.id}"/>
                         <input id="comment-input-field" type="text" name="commentContent" placeholder="Write a comment..." required/>
                         <button type="submit" class="comment-submit-button">
